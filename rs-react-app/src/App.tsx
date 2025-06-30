@@ -37,7 +37,7 @@ class App extends React.Component<Record<string, never>, AppState> {
           onLoadingChange={(loading) => this.setState({ loading })}
           onErrorChange={(error) => this.setState({ error })}
         />
-        <ResultsSection  loading={loading} error={error} results={results} />
+        <ResultsSection loading={loading} error={error} results={results} />
 
         <button
           onClick={this.handleThrowError}

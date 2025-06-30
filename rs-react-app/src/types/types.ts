@@ -31,15 +31,15 @@ export interface CharacterDetails {
 }
 
 export interface ResultsSectionProps {
-    results: CharacterDetails[];
-    loading: boolean;
-    error: string | null;
+  results: CharacterDetails[];
+  loading: boolean;
+  error: string | null;
 }
 
 export interface AppState {
-    searchTerm: string;
-    results: CharacterDetails[];
-    loading: boolean;
-    error: string | null;
-    shouldThrowError: boolean;
+  searchTerm: string;
+  results: CharacterDetails[];
+  loading: boolean;
+  error: string | null;
+  shouldThrowError: boolean;
 }
