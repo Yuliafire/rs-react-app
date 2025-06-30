@@ -5,10 +5,7 @@ import Footer from '../src/components/layout/Footer/Footer';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 // import ResultsSection from '../src/components/ResultsSection/ResultsSection';
 
-
-
 class App extends React.Component {
-
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
@@ -16,12 +13,12 @@ class App extends React.Component {
       results: [],
       loading: false,
       error: null,
-      shouldThrowError: false
+      shouldThrowError: false,
     };
   }
 
   handleThrowError = () => {
-   this.setState({ shouldThrowError: true });
+    this.setState({ shouldThrowError: true });
   };
 
   render() {
@@ -36,15 +33,15 @@ class App extends React.Component {
       <div className="app">
         <Header />
         <SearchSection
-           onSearchResults={(results) => this.setState({ results })}
-           onLoadingChange={(loading) => this.setState({ loading })}
-           onErrorChange={(error) => this.setState({ error })}
+          onSearchResults={(results) => this.setState({ results })}
+          onLoadingChange={(loading) => this.setState({ loading })}
+          onErrorChange={(error) => this.setState({ error })}
         />
         {/* <ResultsSection  loading={loading} error={error} results={results} /> */}
 
         <button
-        onClick={this.handleThrowError}
-        style={{ margin: '1rem', padding: '0.5rem 1rem', display: 'block' }}
+          onClick={this.handleThrowError}
+          style={{ margin: '1rem', padding: '0.5rem 1rem', display: 'block' }}
         >
           Error Button
         </button>

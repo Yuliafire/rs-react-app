@@ -19,7 +19,7 @@ const storageService = {
       // Update search history
       const history = this.getSearchHistory();
       if (term && !history.includes(term)) {
-        const newHistory = [term, ...history].slice(0, 10); 
+        const newHistory = [term, ...history].slice(0, 10);
         localStorage.setItem(STARWAR_HISTORY_KEY, JSON.stringify(newHistory));
       }
     } catch (error) {

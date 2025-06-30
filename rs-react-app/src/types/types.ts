@@ -21,11 +21,11 @@ export interface ResultItem {
 }
 
 export interface CharacterDetails {
-    id: string;
-    name: string;
-    yearOfBirth?: number;
-    yearOfDeath?: number | null;
-    gender?: string;
-    maritalStatus?: string;
-    serialNumber?: string;
+  id: string;
+  name: string;
+  yearOfBirth?: number;
+  yearOfDeath?: number | null;
+  gender?: string;
+  maritalStatus?: string;
+  serialNumber?: string;
 }
