@@ -5,7 +5,7 @@ class Header extends React.Component {
   render() {
     return (
       <header className={styles.header}>
-        <h1 className={styles.title}>Star Wars</h1>
+        <h1 className={styles.title}>Rick & Morty</h1>
       </header>
     );
   }

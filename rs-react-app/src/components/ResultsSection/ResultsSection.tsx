@@ -2,6 +2,7 @@ import React from 'react';
 import type { ResultsSectionProps } from '../../types/types';
 import styles from './ResultsSection.module.scss';
 import Loader from '../ui/Loader/Loader';
+import CardList from '../../components/ui/CardList/CardList';
 
 interface ResultsSectionState {
   currentPage: number;
@@ -16,7 +17,7 @@ class ResultsSection extends React.Component<
     super(props);
     this.state = {
       currentPage: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 20,
     };
   }
 
@@ -34,6 +35,7 @@ class ResultsSection extends React.Component<
 
   handlePageChange = (page: number) => {
     this.setState({ currentPage: page });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   getTotalPages = () => {
@@ -70,17 +72,7 @@ class ResultsSection extends React.Component<
       <section className={styles.resultsSection}>
         {paginatedItems.length > 0 ? (
           <>
-            <Table
-              items={paginatedItems}
-              headers={[
-                'ID',
-                'Name',
-                'Gender',
-                'Year of Birth',
-                'Year of Death',
-                'Marital Status',
-              ]}
-            />
+            <CardList characters={paginatedItems} />
             <div className={styles.pagination}>
               <button
                 onClick={() => this.handlePageChange(currentPage - 1)}
@@ -91,11 +83,11 @@ class ResultsSection extends React.Component<
                 ◄ Previous
               </button>
               <span className={styles.paginationInfo}>
-                {currentPage} of {totalPages}
+                Page {currentPage} of {totalPages}
               </span>
               <button
                 onClick={() => this.handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                disabled={currentPage === totalPages || totalPages === 0}
                 className={styles.paginationButton}
                 aria-label="Next page"
               >
@@ -105,7 +97,7 @@ class ResultsSection extends React.Component<
           </>
         ) : (
           <p className={styles.noResults}>
-            No lifeforms detected. Adjust your sensors and try again.
+            No characters found in the multiverse. Try another search!
           </p>
         )}
       </section>
