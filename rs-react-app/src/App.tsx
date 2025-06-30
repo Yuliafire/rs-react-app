@@ -3,9 +3,10 @@ import React from 'react';
 import Header from '../src/components/layout/Header/Header';
 import Footer from '../src/components/layout/Footer/Footer';
 import SearchSection from '../src/components/SearchSection/SearchSection';
-// import ResultsSection from '../src/components/ResultsSection/ResultsSection';
+import ResultsSection from '../src/components/ResultsSection/ResultsSection';
+import type { AppState } from './types/types';
 
-class App extends React.Component {
+class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
@@ -22,12 +23,11 @@ class App extends React.Component {
   };
 
   render() {
-    // const { shouldThrowError } =  this.state;
-    // const { loading, error, results, shouldThrowError } = this.state;
+    const { loading, error, results, shouldThrowError } = this.state;
 
-    // if (shouldThrowError) {
-    //   throw new Error('Test error from Error button');
-    // }
+    if (shouldThrowError) {
+      throw new Error('Test error from Error button');
+    }
 
     return (
       <div className="app">
@@ -37,7 +37,7 @@ class App extends React.Component {
           onLoadingChange={(loading) => this.setState({ loading })}
           onErrorChange={(error) => this.setState({ error })}
         />
-        {/* <ResultsSection  loading={loading} error={error} results={results} /> */}
+        <ResultsSection  loading={loading} error={error} results={results} />
 
         <button
           onClick={this.handleThrowError}

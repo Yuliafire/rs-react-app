@@ -29,3 +29,17 @@ export interface CharacterDetails {
   maritalStatus?: string;
   serialNumber?: string;
 }
+
+export interface ResultsSectionProps {
+    results: CharacterDetails[];
+    loading: boolean;
+    error: string | null;
+}
+
+export interface AppState {
+    searchTerm: string;
+    results: CharacterDetails[];
+    loading: boolean;
+    error: string | null;
+    shouldThrowError: boolean;
+}
