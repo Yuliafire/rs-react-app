@@ -1,21 +1,34 @@
 import type { ResultItem, CharacterDetails } from '../types/types';
 
-interface CharacterApiResponse {
-  uid: string;
+interface RickAndMortyCharacter {
+  id: number;
   name: string;
-  gender?: string;
-  yearOfBirth?: number;
-  yearOfDeath?: number | null;
-  maritalStatus?: string;
-  serialNumber?: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
 }
 
-interface CharacterListResponse {
-  characters: CharacterApiResponse[];
-}
-
-interface SingleCharacterResponse {
-  character: CharacterApiResponse;
+interface RickAndMortyApiResponse {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+  results: RickAndMortyCharacter[];
 }
 
 type SuccessResponse<T> = {
@@ -28,13 +41,12 @@ type ErrorResponse = {
   message: string;
 };
 
-type ModResponse<T> = SuccessResponse<T> | ErrorResponse;
+type ApiResponse<T> = SuccessResponse<T> | ErrorResponse;
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || 'https://stapi.co/api/v1/rest';
+const API_BASE_URL = import.meta.env.VITE_RM_API_URL || 'https://rickandmortyapi.com/api';
 
 class ApiService {
-  private async makeRequest<T>(url: string): Promise<ModResponse<T>> {
+  private async makeRequest<T>(url: string): Promise<ApiResponse<T>> {
     try {
       const response = await fetch(url);
 
@@ -53,8 +65,7 @@ class ApiService {
     } catch (error) {
       return {
         status: 'error',
-        message:
-          error instanceof Error ? error.message : 'Network error occurred',
+        message: error instanceof Error ? error.message : 'Network error occurred',
       };
     }
   }
@@ -64,41 +75,39 @@ class ApiService {
       case 400:
         return 'Invalid search parameters';
       case 404:
-        return 'No characters found';
+        return 'No characters found in the multiverse';
       case 429:
-        return 'Too many requests - please wait';
+        return 'Too many requests - portal gun cooling down';
       case 500:
-        return 'Star wars database unavailable';
+        return 'Central Finite Curve is unstable';
       default:
-        return `Star wars communications error (${status})`;
+        return `Interdimensional cable error (${status})`;
     }
   }
 
-  async searchItems(term: string = ''): Promise<ModResponse<ResultItem[]>> {
-    const response = await this.makeRequest<CharacterListResponse>(
-      `${API_BASE_URL}/character/search?name=${encodeURIComponent(term)}`
-    );
+  async searchItems(term: string = ''): Promise<ApiResponse<ResultItem[]>> {
+    const url = term
+      ? `${API_BASE_URL}/character/?name=${encodeURIComponent(term)}`
+      : `${API_BASE_URL}/character/`;
+
+    const response = await this.makeRequest<RickAndMortyApiResponse>(url);
 
     if (response.status === 'error') {
       return response;
     }
 
-    const filteredCharacters = term
-      ? response.data.characters.filter((character) =>
-          character.name.toLowerCase().includes(term.toLowerCase())
-        )
-      : response.data.characters;
-
-    const results: ResultItem[] = filteredCharacters.map(
+    const results: ResultItem[] = response.data.results.map(
       (character): ResultItem => ({
-        id: character.uid,
+        id: character.id.toString(),
         name: character.name,
-        description: '',
-        url: `${API_BASE_URL}/character?uid=${character.uid}`,
-        gender: character.gender || 'Unknown',
-        yearOfBirth: character.yearOfBirth,
-        yearOfDeath: character.yearOfDeath,
-        maritalStatus: character.maritalStatus || 'Unknown',
+        description: `${character.species} - ${character.status}`,
+        url: character.url,
+        gender: character.gender,
+        image: character.image,
+        status: character.status,
+        species: character.species,
+        origin: character.origin.name,
+        episodeCount: character.episode.length
       })
     );
 
@@ -108,32 +117,64 @@ class ApiService {
     };
   }
 
-  async getItemDetails(id: string): Promise<ModResponse<CharacterDetails>> {
-    const response = await this.makeRequest<SingleCharacterResponse>(
-      `${API_BASE_URL}/character?uid=${id}`
+  async getItemDetails(id: string): Promise<ApiResponse<CharacterDetails>> {
+    const response = await this.makeRequest<RickAndMortyCharacter>(
+      `${API_BASE_URL}/character/${id}`
     );
 
     if (response.status === 'error') {
       return response;
     }
 
-    if (!response.data.character) {
-      return {
-        status: 'error',
-        message: 'Character data not found in response',
-      };
+    const character = response.data;
+    const details: CharacterDetails = {
+      id: character.id.toString(),
+      name: character.name,
+      status: character.status,
+      species: character.species,
+      type: character.type,
+      gender: character.gender,
+      origin: character.origin,
+      location: character.location,
+      image: character.image,
+      episode: character.episode,
+      url: character.url,
+      created: character.created
+    };
+
+    return {
+      status: 'success',
+      data: details,
+    };
+  }
+
+  async getMultipleCharacters(ids: number[]): Promise<ApiResponse<CharacterDetails[]>> {
+    const response = await this.makeRequest<RickAndMortyCharacter[]>(
+      `${API_BASE_URL}/character/${ids.join(',')}`
+    );
+
+    if (response.status === 'error') {
+      return response;
     }
 
-    const character = response.data.character;
-    const details: CharacterDetails = {
-      id: character.uid,
+    const characters = Array.isArray(response.data) 
+      ? response.data 
+      : [response.data];
+
+    const details: CharacterDetails[] = characters.map(character => ({
+      id: character.id.toString(),
       name: character.name,
-      gender: character.gender || 'Unknown',
-      yearOfBirth: character.yearOfBirth,
-      yearOfDeath: character.yearOfDeath,
-      maritalStatus: character.maritalStatus || 'Unknown',
-      serialNumber: character.serialNumber,
-    };
+      status: character.status,
+      species: character.species,
+      type: character.type,
+      gender: character.gender,
+      origin: character.origin,
+      location: character.location,
+      image: character.image,
+      episode: character.episode,
+      url: character.url,
+      created: character.created
+    }));
 
     return {
       status: 'success',

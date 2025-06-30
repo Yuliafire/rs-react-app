@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from './SearchSection.module.scss';
-import ApiService from '../../services/apiService';
-import storageService from '../../services/storageService';
 import type { CharacterDetails } from '../../types/types';
 
 interface SearchSectionProps {
@@ -16,22 +14,17 @@ interface SearchSectionState {
   error: string | null;
 }
 
-class SearchSection extends React.Component<
-  SearchSectionProps,
-  SearchSectionState
-> {
+class SearchSection extends React.Component<SearchSectionProps, SearchSectionState> {
+  private apiTimeout: number;
+
   constructor(props: SearchSectionProps) {
     super(props);
     this.state = {
-      inputValue: storageService.getSearchTerm() || '',
+      inputValue: '',
       isLoading: false,
       error: null,
     };
-  }
-
-  componentDidMount() {
-    const searchTerm = this.state.inputValue.trim();
-    this.performSearch(searchTerm);
+    this.apiTimeout = Number(import.meta.env.VITE_API_TIMEOUT) || 5000;
   }
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +33,7 @@ class SearchSection extends React.Component<
 
   handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const processedTerm = this.state.inputValue.trim();
-    await this.performSearch(processedTerm);
+    await this.performSearch(this.state.inputValue.trim());
   };
 
   performSearch = async (term: string) => {
@@ -49,95 +41,60 @@ class SearchSection extends React.Component<
     this.props.onLoadingChange?.(true);
 
     try {
-      const searchResponse = await ApiService.searchItems(term.trim());
-      if (searchResponse.status === 'error') {
-        throw new Error(searchResponse.message);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), this.apiTimeout);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_RM_API_URL}/character/?name=${encodeURIComponent(term)}`,
+        {
+          signal: controller.signal,
+        }
+      );
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('No characters found matching your search');
+        }
+        throw new Error(`API request failed with status ${response.status}`);
       }
 
-      if (!searchResponse.data || searchResponse.data.length === 0) {
+      const data = await response.json();
+      const results = data.results || [];
+
+      if (results.length === 0) {
         throw new Error(
-          term.trim() === ''
-            ? 'No characters available in database'
+          term === ''
+            ? 'No characters available'
             : 'No characters found matching your search'
         );
       }
 
-      let filteredResults = searchResponse.data;
-      if (term.trim() !== '') {
-        filteredResults = searchResponse.data.filter((item) =>
-          item.name.toLowerCase().includes(term.toLowerCase())
-        );
+      const formattedResults: CharacterDetails[] = results.map((character: any) => ({
+        id: character.id,
+        name: character.name,
+        status: character.status,
+        species: character.species,
+        type: character.type,
+        gender: character.gender,
+        origin: {
+          name: character.origin.name,
+          url: character.origin.url
+        },
+        location: {
+          name: character.location.name,
+          url: character.location.url
+        },
+        image: character.image,
+        episode: character.episode,
+        url: character.url,
+        created: character.created
+      }));
 
-        if (filteredResults.length === 0) {
-          throw new Error('No characters found matching your search');
-        }
-      }
-
-      let resultsToProcess = filteredResults;
-      if (term.trim() !== '') {
-        resultsToProcess = searchResponse.data.slice(0, 10);
-
-        if (resultsToProcess.length < 10) {
-          this.props.onSearchResults(
-            resultsToProcess.map((item) => ({
-              id: item.id,
-              name: item.name,
-              gender: item.gender || 'Unknown',
-              yearOfBirth: item.yearOfBirth,
-              yearOfDeath: item.yearOfDeath,
-              maritalStatus: item.maritalStatus || 'Unknown',
-            }))
-          );
-          storageService.saveSearchTerm(term);
-          return;
-        }
-      }
-
-      const detailedResults = await Promise.all(
-        resultsToProcess.map(async (item) => {
-          try {
-            const detailResponse = await ApiService.getItemDetails(item.id);
-            if (detailResponse.status === 'success') {
-              return {
-                id: item.id,
-                name: item.name,
-                gender: detailResponse.data.gender || 'Unknown',
-                yearOfBirth: detailResponse.data.yearOfBirth,
-                yearOfDeath: detailResponse.data.yearOfDeath,
-                maritalStatus: detailResponse.data.maritalStatus || 'Unknown',
-              };
-            }
-            return null;
-          } catch (error) {
-            console.warn(`Failed to fetch details for ${item.id}:`, error);
-            return {
-              id: item.id,
-              name: item.name,
-              gender: item.gender,
-              yearOfBirth: item.yearOfBirth,
-              yearOfDeath: item.yearOfDeath,
-              maritalStatus: item.maritalStatus,
-            };
-          }
-        })
-      );
-
-      const validResults = detailedResults.filter(
-        (result) => result !== null
-      ) as CharacterDetails[];
-
-      if (validResults.length === 0) {
-        throw new Error('No complete character records found');
-      }
-
-      this.props.onSearchResults(validResults);
-      storageService.saveSearchTerm(term);
+      this.props.onSearchResults(formattedResults);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : 'Search failed due to an unknown error';
-
+      const errorMessage = this.getErrorMessage(error);
       this.setState({ error: errorMessage });
       this.props.onErrorChange?.(errorMessage);
       this.props.onSearchResults([]);
@@ -145,6 +102,18 @@ class SearchSection extends React.Component<
       this.setState({ isLoading: false });
       this.props.onLoadingChange?.(false);
     }
+  };
+
+  getErrorMessage = (error: unknown): string => {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      return 'Request timed out. Please try again.';
+    }
+    if (error instanceof Error) {
+      return error.message.includes('404')
+        ? 'No Rick and Morty characters found'
+        : error.message;
+    }
+    return 'Search failed due to an unknown error';
   };
 
   render() {
@@ -157,8 +126,8 @@ class SearchSection extends React.Component<
             type="text"
             value={inputValue}
             onChange={this.handleInputChange}
-            placeholder="Search Star Trek characters..."
-            aria-label="Search Star Trek characters"
+            placeholder="Search Rick and Morty characters..."
+            aria-label="Search Rick and Morty characters"
             className={styles.searchInput}
             disabled={isLoading}
           />
@@ -169,7 +138,11 @@ class SearchSection extends React.Component<
             disabled={isLoading}
             aria-label={isLoading ? 'Searching...' : 'Search'}
           >
-            {isLoading ? 'Searching...' : 'Search'}
+            {isLoading ? (
+              <span className={styles.spinner} aria-hidden="true" />
+            ) : (
+              'Search'
+            )}
           </button>
         </form>
         {error && (

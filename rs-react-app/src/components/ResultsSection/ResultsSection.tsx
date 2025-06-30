@@ -2,7 +2,6 @@ import React from 'react';
 import type { ResultsSectionProps } from '../../types/types';
 import styles from './ResultsSection.module.scss';
 import Loader from '../ui/Loader/Loader';
-import Table from '../ui/Table/Table';
 
 interface ResultsSectionState {
   currentPage: number;
