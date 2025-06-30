@@ -43,7 +43,8 @@ type ErrorResponse = {
 
 type ApiResponse<T> = SuccessResponse<T> | ErrorResponse;
 
-const API_BASE_URL = import.meta.env.VITE_RM_API_URL || 'https://rickandmortyapi.com/api';
+const API_BASE_URL =
+  import.meta.env.VITE_RM_API_URL || 'https://rickandmortyapi.com/api';
 
 class ApiService {
   private async makeRequest<T>(url: string): Promise<ApiResponse<T>> {
@@ -65,7 +66,8 @@ class ApiService {
     } catch (error) {
       return {
         status: 'error',
-        message: error instanceof Error ? error.message : 'Network error occurred',
+        message:
+          error instanceof Error ? error.message : 'Network error occurred',
       };
     }
   }
@@ -107,7 +109,7 @@ class ApiService {
         status: character.status,
         species: character.species,
         origin: character.origin.name,
-        episodeCount: character.episode.length
+        episodeCount: character.episode.length,
       })
     );
 
@@ -139,7 +141,7 @@ class ApiService {
       image: character.image,
       episode: character.episode,
       url: character.url,
-      created: character.created
+      created: character.created,
     };
 
     return {
@@ -148,7 +150,9 @@ class ApiService {
     };
   }
 
-  async getMultipleCharacters(ids: number[]): Promise<ApiResponse<CharacterDetails[]>> {
+  async getMultipleCharacters(
+    ids: number[]
+  ): Promise<ApiResponse<CharacterDetails[]>> {
     const response = await this.makeRequest<RickAndMortyCharacter[]>(
       `${API_BASE_URL}/character/${ids.join(',')}`
     );
@@ -157,11 +161,11 @@ class ApiService {
       return response;
     }
 
-    const characters = Array.isArray(response.data) 
-      ? response.data 
+    const characters = Array.isArray(response.data)
+      ? response.data
       : [response.data];
 
-    const details: CharacterDetails[] = characters.map(character => ({
+    const details: CharacterDetails[] = characters.map((character) => ({
       id: character.id.toString(),
       name: character.name,
       status: character.status,
@@ -173,7 +177,7 @@ class ApiService {
       image: character.image,
       episode: character.episode,
       url: character.url,
-      created: character.created
+      created: character.created,
     }));
 
     return {

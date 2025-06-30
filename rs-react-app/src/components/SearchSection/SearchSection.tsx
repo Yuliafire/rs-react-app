@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './SearchSection.module.scss';
 import type { CharacterDetails } from '../../types/types';
+import storageService from '../../services/storageService';
 
 interface SearchSectionProps {
   onSearchResults: (results: CharacterDetails[]) => void;
@@ -14,17 +15,56 @@ interface SearchSectionState {
   error: string | null;
 }
 
-class SearchSection extends React.Component<SearchSectionProps, SearchSectionState> {
+interface RickAndMortyApiResponse {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+  results: {
+    id: number;
+    name: string;
+    status: string;
+    species: string;
+    type: string;
+    gender: string;
+    origin: {
+      name: string;
+      url: string;
+    };
+    location: {
+      name: string;
+      url: string;
+    };
+    image: string;
+    episode: string[];
+    url: string;
+    created: string;
+  }[];
+}
+
+class SearchSection extends React.Component<
+  SearchSectionProps,
+  SearchSectionState
+> {
   private apiTimeout: number;
 
   constructor(props: SearchSectionProps) {
     super(props);
     this.state = {
-      inputValue: '',
+      inputValue: storageService.getSearchTerm() || '',
       isLoading: false,
       error: null,
     };
     this.apiTimeout = Number(import.meta.env.VITE_API_TIMEOUT) || 5000;
+  }
+
+  componentDidMount() {
+    const searchTerm = this.state.inputValue.trim();
+    if (searchTerm) {
+      this.performSearch(searchTerm);
+    }
   }
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +73,8 @@ class SearchSection extends React.Component<SearchSectionProps, SearchSectionSta
 
   handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await this.performSearch(this.state.inputValue.trim());
+    const processedTerm = this.state.inputValue.trim();
+    await this.performSearch(processedTerm);
   };
 
   performSearch = async (term: string) => {
@@ -60,7 +101,7 @@ class SearchSection extends React.Component<SearchSectionProps, SearchSectionSta
         throw new Error(`API request failed with status ${response.status}`);
       }
 
-      const data = await response.json();
+      const data: RickAndMortyApiResponse = await response.json();
       const results = data.results || [];
 
       if (results.length === 0) {
@@ -71,8 +112,8 @@ class SearchSection extends React.Component<SearchSectionProps, SearchSectionSta
         );
       }
 
-      const formattedResults: CharacterDetails[] = results.map((character: any) => ({
-        id: character.id,
+      const formattedResults: CharacterDetails[] = results.map((character) => ({
+        id: character.id.toString(),
         name: character.name,
         status: character.status,
         species: character.species,
@@ -80,19 +121,20 @@ class SearchSection extends React.Component<SearchSectionProps, SearchSectionSta
         gender: character.gender,
         origin: {
           name: character.origin.name,
-          url: character.origin.url
+          url: character.origin.url,
         },
         location: {
           name: character.location.name,
-          url: character.location.url
+          url: character.location.url,
         },
         image: character.image,
         episode: character.episode,
         url: character.url,
-        created: character.created
+        created: character.created,
       }));
 
       this.props.onSearchResults(formattedResults);
+      storageService.saveSearchTerm(term);
     } catch (error) {
       const errorMessage = this.getErrorMessage(error);
       this.setState({ error: errorMessage });

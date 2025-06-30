@@ -13,7 +13,7 @@ class CardList extends React.Component<CardListProps> {
     const { characters } = this.props;
     return (
       <div className={styles.cardList}>
-        {characters.map(character => (
+        {characters.map((character) => (
           <Card key={character.id} character={character} />
         ))}
       </div>
