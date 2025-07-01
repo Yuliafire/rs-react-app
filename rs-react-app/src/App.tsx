@@ -5,6 +5,7 @@ import Footer from '../src/components/layout/Footer/Footer';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 import ResultsSection from '../src/components/ResultsSection/ResultsSection';
 import type { AppState } from './types/types';
+import Button from './components/ui/Button/Button';
 
 class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
@@ -39,19 +40,9 @@ class App extends React.Component<Record<string, never>, AppState> {
         />
         <ResultsSection loading={loading} error={error} results={results} />
 
-        <button
-          onClick={this.handleThrowError}
-          style={{
-            position: 'absolute',
-            bottom: '5rem',
-            background: 'red',
-            margin: '1rem',
-            padding: '0.5rem 1rem',
-            display: 'block',
-          }}
-        >
+        <Button onClick={this.handleThrowError} type="button">
           Error Button
-        </button>
+        </Button>
         <Footer />
       </div>
     );

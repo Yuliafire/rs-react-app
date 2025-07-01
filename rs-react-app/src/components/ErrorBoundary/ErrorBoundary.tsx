@@ -44,7 +44,9 @@ class ErrorBoundary extends React.Component<Props, State> {
 
           <div className={styles.separator}></div>
 
-          <Button onClick={this.handleReset}>REINITIALIZE SYSTEM</Button>
+          <Button onClick={this.handleReset} type="reset">
+            REINITIALIZE SYSTEM
+          </Button>
         </div>
       );
     }

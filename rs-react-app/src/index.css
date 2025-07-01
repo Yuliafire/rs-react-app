@@ -13,7 +13,6 @@ body {
   position: relative;
   padding-top: 40px;
   height: auto;
-  background: blue;
   background: #0a0e17;
 }
 
@@ -26,5 +25,5 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   margin: 0 auto;
-  padding-top: 40px;
+  padding-top: 80px;
 }

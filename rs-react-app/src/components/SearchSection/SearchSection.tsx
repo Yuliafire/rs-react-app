@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './SearchSection.module.scss';
 import type { CharacterDetails } from '../../types/types';
 import storageService from '../../services/storageService';
+import Button from '../ui/Button/Button';
 
 interface SearchSectionProps {
   onSearchResults: (results: CharacterDetails[]) => void;
@@ -174,9 +175,8 @@ class SearchSection extends React.Component<
             disabled={isLoading}
           />
 
-          <button
+          <Button
             type="submit"
-            className={styles.searchButton}
             disabled={isLoading}
             aria-label={isLoading ? 'Searching...' : 'Search'}
           >
@@ -185,7 +185,7 @@ class SearchSection extends React.Component<
             ) : (
               'Search'
             )}
-          </button>
+          </Button>
         </form>
         {error && (
           <div className={styles.errorMessage} role="alert">
