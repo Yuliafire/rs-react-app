@@ -1,0 +1,30 @@
+.button {
+    padding: 1rem 2rem;
+    background: transparent;
+    color: #ff3e7f;
+    border: 2px solid #ff3e7f;
+    border-radius: 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+    display: inline-block;
+    text-align: center;
+  
+    &:hover {
+      background: #ff3e7f;
+      color: #0a0e17;
+      box-shadow: 0 0 15px #ff3e7f;
+    }
+  
+    &:active {
+      transform: translateY(1px);
+    }
+  
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }

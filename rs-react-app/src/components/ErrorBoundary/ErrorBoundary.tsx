@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ErrorBoundary.module.scss';
+import Button from '../ui/Button/Button';
 
 interface Props {
   children: React.ReactNode;
@@ -18,7 +19,11 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.error('Caught by ErrorBoundary:', error, info.componentStack);
+    console.error(
+      'Reality destabilization detected:',
+      error,
+      info.componentStack
+    );
   }
 
   handleReset = () => this.setState({ hasError: false, error: undefined });
@@ -28,12 +33,18 @@ class ErrorBoundary extends React.Component<Props, State> {
       return (
         <div className={styles.errorContainer}>
           <h1 className={styles.errorTitle}>
-            {this.state.error?.message || 'Something went wrong!'}
+            DIMENSIONAL INSTABILITY DETECTED
           </h1>
+          <div className={styles.errorSubtitle}>
+            Reality corruption level: critical
+          </div>
+          <div className={styles.errorMessage}>
+            Emergency stabilization protocols engaged
+          </div>
 
-          <button className={styles.tryAgainButton} onClick={this.handleReset}>
-            Try Again
-          </button>
+          <div className={styles.separator}></div>
+
+          <Button onClick={this.handleReset}>REINITIALIZE SYSTEM</Button>
         </div>
       );
     }

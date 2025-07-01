@@ -13,6 +13,8 @@ body {
   position: relative;
   padding-top: 40px;
   height: auto;
+  background: blue;
+  background: #0a0e17;
 }
 
 #root {

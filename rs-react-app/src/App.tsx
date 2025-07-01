@@ -41,7 +41,14 @@ class App extends React.Component<Record<string, never>, AppState> {
 
         <button
           onClick={this.handleThrowError}
-          style={{ margin: '1rem', padding: '0.5rem 1rem', display: 'block' }}
+          style={{
+            position: 'absolute',
+            bottom: '5rem',
+            background: 'red',
+            margin: '1rem',
+            padding: '0.5rem 1rem',
+            display: 'block',
+          }}
         >
           Error Button
         </button>
