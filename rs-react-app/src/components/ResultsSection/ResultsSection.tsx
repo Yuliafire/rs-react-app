@@ -72,28 +72,28 @@ class ResultsSection extends React.Component<
       <section className={styles.resultsSection}>
         {paginatedItems.length > 0 ? (
           <>
-              <CardList characters={paginatedItems} />
-              <div className={styles.pagination}>
-                <button
-                  onClick={() => this.handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={styles.paginationButton}
-                  aria-label="Previous page"
-                >
-                  ◄ Previous
-                </button>
-                <span className={styles.paginationInfo}>
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={() => this.handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages || totalPages === 0}
-                  className={styles.paginationButton}
-                  aria-label="Next page"
-                >
-                  Next ►
-                </button>
-              </div>
+            <CardList characters={paginatedItems} />
+            <div className={styles.pagination}>
+              <button
+                onClick={() => this.handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={styles.paginationButton}
+                aria-label="Previous page"
+              >
+                ◄ Previous
+              </button>
+              <span className={styles.paginationInfo}>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => this.handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages || totalPages === 0}
+                className={styles.paginationButton}
+                aria-label="Next page"
+              >
+                Next ►
+              </button>
+            </div>
           </>
         ) : (
           <p className={styles.noResults}>

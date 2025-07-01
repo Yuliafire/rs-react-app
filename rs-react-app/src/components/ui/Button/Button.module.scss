@@ -19,21 +19,8 @@
   min-width: 8rem;
   text-align: center;
 
-  &[type='submit'] {
-    border-color: #42f5ef;
-    color: #42f5ef;
-
-    &:hover:not(:disabled) {
-      background: #42f5ef;
-      color: #0a0e17;
-      box-shadow: 0 0 15px #42f5ef;
-    }
-  }
-
+  &[type='submit'],
   &[type='button'] {
-    // position: absolute;
-    // bottom: 5rem;
-    // left: 3rem;
     border-color: #42f5ef;
     color: #42f5ef;
 

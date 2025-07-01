@@ -1,4 +1,3 @@
-import './App.scss';
 import React from 'react';
 import Header from '../src/components/layout/Header/Header';
 import Footer from '../src/components/layout/Footer/Footer';

@@ -1,4 +1,3 @@
-// Card.tsx
 import React from 'react';
 import styles from './Card.module.scss';
 import type { CharacterDetails } from '../../../types/types';
