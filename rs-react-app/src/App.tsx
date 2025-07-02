@@ -24,7 +24,7 @@ class App extends React.Component<Record<string, never>, AppState> {
   };
 
   handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
-    this.setState({ 
+    this.setState({
       results,
       isSearchResult: !!searchTerm.trim(),
       loading: false,

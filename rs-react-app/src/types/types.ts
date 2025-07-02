@@ -19,7 +19,16 @@ export interface ResultsSectionProps {
   isPaginated?: boolean;
 }
 
-export interface ApiCharacter {
+export interface AppState {
+  searchTerm: string;
+  results: CharacterDetails[];
+  loading: boolean;
+  error: string | null;
+  shouldThrowError: boolean;
+  isSearchResult: boolean;
+}
+
+export interface CharacterDetails {
   id: string;
   name: string;
   status: string;
@@ -40,31 +49,12 @@ export interface ApiCharacter {
   created: string;
 }
 
-export interface AppState {
-  searchTerm: string;
+export interface ApiResponse {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
   results: CharacterDetails[];
-  loading: boolean;
-  error: string | null;
-  shouldThrowError: boolean;
-  isSearchResult: boolean;
-}
-export interface CharacterDetails {
-  id: string;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
 }

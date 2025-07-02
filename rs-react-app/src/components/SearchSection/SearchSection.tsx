@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './SearchSection.module.scss';
-import type { CharacterDetails } from '../../types/types';
+import type { CharacterDetails, ApiResponse } from '../../types/types';
 import storageService from '../../services/storageService';
 import Button from '../ui/Button/Button';
 
@@ -14,35 +14,6 @@ interface SearchSectionState {
   inputValue: string;
   isLoading: boolean;
   error: string | null;
-}
-
-interface RickAndMortyApiResponse {
-  info: {
-    count: number;
-    pages: number;
-    next: string | null;
-    prev: string | null;
-  };
-  results: {
-    id: string;
-    name: string;
-    status: string;
-    species: string;
-    type: string;
-    gender: string;
-    origin: {
-      name: string;
-      url: string;
-    };
-    location: {
-      name: string;
-      url: string;
-    };
-    image: string;
-    episode: string[];
-    url: string;
-    created: string;
-  }[];
 }
 
 class SearchSection extends React.Component<SearchSectionProps, SearchSectionState> {
@@ -97,7 +68,7 @@ class SearchSection extends React.Component<SearchSectionProps, SearchSectionSta
         throw new Error(`API request failed with status ${response.status}`);
       }
 
-      const data: RickAndMortyApiResponse = await response.json();
+      const data: ApiResponse = await response.json();
       const results = data.results || [];
 
       if (results.length === 0) {
@@ -108,22 +79,7 @@ class SearchSection extends React.Component<SearchSectionProps, SearchSectionSta
         );
       }
 
-      const formattedResults: CharacterDetails[] = results.map((character) => ({
-        id: character.id.toString(),
-        name: character.name,
-        status: character.status,
-        species: character.species,
-        type: character.type,
-        gender: character.gender,
-        origin: character.origin,
-        location: character.location,
-        image: character.image,
-        episode: character.episode,
-        url: character.url,
-        created: character.created,
-      }));
-
-      this.props.onSearchResults(formattedResults, term);
+      this.props.onSearchResults(results, term);
       storageService.saveSearchTerm(term);
     } catch (error) {
       const errorMessage = this.getErrorMessage(error);
