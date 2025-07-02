@@ -141,7 +141,7 @@ class ApiService {
       status: 'success',
       data: {
         ...successResponse.data,
-        id: successResponse.data.id.toString(),
+        id: successResponse.data.id,
       },
     };
   }
@@ -168,7 +168,7 @@ class ApiService {
       status: 'success',
       data: characters.map((char) => ({
         ...char,
-        id: char.id.toString(),
+        id: char.id,
       })),
     };
   }

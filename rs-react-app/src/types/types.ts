@@ -1,5 +1,5 @@
 export interface ResultItem {
-  id: string;
+  id: number;
   name: string;
   description: string;
   url: string;
@@ -29,7 +29,7 @@ export interface AppState {
 }
 
 export interface CharacterDetails {
-  id: string;
+  id: number;
   name: string;
   status: string;
   species: string;
