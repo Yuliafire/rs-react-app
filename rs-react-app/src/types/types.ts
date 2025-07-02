@@ -11,7 +11,15 @@ export interface ResultItem {
   episodeCount?: number;
 }
 
-export interface CharacterDetails {
+export interface ResultsSectionProps {
+  results: CharacterDetails[];
+  loading: boolean;
+  error: string | null;
+  isSearchResult: boolean;
+  isPaginated?: boolean;
+}
+
+export interface ApiCharacter {
   id: string;
   name: string;
   status: string;
@@ -32,16 +40,31 @@ export interface CharacterDetails {
   created: string;
 }
 
-export interface ResultsSectionProps {
-  results: CharacterDetails[];
-  loading: boolean;
-  error: string | null;
-}
-
 export interface AppState {
   searchTerm: string;
   results: CharacterDetails[];
   loading: boolean;
   error: string | null;
   shouldThrowError: boolean;
+  isSearchResult: boolean;
+}
+export interface CharacterDetails {
+  id: string;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
 }

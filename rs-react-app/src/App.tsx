@@ -3,7 +3,7 @@ import Header from '../src/components/layout/Header/Header';
 import Footer from '../src/components/layout/Footer/Footer';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 import ResultsSection from '../src/components/ResultsSection/ResultsSection';
-import type { AppState } from './types/types';
+import type { AppState,  CharacterDetails } from './types/types';
 import Button from './components/ui/Button/Button';
 
 class App extends React.Component<Record<string, never>, AppState> {
@@ -15,6 +15,7 @@ class App extends React.Component<Record<string, never>, AppState> {
       loading: false,
       error: null,
       shouldThrowError: false,
+      isSearchResult: false,
     };
   }
 
@@ -22,8 +23,26 @@ class App extends React.Component<Record<string, never>, AppState> {
     this.setState({ shouldThrowError: true });
   };
 
+  handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
+    this.setState({ 
+      results,
+      isSearchResult: !!searchTerm.trim(),
+      loading: false,
+      error: null,
+      searchTerm
+    });
+  };
+
+  handleLoadingChange = (loading: boolean) => {
+    this.setState({ loading });
+  };
+
+  handleErrorChange = (error: string | null) => {
+    this.setState({ error });
+  };
+
   render() {
-    const { loading, error, results, shouldThrowError } = this.state;
+    const { loading, error, results, shouldThrowError, isSearchResult } = this.state;
 
     if (shouldThrowError) {
       throw new Error('Test error from Error button');
@@ -33,12 +52,16 @@ class App extends React.Component<Record<string, never>, AppState> {
       <div className="app">
         <Header />
         <SearchSection
-          onSearchResults={(results) => this.setState({ results })}
-          onLoadingChange={(loading) => this.setState({ loading })}
-          onErrorChange={(error) => this.setState({ error })}
+          onSearchResults={this.handleSearchResults}
+          onLoadingChange={this.handleLoadingChange}
+          onErrorChange={this.handleErrorChange}
         />
-        <ResultsSection loading={loading} error={error} results={results} />
-
+        <ResultsSection
+          results={results}
+          loading={loading}
+          error={error || ''}
+          isPaginated={isSearchResult}
+        />
         <Button onClick={this.handleThrowError} type="button">
           Error Button
         </Button>

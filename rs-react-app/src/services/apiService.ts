@@ -1,7 +1,7 @@
 import type { ResultItem, CharacterDetails } from '../types/types';
 
 interface RickAndMortyCharacter {
-  id: number;
+  id: string;
   name: string;
   status: string;
   species: string;
@@ -88,19 +88,66 @@ class ApiService {
   }
 
   async searchItems(term: string = ''): Promise<ApiResponse<ResultItem[]>> {
-    const url = term
-      ? `${API_BASE_URL}/character/?name=${encodeURIComponent(term)}`
-      : `${API_BASE_URL}/character/`;
+    const processedTerm = term.trim();
 
-    const response = await this.makeRequest<RickAndMortyApiResponse>(url);
+    if (!processedTerm) {
+      return this.fetchAllCharacters();
+    }
+
+    const response = await this.makeRequest<RickAndMortyApiResponse>(
+      `${API_BASE_URL}/character/?name=${encodeURIComponent(processedTerm)}&page=1`
+    );
 
     if (response.status === 'error') {
       return response;
     }
 
-    const results: ResultItem[] = response.data.results.map(
+    return {
+      status: 'success',
+      data: this.mapCharactersToResultItems(response.data.results),
+    };
+  }
+
+  private async fetchAllCharacters(): Promise<ApiResponse<ResultItem[]>> {
+    let allCharacters: RickAndMortyCharacter[] = [];
+    let nextUrl: string | null = `${API_BASE_URL}/character/`;
+
+    try {
+      while (nextUrl) {
+        const response =
+          await this.makeRequest<RickAndMortyApiResponse>(nextUrl);
+
+        if (response.status === 'error') {
+          return response;
+        }
+
+        const successResponse =
+          response as SuccessResponse<RickAndMortyApiResponse>;
+        allCharacters = [...allCharacters, ...successResponse.data.results];
+        nextUrl = successResponse.data.info.next;
+      }
+
+      return {
+        status: 'success',
+        data: this.mapCharactersToResultItems(allCharacters),
+      };
+    } catch (error) {
+      return {
+        status: 'error',
+        message:
+          error instanceof Error
+            ? error.message
+            : 'Failed to fetch all characters',
+      };
+    }
+  }
+
+  private mapCharactersToResultItems(
+    characters: RickAndMortyCharacter[]
+  ): ResultItem[] {
+    return characters.map(
       (character): ResultItem => ({
-        id: character.id.toString(),
+        id: character.id,
         name: character.name,
         description: `${character.species} - ${character.status}`,
         url: character.url,
@@ -112,13 +159,7 @@ class ApiService {
         episodeCount: character.episode.length,
       })
     );
-
-    return {
-      status: 'success',
-      data: results,
-    };
   }
-
   async getItemDetails(id: string): Promise<ApiResponse<CharacterDetails>> {
     const response = await this.makeRequest<RickAndMortyCharacter>(
       `${API_BASE_URL}/character/${id}`

@@ -5,9 +5,9 @@ import storageService from '../../services/storageService';
 import Button from '../ui/Button/Button';
 
 interface SearchSectionProps {
-  onSearchResults: (results: CharacterDetails[]) => void;
-  onLoadingChange?: (loading: boolean) => void;
-  onErrorChange?: (error: string | null) => void;
+  onSearchResults: (results: CharacterDetails[], searchTerm: string) => void;
+  onLoadingChange: (loading: boolean) => void;
+  onErrorChange: (error: string | null) => void;
 }
 
 interface SearchSectionState {
@@ -24,7 +24,7 @@ interface RickAndMortyApiResponse {
     prev: string | null;
   };
   results: {
-    id: number;
+    id: string;
     name: string;
     status: string;
     species: string;
@@ -45,10 +45,7 @@ interface RickAndMortyApiResponse {
   }[];
 }
 
-class SearchSection extends React.Component<
-  SearchSectionProps,
-  SearchSectionState
-> {
+class SearchSection extends React.Component<SearchSectionProps, SearchSectionState> {
   private apiTimeout: number;
 
   constructor(props: SearchSectionProps) {
@@ -80,7 +77,7 @@ class SearchSection extends React.Component<
 
   performSearch = async (term: string) => {
     this.setState({ isLoading: true, error: null });
-    this.props.onLoadingChange?.(true);
+    this.props.onLoadingChange(true);
 
     try {
       const controller = new AbortController();
@@ -88,9 +85,7 @@ class SearchSection extends React.Component<
 
       const response = await fetch(
         `${import.meta.env.VITE_RM_API_URL}/character/?name=${encodeURIComponent(term)}`,
-        {
-          signal: controller.signal,
-        }
+        { signal: controller.signal }
       );
 
       clearTimeout(timeoutId);
@@ -120,30 +115,24 @@ class SearchSection extends React.Component<
         species: character.species,
         type: character.type,
         gender: character.gender,
-        origin: {
-          name: character.origin.name,
-          url: character.origin.url,
-        },
-        location: {
-          name: character.location.name,
-          url: character.location.url,
-        },
+        origin: character.origin,
+        location: character.location,
         image: character.image,
         episode: character.episode,
         url: character.url,
         created: character.created,
       }));
 
-      this.props.onSearchResults(formattedResults);
+      this.props.onSearchResults(formattedResults, term);
       storageService.saveSearchTerm(term);
     } catch (error) {
       const errorMessage = this.getErrorMessage(error);
       this.setState({ error: errorMessage });
-      this.props.onErrorChange?.(errorMessage);
-      this.props.onSearchResults([]);
+      this.props.onErrorChange(errorMessage);
+      this.props.onSearchResults([], term);
     } finally {
       this.setState({ isLoading: false });
-      this.props.onLoadingChange?.(false);
+      this.props.onLoadingChange(false);
     }
   };
 
@@ -174,7 +163,6 @@ class SearchSection extends React.Component<
             className={styles.searchInput}
             disabled={isLoading}
           />
-
           <Button
             type="submit"
             disabled={isLoading}

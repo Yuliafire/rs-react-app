@@ -1,23 +1,52 @@
 import React from 'react';
-import type { ResultsSectionProps } from '../../types/types';
+import type { CharacterDetails } from '../../types/types';
 import styles from './ResultsSection.module.scss';
 import Loader from '../ui/Loader/Loader';
 import CardList from '../../components/ui/CardList/CardList';
+
+interface ApiCharacter {
+  id: string;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
+}
+
+interface ResultsSectionProps {
+  results: ApiCharacter[];
+  loading: boolean;
+  error: string;
+  isPaginated?: boolean;
+}
 
 interface ResultsSectionState {
   currentPage: number;
   itemsPerPage: number;
 }
 
-class ResultsSection extends React.Component<
-  ResultsSectionProps,
-  ResultsSectionState
-> {
+class ResultsSection extends React.Component<ResultsSectionProps, ResultsSectionState> {
+  static defaultProps = {
+    isPaginated: true
+  };
+
   constructor(props: ResultsSectionProps) {
     super(props);
     this.state = {
       currentPage: 1,
-      itemsPerPage: 20,
+      itemsPerPage: 20
     };
   }
 
@@ -25,29 +54,58 @@ class ResultsSection extends React.Component<
     this.setState({ currentPage: 1 });
   }
 
-  getPaginatedItems = () => {
-    const { currentPage, itemsPerPage } = this.state;
-    const { results } = this.props;
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return results.slice(startIndex, endIndex);
+  componentDidUpdate(prevProps: ResultsSectionProps) {
+    if (prevProps.results !== this.props.results) {
+      this.setState({ currentPage: 1 });
+    }
+  }
+
+  private mapToCharacterDetails = (character: ApiCharacter): CharacterDetails => {
+    return {
+      id: character.id.toString(),
+      name: character.name,
+      status: character.status,
+      species: character.species,
+      type: character.type,
+      gender: character.gender,
+      origin: character.origin,
+      location: character.location,
+      image: character.image,
+      episode: character.episode,
+      url: character.url,
+      created: character.created
+    };
   };
 
-  handlePageChange = (page: number) => {
+  getDisplayedItems = (): CharacterDetails[] => {
+    const { currentPage, itemsPerPage } = this.state;
+    const { results, isPaginated } = this.props;
+
+    const items = isPaginated
+      ? results.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      : results;
+
+    return items.map((char: ApiCharacter) => this.mapToCharacterDetails(char));
+  };
+
+  handlePageChange = (page: number): void => {
     this.setState({ currentPage: page });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  getTotalPages = () => {
+  getTotalPages = (): number => {
     const { results } = this.props;
     const { itemsPerPage } = this.state;
     return Math.ceil(results.length / itemsPerPage);
   };
 
   render() {
-    const { loading, error } = this.props;
+    const { loading, error, isPaginated } = this.props;
     const { currentPage } = this.state;
-    const paginatedItems = this.getPaginatedItems();
+    const displayedItems = this.getDisplayedItems();
     const totalPages = this.getTotalPages();
 
     if (loading) {
@@ -70,30 +128,32 @@ class ResultsSection extends React.Component<
 
     return (
       <section className={styles.resultsSection}>
-        {paginatedItems.length > 0 ? (
+        {displayedItems.length > 0 ? (
           <>
-            <CardList characters={paginatedItems} />
-            <div className={styles.pagination}>
-              <button
-                onClick={() => this.handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className={styles.paginationButton}
-                aria-label="Previous page"
-              >
-                ◄ Previous
-              </button>
-              <span className={styles.paginationInfo}>
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={() => this.handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages || totalPages === 0}
-                className={styles.paginationButton}
-                aria-label="Next page"
-              >
-                Next ►
-              </button>
-            </div>
+            <CardList characters={displayedItems} />
+            {isPaginated && totalPages > 1 && (
+              <div className={styles.pagination}>
+                <button
+                  onClick={() => this.handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className={styles.paginationButton}
+                  aria-label="Previous page"
+                >
+                  ◄ Previous
+                </button>
+                <span className={styles.paginationInfo}>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() => this.handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className={styles.paginationButton}
+                  aria-label="Next page"
+                >
+                  Next ►
+                </button>
+              </div>
+            )}
           </>
         ) : (
           <p className={styles.noResults}>
