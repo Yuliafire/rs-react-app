@@ -1,35 +1,47 @@
 import React from 'react';
-import Header from '../src/components/layout/Header/Header';
-import Footer from '../src/components/layout/Footer/Footer';
-import SearchSection from '../src/components/SearchSection/SearchSection';
-import ResultsSection from '../src/components/ResultsSection/ResultsSection';
-import type { AppState, CharacterDetails } from './types/types';
-import Button from './components/ui/Button/Button';
+import Header from './components/layout/Header/Header';
+import Footer from './components/layout/Footer/Footer';
+import SearchSection from './components/SearchSection/SearchSection';
+import ResultsSection from './components/ResultsSection/ResultsSection';
+import type { CharacterDetails } from './types/types';
+import ApiService from './services/apiService';
 
-class App extends React.Component<Record<string, never>, AppState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      searchTerm: '',
-      results: [],
-      loading: false,
-      error: null,
-      shouldThrowError: false,
-      isSearchResult: false,
-    };
+interface AppState {
+  results: CharacterDetails[];
+  loading: boolean;
+  error: string | null;
+  isSearchResult: boolean;
+}
+
+class App extends React.Component<{}, AppState> {
+  state: AppState = {
+    results: [],
+    loading: true,
+    error: null,
+    isSearchResult: false
+  };
+
+  async componentDidMount() {
+    await this.loadInitialData();
   }
 
-  handleThrowError = () => {
-    this.setState({ shouldThrowError: true });
-  };
+  async loadInitialData() {
+    this.setState({ loading: true });
+    const response = await ApiService.fetchInitialCharacters();
+    
+    this.setState({
+      loading: false,
+      results: response.status === 'success' ? response.data : [],
+      error: response.status === 'error' ? response.message : null,
+      isSearchResult: false
+    });
+  }
 
   handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
     this.setState({
       results,
       isSearchResult: !!searchTerm.trim(),
-      loading: false,
-      error: null,
-      searchTerm,
+      error: null
     });
   };
 
@@ -42,12 +54,7 @@ class App extends React.Component<Record<string, never>, AppState> {
   };
 
   render() {
-    const { loading, error, results, shouldThrowError, isSearchResult } =
-      this.state;
-
-    if (shouldThrowError) {
-      throw new Error('Test error from Error button');
-    }
+    const { results, loading, error, isSearchResult } = this.state;
 
     return (
       <div className="app">
@@ -60,12 +67,10 @@ class App extends React.Component<Record<string, never>, AppState> {
         <ResultsSection
           results={results}
           loading={loading}
-          error={error || ''}
+          error={error}
           isPaginated={isSearchResult}
+          isInitialLoad={!isSearchResult}
         />
-        <Button onClick={this.handleThrowError} type="button">
-          Error Button
-        </Button>
         <Footer />
       </div>
     );

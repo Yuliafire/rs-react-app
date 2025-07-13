@@ -50,63 +50,61 @@ class ApiService {
     return response.status === 'success';
   }
 
-  async fetchPaginatedCharacters(pageCount: number): Promise<ServiceResponse<CharacterDetails[]>> {
+  async fetchInitialCharacters(limit = 100): Promise<ServiceResponse<CharacterDetails[]>> {
     try {
-      const pages = Array.from({ length: pageCount }, (_, i) => 
+      const countResponse = await this.makeRequest<ApiResponse>(`${API_BASE_URL}/character`);
+      if (!this.isSuccessResponse(countResponse)) return countResponse;
+
+      const totalPages = Math.min(
+        Math.ceil(limit / 20),
+        Math.ceil(countResponse.data.info.count / 20)
+      );
+
+      const pageRequests = Array.from({ length: totalPages }, (_, i) =>
         this.makeRequest<ApiResponse>(`${API_BASE_URL}/character/?page=${i + 1}`)
       );
 
-      const responses = await Promise.all(pages);
+      const responses = await Promise.all(pageRequests);
       const characters: CharacterDetails[] = [];
 
       for (const response of responses) {
-        if (!this.isSuccessResponse(response)) {
-          continue;
-        }
+        if (!this.isSuccessResponse(response)) continue;
         characters.push(...response.data.results);
       }
 
       return {
         status: 'success',
-        data: characters.slice(0, pageCount * 20),
+        data: characters.slice(0, limit)
       };
     } catch (error) {
       return {
         status: 'error',
-        message: 'Failed to fetch characters',
+        message: 'Failed to load initial characters'
       };
     }
   }
 
-  async searchItems(term: string = ''): Promise<ServiceResponse<ResultItem[]>> {
+  async searchCharacters(term: string): Promise<ServiceResponse<CharacterDetails[]>> {
     const processedTerm = term.trim();
     
     if (!processedTerm) {
-      const response = await this.fetchPaginatedCharacters(5);
-      if (!this.isSuccessResponse(response)) {
-        return response;
-      }
-      return {
-        status: 'success',
-        data: this.mapToResultItems(response.data),
-      };
+      return this.fetchInitialCharacters(100);
     }
 
     const response = await this.makeRequest<ApiResponse>(
       `${API_BASE_URL}/character/?name=${encodeURIComponent(processedTerm)}`
     );
 
-    if (!this.isSuccessResponse(response)) {
-      return response;
-    }
+    if (!this.isSuccessResponse(response)) return response;
+    
     return {
       status: 'success',
-      data: this.mapToResultItems(response.data.results),
+      data: response.data.results
     };
   }
 
-  private mapToResultItems(characters: CharacterDetails[]): ResultItem[] {
-    return characters.map((character) => ({
+  mapToResultItems(characters: CharacterDetails[]): ResultItem[] {
+    return characters.map(character => ({
       id: character.id,
       name: character.name,
       description: `${character.species} - ${character.status}`,
@@ -114,7 +112,7 @@ class ApiService {
       gender: character.gender,
       image: character.image,
       status: character.status,
-      species: character.species,
+      species: character.species
     }));
   }
 }

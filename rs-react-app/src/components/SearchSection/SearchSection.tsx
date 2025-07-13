@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './SearchSection.module.scss';
-import type { CharacterDetails, ApiResponse } from '../../types/types';
-import storageService from '../../services/storageService';
 import Button from '../ui/Button/Button';
+import storageService from '../../services/storageService';
+import ApiService from '../../services/apiService';
+import type { CharacterDetails } from '../../types/types';
 
 interface SearchSectionProps {
   onSearchResults: (results: CharacterDetails[], searchTerm: string) => void;
@@ -13,24 +14,13 @@ interface SearchSectionProps {
 interface SearchSectionState {
   inputValue: string;
   isLoading: boolean;
-  error: string | null;
 }
 
-class SearchSection extends React.Component<
-  SearchSectionProps,
-  SearchSectionState
-> {
-  private apiTimeout: number;
-
-  constructor(props: SearchSectionProps) {
-    super(props);
-    this.state = {
-      inputValue: storageService.getSearchTerm() || '',
-      isLoading: false,
-      error: null,
-    };
-    this.apiTimeout = Number(import.meta.env.VITE_API_TIMEOUT) || 5000;
-  }
+class SearchSection extends React.Component<SearchSectionProps, SearchSectionState> {
+  state: SearchSectionState = {
+    inputValue: storageService.getSearchTerm() || '',
+    isLoading: false
+  };
 
   componentDidMount() {
     const searchTerm = this.state.inputValue.trim();
@@ -40,75 +30,35 @@ class SearchSection extends React.Component<
   }
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value, error: null });
+    this.setState({ inputValue: e.target.value });
   };
 
   handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const processedTerm = this.state.inputValue.trim();
-    await this.performSearch(processedTerm);
+    await this.performSearch(this.state.inputValue.trim());
   };
 
   performSearch = async (term: string) => {
-    this.setState({ isLoading: true, error: null });
+    this.setState({ isLoading: true });
     this.props.onLoadingChange(true);
+    this.props.onErrorChange(null);
 
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), this.apiTimeout);
-
-      const response = await fetch(
-        `${import.meta.env.VITE_RM_API_URL}/character/?name=${encodeURIComponent(term)}`,
-        { signal: controller.signal }
-      );
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error('No characters found matching your search');
-        }
-        throw new Error(`API request failed with status ${response.status}`);
-      }
-
-      const data: ApiResponse = await response.json();
-      const results = data.results || [];
-
-      if (results.length === 0) {
-        throw new Error(
-          term === ''
-            ? 'No characters available'
-            : 'No characters found matching your search'
-        );
-      }
-
-      this.props.onSearchResults(results, term);
+    const response = await ApiService.searchCharacters(term);
+    
+    if (response.status === 'success') {
+      this.props.onSearchResults(response.data, term);
       storageService.saveSearchTerm(term);
-    } catch (error) {
-      const errorMessage = this.getErrorMessage(error);
-      this.setState({ error: errorMessage });
-      this.props.onErrorChange(errorMessage);
+    } else {
+      this.props.onErrorChange(response.message);
       this.props.onSearchResults([], term);
-    } finally {
-      this.setState({ isLoading: false });
-      this.props.onLoadingChange(false);
     }
-  };
 
-  getErrorMessage = (error: unknown): string => {
-    if (error instanceof DOMException && error.name === 'AbortError') {
-      return 'Request timed out. Please try again.';
-    }
-    if (error instanceof Error) {
-      return error.message.includes('404')
-        ? 'No Rick and Morty characters found'
-        : error.message;
-    }
-    return 'Search failed due to an unknown error';
+    this.setState({ isLoading: false });
+    this.props.onLoadingChange(false);
   };
 
   render() {
-    const { inputValue, isLoading, error } = this.state;
+    const { inputValue, isLoading } = this.state;
 
     return (
       <section className={styles.searchSection}>
@@ -117,8 +67,7 @@ class SearchSection extends React.Component<
             type="text"
             value={inputValue}
             onChange={this.handleInputChange}
-            placeholder="Search Rick and Morty characters..."
-            aria-label="Search Rick and Morty characters"
+            placeholder="Search characters..."
             className={styles.searchInput}
             disabled={isLoading}
           />
@@ -127,18 +76,9 @@ class SearchSection extends React.Component<
             disabled={isLoading}
             aria-label={isLoading ? 'Searching...' : 'Search'}
           >
-            {isLoading ? (
-              <span className={styles.spinner} aria-hidden="true" />
-            ) : (
-              'Search'
-            )}
+            {isLoading ? 'Searching...' : 'Search'}
           </Button>
         </form>
-        {error && (
-          <div className={styles.errorMessage} role="alert">
-            ⚠️ {error}
-          </div>
-        )}
       </section>
     );
   }

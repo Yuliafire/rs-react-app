@@ -1,22 +1,21 @@
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: skyblue;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    height:auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: skyblue;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  height: auto;
 
-
-    .title {
-      color: #ff3e7f;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 700;
-    }
+  .title {
+    color: #ff3e7f;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
   }
+}
