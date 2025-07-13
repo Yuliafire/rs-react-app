@@ -5,11 +5,14 @@ import SearchSection from './components/SearchSection/SearchSection';
 import ResultsSection from './components/ResultsSection/ResultsSection';
 import type { CharacterDetails } from './types/types';
 import ApiService from './services/apiService';
+import Button from './components/ui/Button/Button';
 
 interface AppState {
   results: CharacterDetails[];
   loading: boolean;
   error: string | null;
+  shouldThrowError: boolean;
+  isSearchResult: boolean;
 }
 
 class App extends React.Component<Record<string, never>, AppState> {
@@ -17,6 +20,8 @@ class App extends React.Component<Record<string, never>, AppState> {
     results: [],
     loading: true,
     error: null,
+    shouldThrowError: false,
+    isSearchResult: false
   };
 
   async componentDidMount() {
@@ -24,23 +29,29 @@ class App extends React.Component<Record<string, never>, AppState> {
   }
 
   async loadInitialData() {
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: null });
     const response = await ApiService.fetchInitialCharacters();
 
-    this.setState({
-      loading: false,
-      results: response.status === 'success' ? response.data : [],
-      error: response.status === 'error' ? response.message : null,
-    });
+    if (response.status === 'success') {
+      this.setState({
+        results: response.data,
+        loading: false,
+        isSearchResult: false
+      });
+    } else {
+      this.setState({
+        error: response.message,
+        loading: false,
+        results: []
+      });
+    }
   }
 
   handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
     this.setState({
       results,
-      error:
-        results.length === 0 && searchTerm.trim()
-          ? 'No characters found'
-          : null,
+      error: results.length === 0 && searchTerm.trim() ? 'No characters found' : null,
+      isSearchResult: searchTerm.trim().length > 0
     });
   };
 
@@ -52,8 +63,16 @@ class App extends React.Component<Record<string, never>, AppState> {
     this.setState({ error });
   };
 
+  handleThrowError = () => {
+    this.setState({ shouldThrowError: true });
+  };
+
   render() {
-    const { results, loading, error } = this.state;
+    const { results, loading, error, shouldThrowError } = this.state;
+
+    if (shouldThrowError) {
+      throw new Error('Test error from Error button');
+    }
 
     return (
       <div className="app">
@@ -63,7 +82,10 @@ class App extends React.Component<Record<string, never>, AppState> {
           onLoadingChange={this.handleLoadingChange}
           onErrorChange={this.handleErrorChange}
         />
-        <ResultsSection results={results} loading={loading} error={error} />
+       <ResultsSection results={results} loading={loading} error={error} />
+        <Button onClick={this.handleThrowError} type="button">
+          Error Button
+        </Button>
         <Footer />
       </div>
     );
