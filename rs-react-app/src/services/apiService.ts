@@ -50,7 +50,7 @@ class ApiService {
     return response.status === 'success';
   }
 
-  async fetchInitialCharacters(limit = 100): Promise<ServiceResponse<CharacterDetails[]>> {
+  async fetchInitialCharacters(limit = 20): Promise<ServiceResponse<CharacterDetails[]>> {
     try {
       const countResponse = await this.makeRequest<ApiResponse>(`${API_BASE_URL}/character`);
       if (!this.isSuccessResponse(countResponse)) return countResponse;
@@ -88,7 +88,7 @@ class ApiService {
     const processedTerm = term.trim();
     
     if (!processedTerm) {
-      return this.fetchInitialCharacters(100);
+      return this.fetchInitialCharacters(20);
     }
 
     const response = await this.makeRequest<ApiResponse>(
