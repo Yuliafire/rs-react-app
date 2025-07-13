@@ -16,7 +16,10 @@ interface SearchSectionState {
   error: string | null;
 }
 
-class SearchSection extends React.Component<SearchSectionProps, SearchSectionState> {
+class SearchSection extends React.Component<
+  SearchSectionProps,
+  SearchSectionState
+> {
   private apiTimeout: number;
 
   constructor(props: SearchSectionProps) {

@@ -3,7 +3,7 @@ import Header from '../src/components/layout/Header/Header';
 import Footer from '../src/components/layout/Footer/Footer';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 import ResultsSection from '../src/components/ResultsSection/ResultsSection';
-import type { AppState,  CharacterDetails } from './types/types';
+import type { AppState, CharacterDetails } from './types/types';
 import Button from './components/ui/Button/Button';
 
 class App extends React.Component<Record<string, never>, AppState> {
@@ -29,7 +29,7 @@ class App extends React.Component<Record<string, never>, AppState> {
       isSearchResult: !!searchTerm.trim(),
       loading: false,
       error: null,
-      searchTerm
+      searchTerm,
     });
   };
 
@@ -42,7 +42,8 @@ class App extends React.Component<Record<string, never>, AppState> {
   };
 
   render() {
-    const { loading, error, results, shouldThrowError, isSearchResult } = this.state;
+    const { loading, error, results, shouldThrowError, isSearchResult } =
+      this.state;
 
     if (shouldThrowError) {
       throw new Error('Test error from Error button');

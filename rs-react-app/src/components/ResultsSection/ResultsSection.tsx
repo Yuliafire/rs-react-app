@@ -16,16 +16,19 @@ interface ResultsSectionState {
   itemsPerPage: number;
 }
 
-class ResultsSection extends React.Component<ResultsSectionProps, ResultsSectionState> {
+class ResultsSection extends React.Component<
+  ResultsSectionProps,
+  ResultsSectionState
+> {
   static defaultProps = {
-    isPaginated: true
+    isPaginated: true,
   };
 
   constructor(props: ResultsSectionProps) {
     super(props);
     this.state = {
       currentPage: 1,
-      itemsPerPage: 20
+      itemsPerPage: 20,
     };
   }
 
