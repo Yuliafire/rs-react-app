@@ -10,15 +10,13 @@ interface AppState {
   results: CharacterDetails[];
   loading: boolean;
   error: string | null;
-  isSearchResult: boolean;
 }
 
 class App extends React.Component<{}, AppState> {
   state: AppState = {
     results: [],
     loading: true,
-    error: null,
-    isSearchResult: false
+    error: null
   };
 
   async componentDidMount() {
@@ -32,16 +30,15 @@ class App extends React.Component<{}, AppState> {
     this.setState({
       loading: false,
       results: response.status === 'success' ? response.data : [],
-      error: response.status === 'error' ? response.message : null,
-      isSearchResult: false
+      error: response.status === 'error' ? response.message : null
     });
   }
 
   handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
     this.setState({
       results,
-      isSearchResult: !!searchTerm.trim(),
-      error: null
+      error: results.length === 0 && searchTerm.trim() ? 
+        'No characters found' : null
     });
   };
 
@@ -54,7 +51,7 @@ class App extends React.Component<{}, AppState> {
   };
 
   render() {
-    const { results, loading, error, isSearchResult } = this.state;
+    const { results, loading, error } = this.state;
 
     return (
       <div className="app">
@@ -68,8 +65,6 @@ class App extends React.Component<{}, AppState> {
           results={results}
           loading={loading}
           error={error}
-          isPaginated={isSearchResult}
-          isInitialLoad={!isSearchResult}
         />
         <Footer />
       </div>

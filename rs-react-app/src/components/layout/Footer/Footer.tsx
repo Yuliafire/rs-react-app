@@ -20,7 +20,7 @@ class Footer extends React.Component {
                 <GitHubIcon />
               </a>
               <a
-                href="https://rs.school/"
+                href="https://www.instagram.com/yulia_speakandcode?igsh=cGloenRtcmcwM2N0"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="RS School"
