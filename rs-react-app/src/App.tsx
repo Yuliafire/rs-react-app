@@ -12,11 +12,11 @@ interface AppState {
   error: string | null;
 }
 
-class App extends React.Component<{}, AppState> {
+class App extends React.Component<Record<string, never>, AppState> {
   state: AppState = {
     results: [],
     loading: true,
-    error: null
+    error: null,
   };
 
   async componentDidMount() {
@@ -26,19 +26,21 @@ class App extends React.Component<{}, AppState> {
   async loadInitialData() {
     this.setState({ loading: true });
     const response = await ApiService.fetchInitialCharacters();
-    
+
     this.setState({
       loading: false,
       results: response.status === 'success' ? response.data : [],
-      error: response.status === 'error' ? response.message : null
+      error: response.status === 'error' ? response.message : null,
     });
   }
 
   handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
     this.setState({
       results,
-      error: results.length === 0 && searchTerm.trim() ? 
-        'No characters found' : null
+      error:
+        results.length === 0 && searchTerm.trim()
+          ? 'No characters found'
+          : null,
     });
   };
 
@@ -61,11 +63,7 @@ class App extends React.Component<{}, AppState> {
           onLoadingChange={this.handleLoadingChange}
           onErrorChange={this.handleErrorChange}
         />
-        <ResultsSection
-          results={results}
-          loading={loading}
-          error={error}
-        />
+        <ResultsSection results={results} loading={loading} error={error} />
         <Footer />
       </div>
     );

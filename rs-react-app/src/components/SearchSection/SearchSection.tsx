@@ -16,10 +16,13 @@ interface SearchSectionState {
   isLoading: boolean;
 }
 
-class SearchSection extends React.Component<SearchSectionProps, SearchSectionState> {
+class SearchSection extends React.Component<
+  SearchSectionProps,
+  SearchSectionState
+> {
   state: SearchSectionState = {
     inputValue: storageService.getSearchTerm() || '',
-    isLoading: false
+    isLoading: false,
   };
 
   componentDidMount() {
@@ -44,7 +47,7 @@ class SearchSection extends React.Component<SearchSectionProps, SearchSectionSta
     this.props.onErrorChange(null);
 
     const response = await ApiService.searchCharacters(term);
-    
+
     if (response.status === 'success') {
       this.props.onSearchResults(response.data, term);
       storageService.saveSearchTerm(term);

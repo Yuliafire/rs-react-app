@@ -12,7 +12,8 @@ type ErrorResponse = {
 
 type ServiceResponse<T> = SuccessResponse<T> | ErrorResponse;
 
-const API_BASE_URL = import.meta.env.VITE_RM_API_URL || 'https://rickandmortyapi.com/api';
+const API_BASE_URL =
+  import.meta.env.VITE_RM_API_URL || 'https://rickandmortyapi.com/api';
 
 class ApiService {
   private async makeRequest<T>(url: string): Promise<ServiceResponse<T>> {
@@ -46,13 +47,19 @@ class ApiService {
     return messages[status] || `API error (${status})`;
   }
 
-  private isSuccessResponse<T>(response: ServiceResponse<T>): response is SuccessResponse<T> {
+  private isSuccessResponse<T>(
+    response: ServiceResponse<T>
+  ): response is SuccessResponse<T> {
     return response.status === 'success';
   }
 
-  async fetchInitialCharacters(limit = 20): Promise<ServiceResponse<CharacterDetails[]>> {
+  async fetchInitialCharacters(
+    limit = 20
+  ): Promise<ServiceResponse<CharacterDetails[]>> {
     try {
-      const countResponse = await this.makeRequest<ApiResponse>(`${API_BASE_URL}/character`);
+      const countResponse = await this.makeRequest<ApiResponse>(
+        `${API_BASE_URL}/character`
+      );
       if (!this.isSuccessResponse(countResponse)) return countResponse;
 
       const totalPages = Math.min(
@@ -61,7 +68,9 @@ class ApiService {
       );
 
       const pageRequests = Array.from({ length: totalPages }, (_, i) =>
-        this.makeRequest<ApiResponse>(`${API_BASE_URL}/character/?page=${i + 1}`)
+        this.makeRequest<ApiResponse>(
+          `${API_BASE_URL}/character/?page=${i + 1}`
+        )
       );
 
       const responses = await Promise.all(pageRequests);
@@ -74,19 +83,25 @@ class ApiService {
 
       return {
         status: 'success',
-        data: characters.slice(0, limit)
+        data: characters.slice(0, limit),
       };
     } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Failed to load initial characters';
       return {
         status: 'error',
-        message: 'Failed to load initial characters'
+        message: errorMessage,
       };
     }
   }
 
-  async searchCharacters(term: string): Promise<ServiceResponse<CharacterDetails[]>> {
+  async searchCharacters(
+    term: string
+  ): Promise<ServiceResponse<CharacterDetails[]>> {
     const processedTerm = term.trim();
-    
+
     if (!processedTerm) {
       return this.fetchInitialCharacters(20);
     }
@@ -96,15 +111,15 @@ class ApiService {
     );
 
     if (!this.isSuccessResponse(response)) return response;
-    
+
     return {
       status: 'success',
-      data: response.data.results
+      data: response.data.results,
     };
   }
 
   mapToResultItems(characters: CharacterDetails[]): ResultItem[] {
-    return characters.map(character => ({
+    return characters.map((character) => ({
       id: character.id,
       name: character.name,
       description: `${character.species} - ${character.status}`,
@@ -112,7 +127,7 @@ class ApiService {
       gender: character.gender,
       image: character.image,
       status: character.status,
-      species: character.species
+      species: character.species,
     }));
   }
 }
