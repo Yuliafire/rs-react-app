@@ -16,9 +16,9 @@ class ResultsSection extends React.Component<ResultsSectionProps> {
 
     if (loading) {
       return (
-        <section className={styles.resultsSection}>
+        <section className={styles.resultsSection} aria-live="polite">
           <div className={styles.loaderContainer}>
-            <Loader />
+            <Loader minDisplayTime={2000} />
           </div>
         </section>
       );
