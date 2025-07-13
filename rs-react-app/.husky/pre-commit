@@ -1,2 +1,4 @@
- #!/bin/sh
-npm run lint && npm run format:fix
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run pre-commit
