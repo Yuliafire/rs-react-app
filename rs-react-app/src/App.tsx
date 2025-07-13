@@ -21,7 +21,7 @@ class App extends React.Component<Record<string, never>, AppState> {
     loading: true,
     error: null,
     shouldThrowError: false,
-    isSearchResult: false
+    isSearchResult: false,
   };
 
   async componentDidMount() {
@@ -36,13 +36,13 @@ class App extends React.Component<Record<string, never>, AppState> {
       this.setState({
         results: response.data,
         loading: false,
-        isSearchResult: false
+        isSearchResult: false,
       });
     } else {
       this.setState({
         error: response.message,
         loading: false,
-        results: []
+        results: [],
       });
     }
   }
@@ -50,8 +50,11 @@ class App extends React.Component<Record<string, never>, AppState> {
   handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
     this.setState({
       results,
-      error: results.length === 0 && searchTerm.trim() ? 'No characters found' : null,
-      isSearchResult: searchTerm.trim().length > 0
+      error:
+        results.length === 0 && searchTerm.trim()
+          ? 'No characters found'
+          : null,
+      isSearchResult: searchTerm.trim().length > 0,
     });
   };
 
@@ -82,7 +85,7 @@ class App extends React.Component<Record<string, never>, AppState> {
           onLoadingChange={this.handleLoadingChange}
           onErrorChange={this.handleErrorChange}
         />
-       <ResultsSection results={results} loading={loading} error={error} />
+        <ResultsSection results={results} loading={loading} error={error} />
         <Button onClick={this.handleThrowError} type="button">
           Error Button
         </Button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Loader.module.scss';
+import timerService from '../../../utils/timerService';
 
 interface LoaderProps {
   minDisplayTime?: number;
@@ -11,8 +12,6 @@ interface LoaderState {
 }
 
 class Loader extends React.Component<LoaderProps, LoaderState> {
-  private displayTimer?: number;
-  private minDisplayTimer?: number;
   private mounted = false;
 
   constructor(props: LoaderProps) {
@@ -25,10 +24,11 @@ class Loader extends React.Component<LoaderProps, LoaderState> {
 
   componentDidMount() {
     this.mounted = true;
-    this.displayTimer = window.setTimeout(() => {
+
+    timerService.setTimeout(() => {
       if (this.mounted) {
         this.setState({ shouldRender: true }, () => {
-          this.minDisplayTimer = window.setTimeout(() => {
+          timerService.setTimeout(() => {
             this.setState({ isVisible: true });
           }, this.props.minDisplayTime || 2000);
         });
@@ -38,8 +38,7 @@ class Loader extends React.Component<LoaderProps, LoaderState> {
 
   componentWillUnmount() {
     this.mounted = false;
-    if (this.displayTimer) clearTimeout(this.displayTimer);
-    if (this.minDisplayTimer) clearTimeout(this.minDisplayTimer);
+    timerService.clearAll();
   }
 
   render() {
