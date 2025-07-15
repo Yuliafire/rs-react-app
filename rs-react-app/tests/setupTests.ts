@@ -1,8 +1,11 @@
-import { afterEach, vi } from 'vitest';
+import { afterEach, beforeEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
+beforeEach(() => {
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+});
+
 afterEach(() => {
-  cleanup();
-  vi.clearAllMocks();
+  vi.restoreAllMocks();
 });
