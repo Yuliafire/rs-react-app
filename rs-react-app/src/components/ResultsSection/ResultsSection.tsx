@@ -16,7 +16,11 @@ class ResultsSection extends React.Component<ResultsSectionProps> {
 
     if (loading) {
       return (
-        <section className={styles.resultsSection} aria-live="polite">
+        <section
+          className={styles.resultsSection}
+          role="alert"
+          aria-live="polite"
+        >
           <div className={styles.loaderContainer}>
             <Loader minDisplayTime={2000} />
           </div>
@@ -27,7 +31,7 @@ class ResultsSection extends React.Component<ResultsSectionProps> {
     if (error) {
       return (
         <section className={styles.resultsSectionError}>
-          <p>{error}</p>
+          <p role="paragraph">{error}</p>
         </section>
       );
     }
