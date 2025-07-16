@@ -9,7 +9,7 @@
     "format:fix": "prettier --write .",
     "lint": "eslint --fix .",
     "preview": "vite preview",
-    "prepare": "husky",
+    "prepare": "husky && chmod ug+x .husky/*",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
   },
