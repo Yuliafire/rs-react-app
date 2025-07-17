@@ -2,7 +2,6 @@ import ApiService from '../src/services/apiService';
 import type { CharacterDetails, ApiResponse } from '../src/types/types';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Test data
 const mockCharacter: CharacterDetails = {
   id: 1,
   name: 'Rick Sanchez',
