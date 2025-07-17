@@ -22,7 +22,7 @@ class ResultsSection extends React.Component<ResultsSectionProps> {
           aria-live="polite"
         >
           <div className={styles.loaderContainer}>
-            <Loader minDisplayTime={2000} />
+            <Loader minDisplayTime={2000} data-testid="loader" />
           </div>
         </section>
       );

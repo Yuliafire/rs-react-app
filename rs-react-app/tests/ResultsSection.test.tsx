@@ -5,18 +5,19 @@ import type { CharacterDetails } from '../src/types/types';
 import '@testing-library/jest-dom/vitest';
 
 vi.mock('../ui/Loader/Loader', () => ({
-  default: () => (
-    <div data-testid="loader" role="status">
-      Loading...
-    </div>
-  ),
+  default: ({ loading }: { loading: boolean }) =>
+    loading ? (
+      <div data-testid="loader" role="status">
+        Loading...
+      </div>
+    ) : null,
 }));
 
 vi.mock('../ui/CardList/CardList', () => ({
   default: ({ characters }: { characters: CharacterDetails[] }) => (
     <ul role="list">
       {characters.map((char) => (
-        <li key={char.id} role="listitem">
+        <li key={char.id} data-testid="card">
           {char.name}
         </li>
       ))}
@@ -126,5 +127,75 @@ describe('ResultsSection Component', () => {
         screen.queryByText(/No characters found/i)
       ).not.toBeInTheDocument();
     });
+  });
+});
+
+describe('ResultsSection Component', () => {
+  const mockCharacters: CharacterDetails[] = [
+    {
+      id: 1,
+      name: 'Rick Sanchez',
+      status: 'Alive',
+      species: 'Human',
+      type: '',
+      gender: '',
+      origin: { name: '', url: '' },
+      location: { name: '', url: '' },
+      image: '',
+      episode: [],
+      url: '',
+      created: '',
+    },
+    {
+      id: 2,
+      name: 'Morty Smith',
+      status: 'Alive',
+      species: 'Human',
+      type: '',
+      gender: '',
+      origin: { name: '', url: '' },
+      location: { name: '', url: '' },
+      image: '',
+      episode: [],
+      url: '',
+      created: '',
+    },
+  ];
+
+  describe('Data Handling', () => {
+    it('handles missing character data gracefully', () => {
+      const incompleteChars = [
+        { ...mockCharacters[0], name: undefined },
+      ] as unknown as CharacterDetails[];
+      render(
+        <ResultsSection
+          results={incompleteChars}
+          loading={false}
+          error={null}
+        />
+      );
+      expect(screen.getAllByTestId('card')).toHaveLength(1);
+    });
+  });
+});
+
+describe('Error Handling', () => {
+  it('displays network error differently from not found', () => {
+    const { rerender } = render(
+      <ResultsSection error="Network Error" results={[]} loading={false} />
+    );
+    expect(screen.getByText(/network error/i)).toBeInTheDocument();
+
+    rerender(
+      <ResultsSection error="404: Not Found" results={[]} loading={false} />
+    );
+    expect(screen.getByText(/not found/i)).toBeInTheDocument();
+  });
+
+  it('shows server error message for 500 status', () => {
+    render(
+      <ResultsSection error="500: Server Error" results={[]} loading={false} />
+    );
+    expect(screen.getByText(/server error/i)).toBeInTheDocument();
   });
 });

@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 import storageService from '../src/services/storageService';
 import '@testing-library/jest-dom/vitest';
+import userEvent from '@testing-library/user-event';
 
 vi.mock('../src/services/storageService', () => ({
   default: {
@@ -47,6 +48,22 @@ describe('SearchSection Component', () => {
       render(<SearchSection {...mockProps} />);
 
       expect(screen.getByRole('textbox')).toHaveValue('Rick');
+    });
+
+    it('updates input value when user types', async () => {
+      const user = userEvent.setup();
+      render(<SearchSection {...mockProps} />);
+      const input = screen.getByRole('textbox');
+      await user.type(input, 'Morty');
+      expect(input).toHaveValue('Morty');
+    });
+
+    it('triggers search on button click', async () => {
+      const user = userEvent.setup();
+      render(<SearchSection {...mockProps} />);
+      await user.type(screen.getByRole('textbox'), 'Rick');
+      await user.click(screen.getByRole('button', { name: /search/i }));
+      expect(mockProps.onSearchResults).toHaveBeenCalled();
     });
 
     it('shows empty input when no saved term exists', () => {
