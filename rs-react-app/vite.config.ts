@@ -8,11 +8,7 @@ import path from 'path';
 
 export default defineConfig(({ mode }) => {
   const config: UserConfig = {
-    plugins: [
-      react(),
-      svgr(),
-      tsconfigPaths()
-    ],
+    plugins: [react(), svgr(), tsconfigPaths()],
     build: {
       target: 'es2022',
     },
@@ -21,7 +17,7 @@ export default defineConfig(({ mode }) => {
       globals: true,
       setupFiles: './tests/setupTests.ts',
       include: ['**/*.{test,spec}.{js,jsx,ts,tsx}'],
-      exclude: ['**/node_modules/**', '**/dist/**'], 
+      exclude: ['**/node_modules/**', '**/dist/**'],
       coverage: {
         provider: 'istanbul',
         enabled: true,
@@ -35,24 +31,24 @@ export default defineConfig(({ mode }) => {
           'src/constants/**',
           'src/types/**',
           'src/index.{js,jsx,ts,tsx}',
-          'src/setupTests.{js,ts}'
+          'src/setupTests.{js,ts}',
         ],
         thresholds: {
           global: {
             statements: 80,
             branches: 50,
             functions: 50,
-            lines: 50
-          }
-        }
-      }
+            lines: 50,
+          },
+        },
+      },
     },
     resolve: {
       alias: {
         '@components': path.resolve(__dirname, './src/components'),
         '@services': path.resolve(__dirname, './src/services'),
-      }
-    }
+      },
+    },
   };
 
   if (mode === 'production') {
