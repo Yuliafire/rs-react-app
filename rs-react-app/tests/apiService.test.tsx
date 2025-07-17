@@ -2,6 +2,7 @@ import ApiService from '../src/services/apiService';
 import type { CharacterDetails, ApiResponse } from '../src/types/types';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+// Test data
 const mockCharacter: CharacterDetails = {
   id: 1,
   name: 'Rick Sanchez',
@@ -17,7 +18,7 @@ const mockCharacter: CharacterDetails = {
   created: '',
 };
 
-const mockApiResponse = (
+const createMockApiResponse = (
   results: CharacterDetails[],
   count = results.length
 ): ApiResponse => ({
@@ -26,7 +27,7 @@ const mockApiResponse = (
 });
 
 const mockFetch = vi.fn();
-global.fetch = mockFetch;
+global.fetch = mockFetch as typeof global.fetch;
 
 describe('ApiService', () => {
   const BASE_URL = 'https://rickandmortyapi.com/api';
@@ -74,21 +75,22 @@ describe('ApiService', () => {
     it('limits results to requested count', async () => {
       const characters = Array(50).fill(mockCharacter);
       mockFetch.mockResolvedValue(
-        mockSuccessResponse(mockApiResponse(characters, 50))
+        createMockSuccessResponse(createMockApiResponse(characters, 50))
       );
       const result = await ApiService.fetchInitialCharacters(25);
 
       if (result.status === 'success') {
         expect(result.data.length).toBe(25);
       } else {
-        fail('Expected success response');
+        throw new Error('Expected success response');
       }
     });
   });
+
   describe('searchCharacters', () => {
     it('searches with encoded term', async () => {
       mockFetch.mockResolvedValue(
-        mockSuccessResponse(mockApiResponse([mockCharacter]))
+        createMockSuccessResponse(createMockApiResponse([mockCharacter]))
       );
       await ApiService.searchCharacters('Rick Sanchez');
       expect(mockFetch).toHaveBeenCalledWith(
@@ -98,14 +100,14 @@ describe('ApiService', () => {
 
     it('falls back to initial fetch when search term is empty', async () => {
       mockFetch.mockResolvedValue(
-        mockSuccessResponse(mockApiResponse([mockCharacter]))
+        createMockSuccessResponse(createMockApiResponse([mockCharacter]))
       );
       await ApiService.searchCharacters('   ');
       expect(mockFetch).toHaveBeenCalledWith(`${BASE_URL}/character`);
     });
 
     it('handles no results', async () => {
-      mockFetch.mockResolvedValue(mockErrorResponse(404));
+      mockFetch.mockResolvedValue(createMockErrorResponse(404));
       const result = await ApiService.searchCharacters('Unknown');
       expect(result).toEqual({
         status: 'error',
@@ -153,8 +155,7 @@ describe('ApiService', () => {
   });
 });
 
-// Helper functions
-function mockSuccessResponse<T>(data: T): Response {
+function createMockSuccessResponse<T>(data: T): Response {
   return {
     ok: true,
     status: 200,
@@ -162,14 +163,10 @@ function mockSuccessResponse<T>(data: T): Response {
   } as Response;
 }
 
-function mockErrorResponse(status: number): Response {
+function createMockErrorResponse(status: number): Response {
   return {
     ok: false,
     status,
     json: async () => ({}),
   } as Response;
-}
-function fail(_arg0: string) {
-  throw new Error('Function not implemented.');
-  console.log(_arg0);
 }
