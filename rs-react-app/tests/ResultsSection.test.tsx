@@ -4,7 +4,6 @@ import ResultsSection from '../src/components/ResultsSection/ResultsSection';
 import type { CharacterDetails } from '../src/types/types';
 import '@testing-library/jest-dom/vitest';
 
-// Mock child components
 vi.mock('../ui/Loader/Loader', () => ({
   default: () => (
     <div data-testid="loader" role="status">
