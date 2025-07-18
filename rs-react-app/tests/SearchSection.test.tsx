@@ -16,7 +16,7 @@ interface ApiResponse {
 }
 
 interface SearchSectionProps {
-  onSearchResults: (results: CharacterResult[]) => void;
+  onSearchResults: (results: CharacterResult[], searchTerm: string) => void;
   onLoadingChange: (isLoading: boolean) => void;
   onErrorChange: (error: string | null) => void;
 }
@@ -24,7 +24,7 @@ interface SearchSectionProps {
 vi.mock('../src/services/storageService', () => ({
   default: {
     getSearchTerm: vi.fn(() => ''),
-    saveSearchTerm: vi.fn(),
+    saveSearchTerm: vi.fn(() => Promise.resolve()),
   },
 }));
 
@@ -56,6 +56,11 @@ describe('SearchSection Component', () => {
       expect(
         screen.getByRole('button', { name: /search/i })
       ).toBeInTheDocument();
+    });
+
+    it('shows empty input when no saved term exists', () => {
+      render(<SearchSection {...mockProps} />);
+      expect(screen.getByRole('textbox')).toHaveValue('');
     });
   });
 

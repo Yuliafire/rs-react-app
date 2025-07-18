@@ -38,7 +38,10 @@ class SearchSection extends React.Component<
 
   handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await this.performSearch(this.state.inputValue.trim());
+    const trimmedValue = this.state.inputValue.trim();
+    if (trimmedValue) {
+      await this.performSearch(trimmedValue);
+    }
   };
 
   //   this.setState({ isLoading: true });
