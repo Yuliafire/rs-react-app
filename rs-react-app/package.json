@@ -9,7 +9,7 @@
     "format:fix": "prettier --write .",
     "lint": "eslint --fix .",
     "test": "vitest",
-    "prepare": " cd .. && husky rs-react-app/.husky",
+    "prepare": "cd .. && husky install rs-react-app/.husky",
     "test:coverage": "vitest run --coverage"
   },
   "lint-staged": {
@@ -17,9 +17,15 @@
       "tsc --noEmit",
       "eslint --fix"
     ],
-    "*.{js,ts,jsx,tsx,json,md,scss,css}": "prettier --write",
-    "*.module.scss": "stylelint --fix",
-    "package.json": []
+    "*.{js,ts,jsx,tsx,json,md,scss,css}": [
+      "prettier --write"
+    ],
+    "*.module.scss": [
+      "stylelint --fix"
+    ],
+    "package.json": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "react": "^19.1.0",
