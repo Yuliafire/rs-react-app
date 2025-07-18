@@ -10,7 +10,8 @@
     "lint": "eslint --fix .",
     "test": "vitest",
     "prepare": "cd .. && husky rs-react-app/.husky",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "postinstall": "node -e \"fs.writeFileSync('.husky/pre-commit', '#!/bin/sh\\ncd $(dirname $0)/../ && npm run lint && npm run format:fix\\n', { mode: 0o755 })\""
   },
  
   "dependencies": {
