@@ -12,20 +12,27 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
   },
+
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
     "pre-push": "npm test",
     "preserveUnused": false
   },
+  
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": "eslint --fix",
-    "*.{js,ts,jsx,tsx,json,md}": "prettier --write"
-  },
+    "*.{ts,tsx}": "tsc --noEmit", 
+    "*.{js,ts,jsx,tsx}": "eslint --fix", 
+    "*.{js,ts,jsx,tsx,json,md,scss,css}": "prettier --write", 
+    "*.module.scss": "stylelint --fix" 
+},
+
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+     "stylelint": "^16.6.1",
+    "stylelint-config-standard-scss": "^13.1.0",
     "@eslint/js": "^9.29.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
