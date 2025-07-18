@@ -16,6 +16,7 @@ class Card extends React.Component<CardProps> {
           <img src={character.image} alt={character.name} />
           <span
             className={`${styles.statusBadge} ${styles[character.status.toLowerCase()]}`}
+            data-testid="status-badge"
           >
             {character.status}
           </span>

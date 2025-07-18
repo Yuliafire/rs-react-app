@@ -96,3 +96,8 @@ describe('ErrorBoundary', () => {
     ).not.toBeInTheDocument();
   });
 });
+
+// ADD TEST!! Error Button Tests: !!!!
+
+//     Throws error when test button is clicked
+//     Triggers error boundary fallback UI

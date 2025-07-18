@@ -1,4 +1,3 @@
-// storageService.test.ts
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import storageService from '../src/services/storageService';
 

@@ -54,7 +54,7 @@ class Loader extends React.Component<LoaderProps, LoaderState> {
           aria-live="polite"
           data-testid="loader"
         >
-          <div className={styles.loaderSpinner}></div>
+          <div className={styles.loaderSpinner} role="status"></div>
           <p className={styles.loaderText}>Loading...</p>
         </div>
       </div>
