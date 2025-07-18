@@ -15,13 +15,14 @@
 
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
-    "pre-push": "npm test",
-    "preserveUnused": false
+    "pre-push": "npm test"
   },
   
   "lint-staged": {
-    "*.{ts,tsx}": "tsc --noEmit", 
-    "*.{js,ts,jsx,tsx}": "eslint --fix", 
+    "*.{ts,tsx}": [
+      "tsc --noEmit",
+      "eslint --fix"
+    ],
     "*.{js,ts,jsx,tsx,json,md,scss,css}": "prettier --write", 
     "*.module.scss": "stylelint --fix" 
 },
