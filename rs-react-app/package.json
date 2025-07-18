@@ -19,7 +19,7 @@
     ],
     "*.{js,ts,jsx,tsx,json,md,scss,css}": "prettier --write",
     "*.module.scss": "stylelint --fix",
-    "package.json": [] 
+    "package.json": []
   },
   "dependencies": {
     "react": "^19.1.0",
