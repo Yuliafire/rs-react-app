@@ -8,32 +8,23 @@
     "build": "tsc -b && vite build",
     "format:fix": "prettier --write .",
     "lint": "eslint --fix .",
-    "prepare": "npx simple-git-hooks",
     "test": "vitest",
+    "prepare": "husky",
     "test:coverage": "vitest run --coverage"
   },
-
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged",
-    "pre-push": "npm test"
-  },
-  
   "lint-staged": {
     "*.{ts,tsx}": [
       "tsc --noEmit",
       "eslint --fix"
     ],
-    "*.{js,ts,jsx,tsx,json,md,scss,css}": "prettier --write", 
-    "*.module.scss": "stylelint --fix" 
-},
-
+    "*.{js,ts,jsx,tsx,json,md,scss,css}": "prettier --write",
+    "*.module.scss": "stylelint --fix"
+  },
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "stylelint": "^16.6.1",
-    "stylelint-config-standard-scss": "^13.1.0",
     "@eslint/js": "^9.29.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -56,11 +47,13 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
     "sass": "^1.87.0",
-    "simple-git-hooks": "^2.13.0",
+    "stylelint": "^16.6.1",
+    "stylelint-config-standard-scss": "^13.1.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^6.3.5",
