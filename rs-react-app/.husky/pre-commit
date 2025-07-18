@@ -1,2 +1,2 @@
-cd rs-react-app
+# cd rs-react-app
 npx lint-staged
