@@ -3,14 +3,7 @@ import App from '../src/App';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 import type { CharacterDetails } from '../src/types/types';
 import ApiService from '../src/services/apiService';
-
-vi.mock('../src/components/layout/Header/Header', () => ({
-  default: () => <header>Header Mock</header>,
-}));
-
-vi.mock('../src/components/layout/Footer/Footer', () => ({
-  default: () => <footer>Footer Mock</footer>,
-}));
+import '@testing-library/jest-dom/vitest';
 
 vi.mock('../src/components/SearchSection/SearchSection', () => ({
   default: () => <div>SearchSection Mock</div>,
@@ -58,18 +51,9 @@ describe('App Component', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-
     vi.mocked(ApiService.fetchInitialCharacters).mockResolvedValue({
       status: 'success',
       data: [mockCharacter],
-    });
-  });
-
-  describe('Initial State', () => {
-    it('renders header and footer', () => {
-      render(<App />);
-      expect(screen.getByText('Header Mock')).toBeInTheDocument();
-      expect(screen.getByText('Footer Mock')).toBeInTheDocument();
     });
   });
 

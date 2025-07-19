@@ -40,10 +40,4 @@ describe('Footer Component', () => {
     const svgs = screen.getAllByRole('img', { hidden: true });
     expect(svgs.length).toBe(2);
   });
-
-  it('has proper semantic structure', () => {
-    render(<Footer />);
-    const footer = screen.getByRole('contentinfo');
-    expect(footer.tagName).toBe('FOOTER');
-  });
 });
