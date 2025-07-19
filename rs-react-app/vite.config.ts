@@ -25,13 +25,14 @@ export default defineConfig(({ mode }) => {
         reportsDirectory: './coverage',
         include: ['src/**/*.{js,jsx,ts,tsx}'],
         exclude: [
-          '**/*.d.ts',
-          '**/*.config.ts',
-          'tests/**',
-          'src/constants/**',
-          'src/types/**',
+          'src/**/*.d.ts',
+          'src/**/*.test.{js,jsx,ts,tsx}',
+          'src/**/*.spec.{js,jsx,ts,tsx}',
           'src/index.{js,jsx,ts,tsx}',
           'src/setupTests.{js,ts}',
+          '**/*.config.ts',
+          'src/constants/**',
+          'src/types/**',
         ],
         thresholds: {
           global: {
