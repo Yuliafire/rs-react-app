@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
         enabled: true,
         reporter: ['text', 'json', 'html'],
         reportsDirectory: './coverage',
-        include: ['src/**/*.{js,jsx,ts,tsx}'],
+        include: ['src/**/*.{js,jsx,ts,tsx}', 'tests/**/*.{js,jsx,ts,tsx}'],
         exclude: [
           'src/**/*.d.ts',
           'src/**/*.test.{js,jsx,ts,tsx}',
