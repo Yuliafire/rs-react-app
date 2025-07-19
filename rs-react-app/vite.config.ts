@@ -33,6 +33,7 @@ export default defineConfig(({ mode }) => {
           '**/*.config.ts',
           'src/constants/**',
           'src/types/**',
+          'src/main.{js,jsx,ts,tsx}',
         ],
         thresholds: {
           global: {
