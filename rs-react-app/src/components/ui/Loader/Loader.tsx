@@ -52,8 +52,9 @@ class Loader extends React.Component<LoaderProps, LoaderState> {
           className={`${styles.loaderContainer} ${this.state.isVisible ? styles.visible : ''}`}
           aria-busy="true"
           aria-live="polite"
+          data-testid="loader"
         >
-          <div className={styles.loaderSpinner}></div>
+          <div className={styles.loaderSpinner} role="status"></div>
           <p className={styles.loaderText}>Loading...</p>
         </div>
       </div>

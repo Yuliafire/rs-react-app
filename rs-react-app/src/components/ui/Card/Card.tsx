@@ -11,11 +11,12 @@ class Card extends React.Component<CardProps> {
     const { character } = this.props;
 
     return (
-      <div className={styles.card}>
+      <div className={styles.card} data-testid="card">
         <div className={styles.cardImage}>
           <img src={character.image} alt={character.name} />
           <span
             className={`${styles.statusBadge} ${styles[character.status.toLowerCase()]}`}
+            data-testid="status-badge"
           >
             {character.status}
           </span>

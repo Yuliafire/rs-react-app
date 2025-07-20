@@ -11,7 +11,7 @@ class CardList extends React.Component<CardListProps> {
   render() {
     const { characters } = this.props;
     return (
-      <div className={styles.cardList}>
+      <div className={styles.cardList} role="list">
         {characters.map((character) => (
           <Card key={character.id} character={character} />
         ))}

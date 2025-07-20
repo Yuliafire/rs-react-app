@@ -26,13 +26,16 @@ class ErrorBoundary extends React.Component<Props, State> {
     );
   }
 
-  handleReset = () => this.setState({ hasError: false, error: undefined });
+  handleReset = () => {
+    this.setState({ hasError: false, error: undefined });
+    this.forceUpdate();
+  };
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className={styles.errorContainer}>
-          <h1 className={styles.errorTitle}>
+        <div className={styles.errorContainer} role="alert">
+          <h1 className={styles.errorTitle} aria-level={1}>
             DIMENSIONAL INSTABILITY DETECTED
           </h1>
           <div className={styles.errorSubtitle}>
