@@ -44,25 +44,6 @@ class SearchSection extends React.Component<
     }
   };
 
-  //   this.setState({ isLoading: true });
-  //   this.props.onLoadingChange(true);
-  //   this.props.onErrorChange(null);
-
-  //   const response = await ApiService.searchCharacters(term);
-
-  //   if (response.status === 'success') {
-  //     this.props.onSearchResults(response.data, term);
-  //     storageService.saveSearchTerm(term);
-  //   } else {
-  //     this.props.onErrorChange(response.message);
-  //     this.props.onSearchResults([], term);
-  //   }
-
-  //   this.setState({ isLoading: false });
-  //   this.props.onLoadingChange(false);
-  // };
-
-  // In your SearchSection component
   performSearch = async (term: string) => {
     this.setState({ isLoading: true });
     this.props.onLoadingChange(true);

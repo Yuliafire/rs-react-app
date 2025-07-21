@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Loader.module.scss';
 import timerService from '../../../utils/timerService';
 
@@ -6,60 +6,52 @@ interface LoaderProps {
   minDisplayTime?: number;
 }
 
-interface LoaderState {
-  shouldRender: boolean;
-  isVisible: boolean;
-}
+const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
+  const [shouldRender, setShouldRender] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-class Loader extends React.Component<LoaderProps, LoaderState> {
-  private mounted = false;
+  useEffect(() => {
+    let mounted = true;
+    const timers: number[] = [];
 
-  constructor(props: LoaderProps) {
-    super(props);
-    this.state = {
-      shouldRender: false,
-      isVisible: false,
-    };
-  }
+    timers.push(
+      timerService.setTimeout(() => {
+        if (mounted) {
+          setShouldRender(true);
 
-  componentDidMount() {
-    this.mounted = true;
-
-    timerService.setTimeout(() => {
-      if (this.mounted) {
-        this.setState({ shouldRender: true }, () => {
-          timerService.setTimeout(() => {
-            this.setState({ isVisible: true });
-          }, this.props.minDisplayTime || 2000);
-        });
-      }
-    }, 100);
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-    timerService.clearAll();
-  }
-
-  render() {
-    if (!this.state.shouldRender) {
-      return null;
-    }
-
-    return (
-      <div className={styles.loaderWrapper}>
-        <div
-          className={`${styles.loaderContainer} ${this.state.isVisible ? styles.visible : ''}`}
-          aria-busy="true"
-          aria-live="polite"
-          data-testid="loader"
-        >
-          <div className={styles.loaderSpinner} role="status"></div>
-          <p className={styles.loaderText}>Loading...</p>
-        </div>
-      </div>
+          // Visibility delay
+          timers.push(
+            timerService.setTimeout(() => {
+              setIsVisible(true);
+            }, minDisplayTime)
+          );
+        }
+      }, 100)
     );
+
+    return () => {
+      mounted = false;
+      timerService.clearAll();
+    };
+  }, [minDisplayTime]);
+
+  if (!shouldRender) {
+    return null;
   }
-}
+
+  return (
+    <div className={styles.loaderWrapper}>
+      <div
+        className={`${styles.loaderContainer} ${isVisible ? styles.visible : ''}`}
+        aria-busy="true"
+        aria-live="polite"
+        data-testid="loader"
+      >
+        <div className={styles.loaderSpinner} role="status"></div>
+        <p className={styles.loaderText}>Loading...</p>
+      </div>
+    </div>
+  );
+};
 
 export default Loader;
