@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
 import SearchSection from './components/SearchSection/SearchSection';
@@ -7,92 +7,64 @@ import type { CharacterDetails } from './types/types';
 import ApiService from './services/apiService';
 import Button from './components/ui/Button/Button';
 
-interface AppState {
-  results: CharacterDetails[];
-  loading: boolean;
-  error: string | null;
-  shouldThrowError: boolean;
-  isSearchResult: boolean;
-}
+const App = () => {
+  const [results, setResults] = useState<CharacterDetails[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [shouldThrowError, setShouldThrowError] = useState(false);
 
-class App extends React.Component<Record<string, never>, AppState> {
-  state: AppState = {
-    results: [],
-    loading: true,
-    error: null,
-    shouldThrowError: false,
-    isSearchResult: false,
-  };
+  useEffect(() => {
+    const loadInitialData = async () => {
+      setLoading(true);
+      setError(null);
 
-  async componentDidMount() {
-    await this.loadInitialData();
-  }
+      const response = await ApiService.fetchInitialCharacters();
 
-  async loadInitialData() {
-    this.setState({ loading: true, error: null });
-    const response = await ApiService.fetchInitialCharacters();
+      if (response.status === 'success') {
+        setResults(response.data);
+      } else {
+        setError(response.message);
+        setResults([]);
+      }
+      setLoading(false);
+    };
 
-    if (response.status === 'success') {
-      this.setState({
-        results: response.data,
-        loading: false,
-        isSearchResult: false,
-      });
-    } else {
-      this.setState({
-        error: response.message,
-        loading: false,
-        results: [],
-      });
-    }
-  }
+    loadInitialData();
+  }, []);
 
-  handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
-    this.setState({
-      results,
-      error:
-        results.length === 0 && searchTerm.trim()
-          ? 'No characters found'
-          : null,
-      isSearchResult: searchTerm.trim().length > 0,
-    });
-  };
-
-  handleLoadingChange = (loading: boolean) => {
-    this.setState({ loading });
-  };
-
-  handleErrorChange = (error: string | null) => {
-    this.setState({ error });
-  };
-
-  handleThrowError = () => {
-    this.setState({ shouldThrowError: true });
-  };
-
-  render() {
-    const { results, loading, error, shouldThrowError } = this.state;
-
-    if (shouldThrowError) {
-      throw new Error('Test error from Error button');
-    }
-
-    return (
-      <div className="app">
-        <Header />
-        <SearchSection
-          onSearchResults={this.handleSearchResults}
-          onLoadingChange={this.handleLoadingChange}
-          onErrorChange={this.handleErrorChange}
-        />
-        <ResultsSection results={results} loading={loading} error={error} />
-        <Button onClick={this.handleThrowError} type="button">
-          Error Button
-        </Button>
-        <Footer />
-      </div>
+  const handleSearchResults = (
+    results: CharacterDetails[],
+    searchTerm: string
+  ) => {
+    setResults(results);
+    setError(
+      results.length === 0 && searchTerm.trim() ? 'No characters found' : null
     );
+  };
+
+  const handleThrowError = () => {
+    setShouldThrowError(true);
+  };
+
+  if (shouldThrowError) {
+    throw new Error('Test error from Error button');
   }
-}
+
+  return (
+    <div className="app">
+      <Header />
+      <SearchSection
+        onSearchResults={handleSearchResults}
+        onLoadingChange={setLoading}
+        onErrorChange={setError}
+      />
+      <ResultsSection results={results} loading={loading} error={error} />
+      <Button onClick={handleThrowError} type="button">
+        Error Button
+      </Button>
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
