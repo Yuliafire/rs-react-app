@@ -1,0 +1,21 @@
+// src/components/About/About.module.scss
+.about {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  .backLink {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #646cff;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

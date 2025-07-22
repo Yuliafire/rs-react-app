@@ -6,6 +6,7 @@ import ResultsSection from './components/ResultsSection/ResultsSection';
 import type { CharacterDetails } from './types/types';
 import ApiService from './services/apiService';
 import Button from './components/ui/Button/Button';
+// import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
   const [results, setResults] = useState<CharacterDetails[]>([]);
