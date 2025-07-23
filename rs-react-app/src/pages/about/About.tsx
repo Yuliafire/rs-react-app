@@ -1,29 +1,26 @@
-// src/components/About/About.tsx
-import { Link } from 'react-router-dom';
 import styles from './About.module.scss';
+import { Link } from 'react-router-dom';
 
 export const About = () => {
   return (
     <div className={styles.about}>
-      <h1>About This Project</h1>
+      <h2>About This Project</h2>
 
       <section className={styles.authorInfo}>
-        <h2>Author Information</h2>
-        <p>Created by: [Your Name]</p>
-        <p>
-          GitHub:{' '}
-          <a
-            href="https://github.com/yourusername"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @yourusername
-          </a>
-        </p>
+        <h3>Author Information</h3>
+        <p>Create by Yulia Podgurskaia</p>
+        GitHub:{' '}
+        <a
+          href="https://github.com/yourusername"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @Yuliafire
+        </a>
       </section>
 
       <section className={styles.courseInfo}>
-        <h2>RS School React Course</h2>
+        <h3>RS School React Course</h3>
         <p>
           This project was developed as part of the{' '}
           <Link
@@ -37,7 +34,7 @@ export const About = () => {
       </section>
 
       <Link to="/" className={styles.backLink}>
-        ← Back to Search
+        ← Back to Search //{' '}
       </Link>
     </div>
   );
