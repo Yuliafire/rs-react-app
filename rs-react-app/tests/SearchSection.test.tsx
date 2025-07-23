@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import SearchSection from '../src/components/SearchSection/SearchSection';
-import storageService from '../src/services/storageService';
+import { storageService } from '../src/services/storageService';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 
