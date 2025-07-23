@@ -1,21 +1,42 @@
 .header {
+  background-color: #1a1a1a;
+  padding: 15px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: skyblue;
-  border-bottom: 1px solid #ddd;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  height: auto;
+  color: #fff;
 
-  .title {
-    color: #ff3e7f;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .nav {
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #41ead4;
+        }
+      }
+
+      .active {
+        color: #41ead4;
+        font-weight: bold;
+      }
+    }
   }
 }

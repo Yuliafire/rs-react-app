@@ -12,8 +12,7 @@ type ErrorResponse = {
 
 type ServiceResponse<T> = SuccessResponse<T> | ErrorResponse;
 
-const API_BASE_URL =
-  import.meta.env.VITE_RM_API_URL || 'https://rickandmortyapi.com/api';
+const API_BASE_URL = import.meta.env.VITE_RM_API_URL;
 
 class ApiService {
   private async makeRequest<T>(url: string): Promise<ServiceResponse<T>> {

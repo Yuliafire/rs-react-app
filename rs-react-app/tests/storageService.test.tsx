@@ -51,13 +51,13 @@ describe('storageService', () => {
   describe('saveSearchTerm', () => {
     it('should save term to localStorage', () => {
       const testTerm = 'Morty';
-useStorage.saveSearchTerm(testTerm);
+      useStorage.saveSearchTerm(testTerm);
       expect(JSON.parse(mockStorage[RICKMORTY_SEARCH_KEY])).toBe(testTerm);
     });
 
     it('should add term to search history', () => {
       const testTerm = 'Summer';
-   useStorage.saveSearchTerm(testTerm);
+      useStorage.saveSearchTerm(testTerm);
       const history = JSON.parse(mockStorage[RICKMORTY_HISTORY_KEY] || '[]');
       expect(history).toContain(testTerm);
     });
@@ -65,14 +65,14 @@ useStorage.saveSearchTerm(testTerm);
     it('should not duplicate terms in history', () => {
       const testTerm = 'Jerry';
       useStorage.saveSearchTerm(testTerm);
-     useStorage.saveSearchTerm(testTerm);
+      useStorage.saveSearchTerm(testTerm);
       const history = JSON.parse(mockStorage[RICKMORTY_HISTORY_KEY] || '[]');
       expect(history.filter((x: string) => x === testTerm).length).toBe(1);
     });
 
     it('should limit history to 10 items', () => {
       for (let i = 0; i < 15; i++) {
-      useStorage.saveSearchTerm(`Term ${i}`);
+        useStorage.saveSearchTerm(`Term ${i}`);
       }
       const history = JSON.parse(mockStorage[RICKMORTY_HISTORY_KEY] || '[]');
       expect(history.length).toBe(10);
@@ -84,7 +84,7 @@ useStorage.saveSearchTerm(testTerm);
   describe('clearSearchTerm', () => {
     it('should remove search term from storage', () => {
       mockStorage[RICKMORTY_SEARCH_KEY] = JSON.stringify('Beth');
-     useStorage.clearSearchTerm();
+      useStorage.clearSearchTerm();
       expect(mockStorage[RICKMORTY_SEARCH_KEY]).toBeUndefined();
     });
   });
@@ -109,7 +109,7 @@ useStorage.saveSearchTerm(testTerm);
   describe('clearSearchHistory', () => {
     it('should remove history from storage', () => {
       mockStorage[RICKMORTY_HISTORY_KEY] = JSON.stringify(['Rick']);
-     useStorage.clearSearchHistory();
+      useStorage.clearSearchHistory();
       expect(mockStorage[RICKMORTY_HISTORY_KEY]).toBeUndefined();
     });
   });
