@@ -6,15 +6,21 @@ import ApiService from '../../services/apiService';
 import type { CharacterDetails } from '../../types/types';
 
 interface SearchSectionProps {
-  onSearchResults: (results: CharacterDetails[], searchTerm: string) => void;
+  onSearchResults: (
+    results: CharacterDetails[],
+    totalPages: number,
+    searchTerm: string
+  ) => void;
   onLoadingChange: (loading: boolean) => void;
   onErrorChange: (error: string | null) => void;
+  page: number;
 }
 
 const SearchSection = ({
   onSearchResults,
   onLoadingChange,
   onErrorChange,
+  page,
 }: SearchSectionProps) => {
   const { getSearchTerm, saveSearchTerm } = useStorage();
   const [inputValue, setInputValue] = useState(getSearchTerm() || '');
@@ -25,7 +31,7 @@ const SearchSection = ({
     if (searchTerm) {
       performSearch(searchTerm);
     }
-  }, []);
+  }, [page]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -37,18 +43,22 @@ const SearchSection = ({
     onErrorChange(null);
 
     try {
-      const response = (await ApiService.searchCharacters(term)) || {};
+      const response = await ApiService.searchCharacters(term, page);
 
       if (response.status === 'success') {
-        onSearchResults(response.data || [], term);
+        onSearchResults(
+          response.data.characters,
+          response.data.totalPages,
+          term
+        );
         saveSearchTerm(term);
       } else {
         onErrorChange(response.message || 'Unknown error');
-        onSearchResults([], term);
+        onSearchResults([], 0, term);
       }
     } catch (error) {
       onErrorChange('API request failed');
-      onSearchResults([], term);
+      onSearchResults([], 0, term);
       console.error(error);
     } finally {
       setIsLoading(false);

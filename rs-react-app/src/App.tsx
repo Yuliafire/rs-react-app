@@ -6,7 +6,14 @@ import ResultsSection from './components/ResultsSection/ResultsSection';
 import type { CharacterDetails } from './types/types';
 import ApiService from './services/apiService';
 import Button from './components/ui/Button/Button';
+
+// import NotFound from '../src/pages/not-found/Notfound';
+// import About from '../src/pages/about/About';
+// import HomePage from '../src/pages/home/Home';
 // import { Route, Routes } from 'react-router-dom';
+// const HOMEPAGE_PATH = '/';
+// const ABOUTPAGE_PATH  = '/about';
+// const NOTFOUND_PATH = '*';
 
 const App = () => {
   const [results, setResults] = useState<CharacterDetails[]>([]);
@@ -22,7 +29,7 @@ const App = () => {
       const response = await ApiService.fetchInitialCharacters();
 
       if (response.status === 'success') {
-        setResults(response.data);
+        setResults(response.data.characters);
       } else {
         setError(response.message);
         setResults([]);
@@ -69,3 +76,17 @@ const App = () => {
 };
 
 export default App;
+
+// there will be another return
+
+//  return (
+//       <div className="app">
+//         <Header />
+//         <Routes>
+//           <Route path={HOME_PATH} element={<HomePage />} />
+//           <Route path={RESERVE_HOME_PATH} element={<HomePage />} />
+//           <Route path={ABOUTPAGE_PATH} element={<AboutPage />} />
+//           <Route path={NOTFOUND_PATH} element={<NotFound />} />
+//         </Routes>
+//       </div>
+//     );

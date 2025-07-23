@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import SearchSection from '../src/components/SearchSection/SearchSection';
-import { storageService } from '../src/services/storageService';
+import { useStorage } from '../src/services/storageService';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 
@@ -46,7 +46,7 @@ const mockProps: SearchSectionProps = {
 describe('SearchSection Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(storageService.getSearchTerm).mockReturnValue('');
+    vi.mocked(useStorage.getSearchTerm).mockReturnValue('');
   });
 
   describe('Rendering', () => {
@@ -66,7 +66,7 @@ describe('SearchSection Component', () => {
 
   describe('Behavior', () => {
     it('displays saved search term', () => {
-      vi.mocked(storageService.getSearchTerm).mockReturnValue('Rick');
+      vi.mocked(useStorage.getSearchTerm).mockReturnValue('Rick');
       render(<SearchSection {...mockProps} />);
       expect(screen.getByRole('textbox')).toHaveValue('Rick');
     });
