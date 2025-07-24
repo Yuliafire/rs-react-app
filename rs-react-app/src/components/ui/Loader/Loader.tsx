@@ -19,7 +19,6 @@ const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
         if (mounted) {
           setShouldRender(true);
 
-          // Visibility delay
           timers.push(
             timerService.setTimeout(() => {
               setIsVisible(true);
