@@ -8,33 +8,35 @@ export const About = () => {
 
       <section className={styles.authorInfo}>
         <h3>Author Information</h3>
-        <p>Create by Yulia Podgurskaia</p>
-        GitHub:{' '}
-        <a
-          href="https://github.com/yourusername"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          @Yuliafire
-        </a>
+        <p>Created by Yulia Podgurskaia</p>
+        <p>
+          GitHub:{' '}
+          <a
+            href="https://github.com/Yuliafire"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @Yuliafire
+          </a>
+        </p>
       </section>
 
       <section className={styles.courseInfo}>
         <h3>RS School React Course</h3>
         <p>
           This project was developed as part of the{' '}
-          <Link
-            to="https://rs.school/react/"
+          <a
+            href="https://rs.school/react/"
             target="_blank"
             rel="noopener noreferrer"
           >
             RS School React Course
-          </Link>
+          </a>
         </p>
       </section>
 
-      <Link to="/" className={styles.backLink}>
-        ← Back to Search //{' '}
+      <Link to="/" className={styles.backLink} role="link">
+        ← Back to Search{' '}
       </Link>
     </div>
   );
