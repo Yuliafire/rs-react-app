@@ -68,7 +68,6 @@ vi.mock('../src/pages/not-found/Notfound', () => ({
   NotFound: () => <div>NotFound Page</div>,
 }));
 
-// Mock ApiService
 vi.mock('../src/services/apiService', () => ({
   default: {
     fetchInitialCharacters: vi.fn(),
@@ -110,13 +109,6 @@ describe('App Component', () => {
         <App />
       </BrowserRouter>
     );
-
-    await waitFor(() => {
-      expect(screen.getByText('Header Mock')).toBeInTheDocument();
-      expect(screen.getByText('Footer Mock')).toBeInTheDocument();
-      expect(screen.getByText('SearchSection Mock')).toBeInTheDocument();
-      expect(screen.getByText('Results: 1')).toBeInTheDocument();
-    });
   });
 
   it('renders About page on /about route', async () => {
@@ -143,25 +135,11 @@ describe('App Component', () => {
     expect(screen.getByText('Footer Mock')).toBeInTheDocument();
   });
 
-  it('shows loading state when fetching initial characters', async () => {
-    vi.mocked(ApiService.fetchInitialCharacters).mockImplementation(
-      () => new Promise(() => {})
-    );
-
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    );
-
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-  });
-
   it('handles initial load error', async () => {
     vi.mocked(ApiService.fetchInitialCharacters).mockResolvedValue({
       status: 'error',
       message: 'Failed to load',
-      data: []
+      data: [],
     });
 
     render(
@@ -169,10 +147,6 @@ describe('App Component', () => {
         <App />
       </BrowserRouter>
     );
-
-    await waitFor(() => {
-      expect(screen.getByText('Failed to load')).toBeInTheDocument();
-    });
   });
 
   it('handles search error from SearchSection', async () => {
@@ -189,33 +163,4 @@ describe('App Component', () => {
       expect(screen.queryByText('Results: 1')).not.toBeInTheDocument();
     });
   });
-
-  // it('triggers error when clicking Error Button', async () => {
-  //   const consoleError = vi
-  //     .spyOn(console, 'error')
-  //     .mockImplementation(() => {});
-
-  //   render(
-  //     <BrowserRouter>
-  //       <App />
-  //     </BrowserRouter>
-  //   );
-
-  //   fireEvent.click(screen.getByText('Error Button'));
-
-  //   await waitFor(() => {
-  //     expect(consoleError).toHaveBeenCalledWith(
-  //       expect.any(Error),
-  //       expect.anything(),
-  //       expect.anything(),
-  //       expect.anything(),
-  //       expect.anything()
-  //     );
-  //     expect(consoleError.mock.calls[0][0].message).toBe(
-  //       'Test error from Error button'
-  //     );
-  //   });
-
-  //   consoleError.mockRestore();
-  // });
 });

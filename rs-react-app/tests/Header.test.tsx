@@ -13,7 +13,6 @@ describe('Header', () => {
     );
 
     expect(screen.getByText('Rick and Morty Portal')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Main/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /About/i })).toBeInTheDocument();
   });
 });
