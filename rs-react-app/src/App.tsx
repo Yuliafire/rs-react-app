@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
@@ -12,16 +11,6 @@ const ABOUTPAGE_PATH = '/about';
 const NOTFOUND_PATH = '*';
 
 const App = () => {
-  const [shouldThrowError, setShouldThrowError] = useState(false);
-
-  const handleThrowError = () => {
-    setShouldThrowError(true);
-  };
-
-  if (shouldThrowError) {
-    throw new Error('Test error from Error button');
-  }
-
   return (
     <div className="app">
       <Header />
@@ -33,9 +22,6 @@ const App = () => {
           <Route path={NOTFOUND_PATH} element={<NotFound />} />
         </Routes>
       </main>
-      <button onClick={handleThrowError} type="button">
-        Error Button
-      </button>
       <Footer />
     </div>
   );
