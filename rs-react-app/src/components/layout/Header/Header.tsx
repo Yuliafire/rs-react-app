@@ -6,25 +6,12 @@ const Header = () => {
     <header className={styles.header}>
       <h1>Rick and Morty Portal</h1>
       <nav className={styles.nav}>
-        <ul>
-          <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? styles.active : '')}
-              end
-            >
-              Main
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/about"
-              className={({ isActive }) => (isActive ? styles.active : '')}
-            >
-              About
-            </NavLink>
-          </li>
-        </ul>
+        <NavLink
+          to="/about"
+          className={({ isActive }) => (isActive ? styles.active : '')}
+        >
+          About
+        </NavLink>
       </nav>
     </header>
   );

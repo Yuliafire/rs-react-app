@@ -1,0 +1,17 @@
+.details {
+  flex: 1;
+  padding: 1rem;
+  background: #f0f0f0;
+  border-left: 1px solid #ccc;
+}
+
+.details img {
+  max-width: 200px;
+  border-radius: 8px;
+}
+
+.details button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

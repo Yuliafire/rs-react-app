@@ -3,11 +3,19 @@ import type { CharacterDetails } from '../../../types/types';
 
 interface CardProps {
   character: CharacterDetails;
+  onClick: () => void;
 }
 
-const Card = ({ character }: CardProps) => {
+const Card = ({ character, onClick }: CardProps) => {
   return (
-    <div className={styles.card} data-testid="card">
+    <div
+      className={styles.card}
+      data-testid="card"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${character.name}`}
+    >
       <div className={styles.cardImage}>
         <img src={character.image} alt={character.name} />
         <span

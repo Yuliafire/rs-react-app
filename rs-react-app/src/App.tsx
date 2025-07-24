@@ -14,7 +14,7 @@ const App = () => {
   return (
     <div className="app">
       <Header />
-      <main>
+      <main className="main">
         <Routes>
           <Route path={HOME_PATH} element={<HomePage />} />
           <Route path={RESERVE_HOME_PATH} element={<HomePage />} />

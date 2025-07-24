@@ -7,9 +7,15 @@ interface ResultsSectionProps {
   results: CharacterDetails[];
   loading: boolean;
   error: string | null;
+  onResultClick: (id: number) => void;
 }
 
-const ResultsSection = ({ loading, error, results }: ResultsSectionProps) => {
+const ResultsSection = ({
+  loading,
+  error,
+  results,
+  onResultClick,
+}: ResultsSectionProps) => {
   if (loading) {
     return (
       <section
@@ -42,7 +48,7 @@ const ResultsSection = ({ loading, error, results }: ResultsSectionProps) => {
 
   return (
     <section className={styles.resultsSection}>
-      <CardList characters={results} />
+      <CardList characters={results} onCardClick={onResultClick} />
     </section>
   );
 };

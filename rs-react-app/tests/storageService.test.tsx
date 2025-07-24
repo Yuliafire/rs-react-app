@@ -55,13 +55,6 @@ describe('storageService', () => {
   });
 
   describe('saveSearchTerm', () => {
-    // it('should save term to localStorage', () => {
-    //   const testTerm = 'Morty';
-    //   const { result } = renderHook(() => useStorage());
-    //   result.current.saveSearchTerm(testTerm);
-    //   expect(JSON.parse(mockStorage[RICKMORTY_SEARCH_KEY]!)).toBe(testTerm);
-    // });
-
     it('should add term to search history', () => {
       const testTerm = 'Summer';
       const { result } = renderHook(() => useStorage());

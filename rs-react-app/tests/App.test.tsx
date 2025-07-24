@@ -161,6 +161,7 @@ describe('App Component', () => {
     vi.mocked(ApiService.fetchInitialCharacters).mockResolvedValue({
       status: 'error',
       message: 'Failed to load',
+      data: []
     });
 
     render(
