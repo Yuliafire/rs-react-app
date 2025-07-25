@@ -13,6 +13,9 @@ interface ServiceResponse<T> {
 }
 
 class ApiService {
+  mapToResultItems() {
+    throw new Error('Method not implemented.');
+  }
   private static instance: ApiService;
   private readonly baseUrl: string;
   private readonly maxRetries = 3;
