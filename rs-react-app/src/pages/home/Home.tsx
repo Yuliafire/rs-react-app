@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import SearchSection from '../../components/SearchSection/SearchSection';
 import ResultsSection from '../../components/ResultsSection/ResultsSection';
 import CharacterDetailsComponent from '../../components/CharacterDetails/CharacterDetails';
+import Pagination from '../../components/Pagination/Pagination';
 import styles from './Home.module.scss';
 import type { CharacterDetails } from '../../types/types';
 
@@ -65,28 +66,15 @@ const Home = () => {
           onResultClick={handleResultClick}
         />
         {totalPages > 1 && (
-          <div className={styles.pagination}>
-            <button
-              onClick={() => handlePageChange(page - 1)}
-              disabled={page === 1 || loading}
-              aria-label="Previous page"
-            >
-              Previous
-            </button>
-            <span>
-              Page {page} of {totalPages}
-            </span>
-            <button
-              onClick={() => handlePageChange(page + 1)}
-              disabled={page === totalPages || loading}
-              aria-label="Next page"
-            >
-              Next
-            </button>
-          </div>
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            loading={loading}
+          />
         )}
       </div>
-      {detailsId && (
+      {detailsId && !isNaN(parseInt(detailsId, 10)) && (
         <CharacterDetailsComponent characterId={parseInt(detailsId, 10)} />
       )}
     </div>
