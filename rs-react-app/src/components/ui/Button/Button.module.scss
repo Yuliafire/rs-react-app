@@ -1,9 +1,6 @@
 .button {
   padding: 1rem 2rem;
   background: transparent;
-  color: #ff3e7f;
-  border: 2px solid #ff3e7f;
-  border-radius: 0;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -16,17 +13,19 @@
   gap: 0.5rem;
   position: relative;
   overflow: hidden;
-  min-width: 8rem;
+  min-width: 7rem;
   text-align: center;
+  border-radius:  10px;
+  border: 1px solid  #0a0e17;
+  color: black;
 
   &[type='submit'],
   &[type='button'] {
-    border-color: #42f5ef;
-    color: #42f5ef;
+    border-color: #0a0e17;
 
     &:hover:not(:disabled) {
       background: #42f5ef;
-      color: #0a0e17;
+     
       box-shadow: 0 0 15px #42f5ef;
     }
   }
@@ -37,8 +36,6 @@
   }
 
   &:hover:not(:disabled) {
-    background: #ff3e7f;
     color: #0a0e17;
-    box-shadow: 0 0 15px #ff3e7f;
   }
 }

@@ -13,7 +13,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  flex: 1; 
+  flex: 1;
 }
 
 .searchSection {
@@ -22,7 +22,7 @@
   gap: 1rem;
 
   @media (max-width: 600px) {
-    order: 1; 
+    order: 1;
   }
 }
 
@@ -32,7 +32,7 @@
   gap: 1rem;
 
   @media (max-width: 600px) {
-    order: 2; 
+    order: 2;
   }
 }
 
@@ -56,20 +56,20 @@
 
 .characterDetails {
   flex: 0 0 auto;
-  flex-basis: 40%; 
-  min-width: 300px; 
-  background-color: #1a1a1a; 
+  flex-basis: 40%;
+  min-width: 300px;
+  background-color: #1a1a1a;
   padding: 1rem;
-  border-left: 1px solid #41ead4; 
-  display: block; 
-  visibility: visible; 
+  border-left: 1px solid #41ead4;
+  display: block;
+  visibility: visible;
   max-height: 500px;
 
   @media (max-width: 600px) {
-    order: 3; 
-    flex-basis: 100%; 
+    order: 3;
+    flex-basis: 100%;
     border-left: none;
-    border-top: 1px solid #41ead4; 
+    border-top: 1px solid #41ead4;
   }
 }
 
@@ -81,14 +81,14 @@
   @extend .searchResults;
 }
 
-:where(.home) [data-testid="details"] {
+:where(.home) [data-testid='details'] {
   @extend .characterDetails;
 }
 
-.home:has(> [data-testid="details"]) .container {
-  flex-basis: 60%; 
+.home:has(> [data-testid='details']) .container {
+  flex-basis: 60%;
 }
 
-.home:not(:has(> [data-testid="details"])) .container {
+.home:not(:has(> [data-testid='details'])) .container {
   flex-basis: 100%;
 }
