@@ -17,7 +17,9 @@ button {
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 3px;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 
   &:hover:not(:disabled) {
     background-color: #41ead4;

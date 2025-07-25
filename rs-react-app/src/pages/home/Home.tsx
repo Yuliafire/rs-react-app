@@ -52,27 +52,29 @@ const Home = () => {
 
   return (
     <div className={styles.home}>
-      <SearchSection
-        onSearchResults={handleSearchResults}
-        onLoadingChange={setLoading}
-        onErrorChange={setError}
-        currentPage={page}
-      />
-      <div className={styles.searchResults}>
-        <ResultsSection
-          results={results}
-          loading={loading}
-          error={error}
-          onResultClick={handleResultClick}
+      <div className={styles.container}>
+        <SearchSection
+          onSearchResults={handleSearchResults}
+          onLoadingChange={setLoading}
+          onErrorChange={setError}
+          currentPage={page}
         />
-        {totalPages > 1 && (
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
+        <div className={styles.searchResults}>
+          <ResultsSection
+            results={results}
             loading={loading}
+            error={error}
+            onResultClick={handleResultClick}
           />
-        )}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              loading={loading}
+            />
+          )}
+        </div>
       </div>
       {detailsId && !isNaN(parseInt(detailsId, 10)) && (
         <CharacterDetailsComponent characterId={parseInt(detailsId, 10)} />
