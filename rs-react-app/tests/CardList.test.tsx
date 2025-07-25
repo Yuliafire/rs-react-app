@@ -28,13 +28,27 @@ describe('CardList Component', () => {
 
   describe('Rendering Behavior', () => {
     it('renders one card when given one character', () => {
-      render(<CardList characters={generateMockCharacters(1)} />);
+      render(
+        <CardList
+          characters={generateMockCharacters(1)}
+          onCardClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
       expect(screen.getAllByTestId('card')).toHaveLength(1);
     });
 
     it('renders multiple cards when given multiple characters', () => {
       const testCount = 3;
-      render(<CardList characters={generateMockCharacters(testCount)} />);
+      render(
+        <CardList
+          characters={generateMockCharacters(testCount)}
+          onCardClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
       expect(screen.getAllByTestId('card')).toHaveLength(testCount);
     });
   });
@@ -42,7 +56,14 @@ describe('CardList Component', () => {
   describe('Data Handling', () => {
     it('passes character data correctly to each Card', () => {
       const testData = generateMockCharacters(3);
-      render(<CardList characters={testData} />);
+      render(
+        <CardList
+          characters={testData}
+          onCardClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
 
       const cards = screen.getAllByTestId('card');
       testData.forEach((character, index) => {
@@ -55,7 +76,14 @@ describe('CardList Component', () => {
         { ...generateMockCharacters(1)[0], name: undefined, image: undefined },
       ] as unknown as CharacterDetails[];
 
-      render(<CardList characters={incompleteData} />);
+      render(
+        <CardList
+          characters={incompleteData}
+          onCardClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
       expect(screen.getByTestId('card')).toBeInTheDocument();
     });
   });
@@ -63,7 +91,16 @@ describe('CardList Component', () => {
   describe('Performance', () => {
     it('renders large lists without crashing', () => {
       const largeList = generateMockCharacters(100);
-      expect(() => render(<CardList characters={largeList} />)).not.toThrow();
+      expect(() =>
+        render(
+          <CardList
+            characters={largeList}
+            onCardClick={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        )
+      ).not.toThrow();
     });
   });
 });
