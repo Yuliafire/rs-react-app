@@ -1,4 +1,94 @@
 .home {
   display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  height: auto;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.container {
+  display: flex;
   flex-direction: column;
+  flex: 1; 
+}
+
+.searchSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  @media (max-width: 600px) {
+    order: 1; 
+  }
+}
+
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @media (max-width: 600px) {
+    order: 2; 
+  }
+}
+
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.characterDetails {
+  flex: 0 0 auto;
+  flex-basis: 40%; 
+  min-width: 300px; 
+  background-color: #1a1a1a; 
+  padding: 1rem;
+  border-left: 1px solid #41ead4; 
+  display: block; 
+  visibility: visible; 
+  max-height: 500px;
+
+  @media (max-width: 600px) {
+    order: 3; 
+    flex-basis: 100%; 
+    border-left: none;
+    border-top: 1px solid #41ead4; 
+  }
+}
+
+:where(.home) > :nth-child(1) {
+  @extend .searchSection;
+}
+
+:where(.home) > .searchResults {
+  @extend .searchResults;
+}
+
+:where(.home) [data-testid="details"] {
+  @extend .characterDetails;
+}
+
+.home:has(> [data-testid="details"]) .container {
+  flex-basis: 60%; 
+}
+
+.home:not(:has(> [data-testid="details"])) .container {
+  flex-basis: 100%;
 }
