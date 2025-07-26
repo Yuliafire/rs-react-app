@@ -16,29 +16,15 @@ const ResultsSection = ({
   results,
   onResultClick,
 }: ResultsSectionProps) => {
-  if (loading) {
-    return (
-      <section
-        className={styles.resultsSection}
-        role="alert"
-        aria-live="polite"
-      >
-        <div className={styles.loaderContainer}>
-          <Loader minDisplayTime={2000} data-testid="loader" />
-        </div>
-      </section>
-    );
-  }
-
   if (error) {
     return (
-      <section className={styles.resultsSectionError}>
+      <section className={styles.resultsSectionError} aria-live="polite">
         <p role="paragraph">{error}</p>
       </section>
     );
   }
 
-  if (results.length === 0) {
+  if (!results.length) {
     return (
       <p className={styles.noResults}>
         No characters found. Try another search!
@@ -48,7 +34,14 @@ const ResultsSection = ({
 
   return (
     <section className={styles.resultsSection}>
-      <CardList characters={results} onCardClick={onResultClick} />
+      {loading ? (
+        <div className={styles.loaderContainer}>
+          <Loader minDisplayTime={2000} data-testid="loader" />
+        </div>
+      ) : (
+        <CardList characters={results} onCardClick={onResultClick} />
+      )}
+      ;
     </section>
   );
 };
