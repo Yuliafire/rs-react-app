@@ -36,6 +36,23 @@
   }
 }
 
+
+// .searchResults {
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
+//   gap: 1rem;
+
+//   @media (max-width: 600px) {
+//     grid-template-columns: 1fr; // 1 column on small screens
+//     order: 2;
+//   }
+// }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .pagination {
   margin-top: 1rem;
   display: flex;
@@ -57,13 +74,17 @@
 .characterDetails {
   flex: 0 0 auto;
   flex-basis: 40%;
-  min-width: 300px;
+  max-width: 400px; 
   background-color: #1a1a1a;
   padding: 1rem;
   border-left: 1px solid #41ead4;
   display: block;
-  visibility: visible;
-  max-height: 500px;
+  width: 100%;
+
+  @media (max-width: 900px) {
+    flex-basis: 30%;
+    max-width: 300px;
+  }
 
   @media (max-width: 600px) {
     order: 3;

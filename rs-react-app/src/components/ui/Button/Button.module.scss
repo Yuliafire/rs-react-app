@@ -15,8 +15,8 @@
   overflow: hidden;
   min-width: 7rem;
   text-align: center;
-  border-radius:  10px;
-  border: 1px solid  #0a0e17;
+  border-radius: 10px;
+  border: 1px solid #0a0e17;
   color: black;
 
   &[type='submit'],
@@ -25,7 +25,7 @@
 
     &:hover:not(:disabled) {
       background: #42f5ef;
-     
+
       box-shadow: 0 0 15px #42f5ef;
     }
   }
