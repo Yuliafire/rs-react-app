@@ -39,7 +39,7 @@ class ApiService {
     try {
       await new Promise((resolve) =>
         setTimeout(resolve, this.retryDelay * retryCount)
-      ); // Delay for retries
+      );
       const response = await fetch(url);
       if (!response.ok) {
         if (response.status === 429 && retryCount < this.maxRetries) {

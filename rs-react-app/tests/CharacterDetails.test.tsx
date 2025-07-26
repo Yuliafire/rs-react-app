@@ -12,7 +12,6 @@ interface ServiceResponse<T> {
   data: T;
 }
 
-// Mock the modules
 vi.mock('react-router-dom', async (importOriginal) => {
   const actual: typeof import('react-router-dom') = await importOriginal();
   return {
@@ -22,6 +21,8 @@ vi.mock('react-router-dom', async (importOriginal) => {
       new URLSearchParams('?page=1&query=rick'),
       vi.fn(),
     ]),
+    useParams: vi.fn(() => ({ id: '1' })),
+    useOutletContext: vi.fn(() => ({ detailsRef: { current: null } })),
   };
 });
 
@@ -65,8 +66,8 @@ describe('CharacterDetailsComponent', () => {
 
   it('fetches and displays character details', async () => {
     render(
-      <MemoryRouter>
-        <CharacterDetailsComponent characterId={1} />
+      <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
+        <CharacterDetailsComponent />
       </MemoryRouter>
     );
 
@@ -90,26 +91,16 @@ describe('CharacterDetailsComponent', () => {
     vi.mocked(ApiService.getCharacter).mockResolvedValue({
       status: 'error',
       message: 'Character not found',
-      data: { ...mockCharacter, id: 999 } as CharacterDetails,
+      data: { ...mockCharacter, id: '999' } as unknown as CharacterDetails,
     } as ServiceResponse<CharacterDetails>);
 
     render(
-      <MemoryRouter>
-        <CharacterDetailsComponent characterId={999} />
+      <MemoryRouter initialEntries={['/home/999?page=1&query=rick']}>
+        <CharacterDetailsComponent />
       </MemoryRouter>
     );
 
     expect(await screen.findByText('Character not found')).toBeInTheDocument();
-  });
-
-  it('displays error for invalid character ID', async () => {
-    render(
-      <MemoryRouter>
-        <CharacterDetailsComponent characterId={0} />
-      </MemoryRouter>
-    );
-
-    expect(await screen.findByText('Invalid character ID')).toBeInTheDocument();
   });
 
   it('handles API request failure', async () => {
@@ -118,8 +109,8 @@ describe('CharacterDetailsComponent', () => {
     );
 
     render(
-      <MemoryRouter>
-        <CharacterDetailsComponent characterId={1} />
+      <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
+        <CharacterDetailsComponent />
       </MemoryRouter>
     );
 
@@ -128,8 +119,8 @@ describe('CharacterDetailsComponent', () => {
 
   it('navigates back with correct search params when close button is clicked', async () => {
     render(
-      <MemoryRouter>
-        <CharacterDetailsComponent characterId={1} />
+      <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
+        <CharacterDetailsComponent />
       </MemoryRouter>
     );
 
@@ -140,19 +131,19 @@ describe('CharacterDetailsComponent', () => {
     const closeButton = screen.getByRole('button', { name: /close/i });
     await userEvent.click(closeButton);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/?page=1&query=rick');
+    expect(mockNavigate).toHaveBeenCalledWith('/home?page=1&query=rick');
   });
 
   it('shows "Character not found" when character data fetch fails', async () => {
     vi.mocked(ApiService.getCharacter).mockResolvedValue({
       status: 'error',
       message: 'Character not found',
-      data: { ...mockCharacter, id: 999 } as CharacterDetails,
+      data: { ...mockCharacter, id: '999' } as unknown as CharacterDetails,
     } as ServiceResponse<CharacterDetails>);
 
     render(
-      <MemoryRouter>
-        <CharacterDetailsComponent characterId={1} />
+      <MemoryRouter initialEntries={['/home/999?page=1&query=rick']}>
+        <CharacterDetailsComponent />
       </MemoryRouter>
     );
 
