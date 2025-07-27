@@ -6,6 +6,11 @@ import { About } from './pages/about/About';
 import { NotFound } from './pages/not-found/Notfound';
 import CharacterDetailsComponent from './components/CharacterDetails/CharacterDetails';
 
+const HOME_PATH = '/';
+const DYNAMIC_PAGE_PATH = '/:page';
+const ABOUT_PATH = '/about';
+const NOT_FOUND_PATH = '*';
+
 const App = () => {
   return (
     <div className="app">
@@ -13,19 +18,19 @@ const App = () => {
       <main className="main">
         <Routes>
           <Route
-            path="/"
+            path={HOME_PATH}
             element={<Home />}
             errorElement={<div>Error in Home or Details</div>}
           />
-          <Route path="/:page" element={<Home />}>
+          <Route path={DYNAMIC_PAGE_PATH} element={<Home />}>
             <Route path=":id" element={<CharacterDetailsComponent />} />
           </Route>
           <Route
-            path="/about"
+            path={ABOUT_PATH}
             element={<About />}
             errorElement={<div>Error in About</div>}
           />
-          <Route path="*" element={<NotFound />} />
+          <Route path={NOT_FOUND_PATH} element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

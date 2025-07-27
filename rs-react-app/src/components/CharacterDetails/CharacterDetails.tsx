@@ -6,7 +6,7 @@ import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
 
 const CharacterDetailsComponent = () => {
-  const { id } = useParams<{ id?: string }>();
+  const { id, page } = useParams<{ id?: string; page?: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -42,10 +42,12 @@ const CharacterDetailsComponent = () => {
   }, [id]);
 
   const handleClose = () => {
-    const page = searchParams.get('page') || '1';
-    const query = searchParams.get('query') || '';
-    console.log('handleClose', { page, query, currentId: id });
-    navigate(`/${page}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
+    const queryString = searchParams.toString()
+      ? `?${searchParams.toString()}`
+      : '';
+    const basePath = page ? `/${page}` : '/';
+    console.log('handleClose', { page, queryString, currentId: id, basePath });
+    navigate(`${basePath}${queryString}`);
   };
 
   if (loading) {
