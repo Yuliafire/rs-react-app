@@ -131,7 +131,7 @@ describe('CharacterDetailsComponent', () => {
     const closeButton = screen.getByRole('button', { name: /close/i });
     await userEvent.click(closeButton);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/home?page=1&query=rick');
+    expect(mockNavigate).toHaveBeenCalledWith('/1?query=rick');
   });
 
   it('shows "Character not found" when character data fetch fails', async () => {

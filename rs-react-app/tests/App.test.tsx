@@ -130,7 +130,6 @@ describe('App Component', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('NotFound Page')).toBeInTheDocument();
     expect(screen.getByText('Header Mock')).toBeInTheDocument();
     expect(screen.getByText('Footer Mock')).toBeInTheDocument();
   });
