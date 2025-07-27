@@ -83,6 +83,7 @@ const Home = () => {
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       console.log('handlePageChange', { newPage, selectedId, query });
+      setSelectedId(undefined);
       setCurrentPage(newPage);
       const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
       navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
