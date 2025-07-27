@@ -1,31 +1,14 @@
-import {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useEffect,
-  useState,
-} from 'react';
-import {
-  useParams,
-  useSearchParams,
-  useNavigate,
-  useOutletContext,
-} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import ApiService from '../../services/apiService';
 import type { CharacterDetails } from '../../types/types';
 import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
 
-interface OutletContext {
-  detailsRef: React.RefObject<HTMLDivElement>;
-}
-
-const CharacterDetailsComponent = forwardRef<HTMLDivElement>((_props, ref) => {
+const CharacterDetailsComponent = () => {
   const { id } = useParams<{ id?: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { detailsRef } = useOutletContext<OutletContext>();
-  const localRef = useRef<HTMLDivElement>(null);
 
   const [character, setCharacter] = useState<CharacterDetails | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,25 +44,20 @@ const CharacterDetailsComponent = forwardRef<HTMLDivElement>((_props, ref) => {
   const handleClose = () => {
     const page = searchParams.get('page') || '1';
     const query = searchParams.get('query') || '';
+    console.log('handleClose', { page, query, currentId: id });
     navigate(`/${page}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
   };
 
-  useImperativeHandle(
-    ref,
-    () => (detailsRef.current || localRef.current) as HTMLDivElement,
-    [detailsRef]
-  );
-
   if (loading) {
     return (
-      <div className={styles.details} ref={localRef}>
+      <div className={styles.details}>
         <Loader minDisplayTime={1000} data-testid="details-loader" />
       </div>
     );
   }
   if (error || !character) {
     return (
-      <div className={styles.details} ref={localRef}>
+      <div className={styles.details}>
         <p>{error || 'Character not found'}</p>
         <button onClick={handleClose} aria-label="Close details">
           Close
@@ -88,7 +66,7 @@ const CharacterDetailsComponent = forwardRef<HTMLDivElement>((_props, ref) => {
     );
   }
   return (
-    <div className={styles.details} ref={localRef}>
+    <div className={styles.details}>
       <h3>{character.name}</h3>
       <img src={character.image} alt={character.name} />
       <p>Status: {character.status}</p>
@@ -101,7 +79,7 @@ const CharacterDetailsComponent = forwardRef<HTMLDivElement>((_props, ref) => {
       </button>
     </div>
   );
-});
+};
 
 CharacterDetailsComponent.displayName = 'CharacterDetailsComponent';
 

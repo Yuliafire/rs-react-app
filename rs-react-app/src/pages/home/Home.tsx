@@ -33,24 +33,28 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const mainPanelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const newPage = !isNaN(parseInt(pageParam || '1', 10))
       ? parseInt(pageParam || '1', 10)
       : 1;
-    if (newPage !== currentPage || query !== queryParam) {
+    if (newPage !== currentPage || query !== queryParam || id !== selectedId) {
       setCurrentPage(newPage);
       setQuery(queryParam);
-      if (idParam) {
-        setSelectedId(parseInt(idParam, 10));
-      }
+      setSelectedId(id);
     }
-  }, [pageParam, idParam, queryParam, currentPage, query]);
+  }, [pageParam, idParam, queryParam, currentPage, query, id]);
 
   const handleSearchResults = (
     results: CharacterDetails[],
     searchTerm: string,
     totalPages: number
   ) => {
+    console.log('handleSearchResults', {
+      totalPages,
+      resultsLength: results.length,
+    });
     setResults(results);
     setTotalPages(totalPages);
 
@@ -61,9 +65,10 @@ const Home = () => {
         `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`
       );
     } else {
-      navigate(
-        `/${currentPage}${query ? `?query=${encodeURIComponent(query)}` : ''}`
-      );
+      const path = selectedId
+        ? `/${currentPage}/${selectedId}`
+        : `/${currentPage}`;
+      navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
     }
     setQuery(searchTerm);
   };
@@ -77,35 +82,15 @@ const Home = () => {
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      setSelectedId(undefined);
+      console.log('handlePageChange', { newPage, selectedId, query });
       setCurrentPage(newPage);
-      navigate(
-        `/${newPage}${query ? `?query=${encodeURIComponent(query)}` : ''}`
-      );
-    }
-  };
-
-  const mainPanelRef = useRef<HTMLDivElement>(null);
-  const detailsRef = useRef<HTMLDivElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (
-      selectedId &&
-      !isNaN(selectedId) &&
-      detailsRef.current &&
-      !detailsRef.current.contains(event.target as Node) &&
-      mainPanelRef.current &&
-      mainPanelRef.current.contains(event.target as Node)
-    ) {
-      setSelectedId(undefined);
-      navigate(
-        `/${currentPage}${query ? `?query=${encodeURIComponent(query)}` : ''}`
-      );
+      const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
+      navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
     }
   };
 
   return (
-    <div className={styles.home} onClick={handleClick} ref={mainPanelRef}>
+    <div className={styles.home} ref={mainPanelRef}>
       <div className={styles.container}>
         <SearchSection
           onSearchResults={handleSearchResults}
@@ -134,7 +119,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Outlet context={{ detailsRef }} />
+      <Outlet />
     </div>
   );
 };
