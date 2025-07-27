@@ -53,7 +53,6 @@ Ensure you have the following installed:
 - Push to the branch (git push origin feature/YourFeature).
 - Open a pull request to `develop` branch.
 
-
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
