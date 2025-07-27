@@ -81,6 +81,4 @@ const CharacterDetailsComponent = () => {
   );
 };
 
-CharacterDetailsComponent.displayName = 'CharacterDetailsComponent';
-
 export default CharacterDetailsComponent;
