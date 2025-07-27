@@ -115,12 +115,14 @@ const Home = () => {
         />
         <div className="wrapper">
           <div className={styles.searchResults}>
-            <ResultsSection
-              results={results}
-              loading={loading}
-              error={error}
-              onResultClick={handleResultClick}
-            />
+            <div className="resultsBox">
+              <ResultsSection
+                results={results}
+                loading={loading}
+                error={error}
+                onResultClick={handleResultClick}
+              />
+            </div>
             {totalPages > 1 && (
               <Pagination
                 currentPage={currentPage}

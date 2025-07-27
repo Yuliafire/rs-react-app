@@ -36,6 +36,17 @@
   }
 }
 
+.resultsBox {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 600px) {
+    order: 2;
+    grid-template-columns: 1fr; 
+  }
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -80,14 +91,6 @@
     border-left: none;
     border-top: 1px solid #41ead4;
   }
-}
-
-:where(.home) > :nth-child(1) {
-  @extend .searchSection;
-}
-
-:where(.home) > .searchResults {
-  @extend .searchResults;
 }
 
 :where(.home) [data-testid='details'] {
