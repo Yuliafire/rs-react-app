@@ -1,0 +1,31 @@
+.details {
+  flex: 1;
+  padding: 1rem;
+  background: #333;
+  color: white;
+  border-left: 3px solid #41ead4;
+  height: auto;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    border: 3px solid #41ead4;
+  }
+}
+
+.details img {
+  max-width: 400px;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.details button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: 1px solid white;
+  border-radius: 10px;
+  color: black;
+  color: white;
+}

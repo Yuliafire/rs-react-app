@@ -1,14 +1,20 @@
-import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 
-class Header extends React.Component {
-  render() {
-    return (
-      <header className={styles.header}>
-        <h1 className={styles.title}>Rick & Morty</h1>
-      </header>
-    );
-  }
-}
+const Header = () => {
+  return (
+    <header className={styles.header}>
+      <h1>Rick and Morty Portal</h1>
+      <nav className={styles.nav}>
+        <NavLink
+          to="/about"
+          className={({ isActive }) => (isActive ? styles.active : '')}
+        >
+          About
+        </NavLink>
+      </nav>
+    </header>
+  );
+};
 
 export default Header;

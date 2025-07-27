@@ -1,23 +1,24 @@
-import React from 'react';
 import Card from '../Card/Card';
 import styles from './CardList.module.scss';
 import type { CharacterDetails } from '../../../types/types';
 
 interface CardListProps {
   characters: CharacterDetails[];
+  onCardClick: (id: number) => void;
 }
 
-class CardList extends React.Component<CardListProps> {
-  render() {
-    const { characters } = this.props;
-    return (
-      <div className={styles.cardList} role="list">
-        {characters.map((character) => (
-          <Card key={character.id} character={character} />
-        ))}
-      </div>
-    );
-  }
-}
+const CardList = ({ characters, onCardClick }: CardListProps) => {
+  return (
+    <div className={styles.cardList} role="list">
+      {characters.map((character) => (
+        <Card
+          key={character.id}
+          character={character}
+          onClick={() => onCardClick(character.id)}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default CardList;

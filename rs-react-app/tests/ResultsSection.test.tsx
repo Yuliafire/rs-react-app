@@ -60,12 +60,30 @@ describe('ResultsSection Component', () => {
   describe('Initial States', () => {
     it('shows error message', () => {
       const error = 'Test error';
-      render(<ResultsSection loading={false} error={error} results={[]} />);
+      render(
+        <ResultsSection
+          loading={false}
+          error={error}
+          results={[]}
+          onResultClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
       expect(screen.getByText(error)).toBeInTheDocument();
     });
 
     it('shows empty state', () => {
-      render(<ResultsSection loading={false} error={null} results={[]} />);
+      render(
+        <ResultsSection
+          loading={false}
+          error={null}
+          results={[]}
+          onResultClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
       expect(screen.getByText(/no characters found/i)).toBeInTheDocument();
     });
   });
@@ -73,7 +91,14 @@ describe('ResultsSection Component', () => {
   describe('With Data', () => {
     it('renders character cards', () => {
       render(
-        <ResultsSection loading={false} error={null} results={mockCharacters} />
+        <ResultsSection
+          loading={false}
+          error={null}
+          results={mockCharacters}
+          onResultClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       );
       expect(screen.getAllByTestId('card')).toHaveLength(2);
     });
@@ -85,6 +110,9 @@ describe('ResultsSection Component', () => {
           results={incompleteChars}
           loading={false}
           error={null}
+          onResultClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       );
       expect(screen.getAllByTestId('card')).toHaveLength(1);
@@ -101,7 +129,16 @@ describe('Error Handling', () => {
 
   errorCases.forEach(({ type, message }) => {
     it(`handles ${type} errors`, () => {
-      render(<ResultsSection error={message} results={[]} loading={false} />);
+      render(
+        <ResultsSection
+          error={message}
+          results={[]}
+          loading={false}
+          onResultClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
       expect(screen.getByText(message)).toBeInTheDocument();
     });
   });

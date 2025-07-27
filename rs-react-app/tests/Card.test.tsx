@@ -37,14 +37,28 @@ const createTestCharacter = (
 describe('Card Component', () => {
   it('handles missing image', () => {
     const testCharacter = createTestCharacter({ image: '' });
-    render(<Card character={testCharacter} />);
+    render(
+      <Card
+        character={testCharacter}
+        onClick={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+    );
     expect(screen.getByAltText(testCharacter.name)).toBeInTheDocument();
   });
 
   describe('Displays item name and description correctly', () => {
     it('should render character name prominently', () => {
       const testCharacter = createTestCharacter({ name: 'Rick Sanchez' });
-      render(<Card character={testCharacter} />);
+      render(
+        <Card
+          character={testCharacter}
+          onClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
 
       const nameElement = screen.getByRole('heading', { level: 3 });
       expect(nameElement).toBeInTheDocument();
@@ -58,7 +72,14 @@ describe('Card Component', () => {
         origin: { name: 'Earth', url: '' },
         location: { name: 'Citadel of Ricks', url: '' },
       });
-      render(<Card character={testCharacter} />);
+      render(
+        <Card
+          character={testCharacter}
+          onClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
       expect(screen.getByText(/Species:/)).toBeInTheDocument();
       expect(screen.getByText(/Gender:/)).toBeInTheDocument();
       expect(screen.getByText(/Origin:/)).toBeInTheDocument();
@@ -69,7 +90,14 @@ describe('Card Component', () => {
   describe('Status Badge', () => {
     it('should display status with correct attributes', () => {
       const testCharacter = createTestCharacter({ status: 'Dead' });
-      render(<Card character={testCharacter} />);
+      render(
+        <Card
+          character={testCharacter}
+          onClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
 
       const statusBadge = screen.getByTestId('status-badge');
       expect(statusBadge).toBeInTheDocument();
@@ -81,14 +109,28 @@ describe('Card Component', () => {
       const testCharacter = createTestCharacter({
         episode: ['ep1', 'ep2', 'ep3'],
       });
-      render(<Card character={testCharacter} />);
+      render(
+        <Card
+          character={testCharacter}
+          onClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
 
       expect(screen.getByText(/Episodes:/)).toHaveTextContent('3');
     });
 
     it('should handle empty episode list', () => {
       const testCharacter = createTestCharacter({ episode: [] });
-      render(<Card character={testCharacter} />);
+      render(
+        <Card
+          character={testCharacter}
+          onClick={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+      );
 
       expect(screen.getByText(/Episodes:/)).toHaveTextContent('0');
     });

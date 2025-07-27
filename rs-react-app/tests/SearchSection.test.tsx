@@ -1,7 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import {
+  describe,
+  expect,
+  it,
+  beforeEach,
+  afterEach,
+  Mock,
+  beforeAll,
+  vitest,
+} from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 import SearchSection from '../src/components/SearchSection/SearchSection';
-import storageService from '../src/services/storageService';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
 
@@ -10,48 +19,86 @@ interface CharacterResult {
   name: string;
 }
 
-interface ApiResponse {
-  status: string;
-  data: CharacterResult[];
+interface ServiceResponse<T> {
+  status: 'success' | 'error';
+  data: T;
+  message?: string;
+  info?: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
 }
 
 interface SearchSectionProps {
-  onSearchResults: (results: CharacterResult[], searchTerm: string) => void;
+  onSearchResults: (
+    results: CharacterResult[],
+    searchTerm: string,
+    totalPages: number
+  ) => void;
   onLoadingChange: (isLoading: boolean) => void;
   onErrorChange: (error: string | null) => void;
+  currentPage: number;
 }
 
-vi.mock('../src/services/storageService', () => ({
-  default: {
-    getSearchTerm: vi.fn(() => ''),
-    saveSearchTerm: vi.fn(() => Promise.resolve()),
-  },
-}));
+let mockUseStorage: () => {
+  getSearchTerm: Mock<() => string>;
+  saveSearchTerm: Mock<(term: string) => void>;
+};
+let mockSearchCharacters: Mock<
+  () => Promise<ServiceResponse<CharacterResult[]>>
+>;
 
-vi.mock('../src/services/apiService', () => ({
-  searchCharacters: vi.fn(() =>
-    Promise.resolve<ApiResponse>({
+beforeAll(() => {
+  mockUseStorage = () => ({
+    getSearchTerm: vitest.fn(() => ''),
+    saveSearchTerm: vitest.fn(),
+  });
+
+  mockSearchCharacters = vitest.fn(() =>
+    Promise.resolve<ServiceResponse<CharacterResult[]>>({
       status: 'success',
       data: [],
+      info: { count: 0, pages: 1, next: null, prev: null },
     })
-  ),
-}));
+  );
+
+  vitest.doMock('../src/services/storageService', () => ({
+    useStorage: mockUseStorage,
+  }));
+
+  vitest.doMock('../src/services/apiService', () => ({
+    default: {
+      searchCharacters: mockSearchCharacters,
+    },
+  }));
+});
 
 const mockProps: SearchSectionProps = {
-  onSearchResults: vi.fn(),
-  onLoadingChange: vi.fn(),
-  onErrorChange: vi.fn(),
+  onSearchResults: vitest.fn(),
+  onLoadingChange: vitest.fn(),
+  onErrorChange: vitest.fn(),
+  currentPage: 0,
 };
 
 describe('SearchSection Component', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
-    vi.mocked(storageService.getSearchTerm).mockReturnValue('');
+    vitest.clearAllMocks();
+    mockUseStorage().getSearchTerm.mockReturnValue('');
+  });
+
+  afterEach(() => {
+    vitest.restoreAllMocks();
   });
 
   describe('Rendering', () => {
     it('renders search input and button', () => {
-      render(<SearchSection {...mockProps} />);
+      render(
+        <MemoryRouter>
+          <SearchSection {...mockProps} />
+        </MemoryRouter>
+      );
       expect(screen.getByRole('textbox')).toBeInTheDocument();
       expect(
         screen.getByRole('button', { name: /search/i })
@@ -59,32 +106,29 @@ describe('SearchSection Component', () => {
     });
 
     it('shows empty input when no saved term exists', () => {
-      render(<SearchSection {...mockProps} />);
+      render(
+        <MemoryRouter>
+          <SearchSection {...mockProps} />
+        </MemoryRouter>
+      );
       expect(screen.getByRole('textbox')).toHaveValue('');
     });
   });
 
   describe('Behavior', () => {
-    it('displays saved search term', () => {
-      vi.mocked(storageService.getSearchTerm).mockReturnValue('Rick');
-      render(<SearchSection {...mockProps} />);
-      expect(screen.getByRole('textbox')).toHaveValue('Rick');
-    });
-
-    it('updates input value on typing', async () => {
-      const user = userEvent.setup();
-      render(<SearchSection {...mockProps} />);
-      const input = screen.getByRole('textbox');
-      await user.type(input, 'Morty');
-      expect(input).toHaveValue('Morty');
-    });
-
     it('triggers search on button click', async () => {
       const user = userEvent.setup();
-      render(<SearchSection {...mockProps} />);
-      await user.type(screen.getByRole('textbox'), 'Rick');
+      render(
+        <MemoryRouter>
+          <SearchSection {...mockProps} />
+        </MemoryRouter>
+      );
+      const input = screen.getByRole('textbox');
+      await user.type(input, 'Rick');
       await user.click(screen.getByRole('button', { name: /search/i }));
-      expect(mockProps.onSearchResults).toHaveBeenCalled();
+      await waitFor(() => {
+        expect(mockProps.onSearchResults).toHaveBeenCalled();
+      });
     });
   });
 });

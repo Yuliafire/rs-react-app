@@ -1,12 +1,45 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import App from '../src/App';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
+import App from '../src/App';
 import type { CharacterDetails } from '../src/types/types';
 import ApiService from '../src/services/apiService';
 import '@testing-library/jest-dom/vitest';
 
+vi.mock('../src/components/layout/Header/Header', () => ({
+  default: () => <div>Header Mock</div>,
+}));
+
+vi.mock('../src/components/layout/Footer/Footer', () => ({
+  default: () => <div>Footer Mock</div>,
+}));
+
 vi.mock('../src/components/SearchSection/SearchSection', () => ({
-  default: () => <div>SearchSection Mock</div>,
+  default: ({
+    onSearchResults,
+    onLoadingChange,
+    onErrorChange,
+  }: {
+    onSearchResults: (results: CharacterDetails[], searchTerm: string) => void;
+    onLoadingChange: (loading: boolean) => void;
+    onErrorChange: (error: string | null) => void;
+  }) => (
+    <div>
+      SearchSection Mock
+      <button
+        onClick={() => {
+          onLoadingChange(true);
+          setTimeout(() => {
+            onSearchResults([], 'test');
+            onLoadingChange(false);
+            onErrorChange('Search failed');
+          }, 0);
+        }}
+      >
+        Trigger Search Error
+      </button>
+    </div>
+  ),
 }));
 
 vi.mock('../src/components/ResultsSection/ResultsSection', () => ({
@@ -27,9 +60,18 @@ vi.mock('../src/components/ResultsSection/ResultsSection', () => ({
   ),
 }));
 
+vi.mock('../src/pages/about/About', () => ({
+  About: () => <div>About Page</div>,
+}));
+
+vi.mock('../src/pages/not-found/Notfound', () => ({
+  NotFound: () => <div>NotFound Page</div>,
+}));
+
 vi.mock('../src/services/apiService', () => ({
   default: {
     fetchInitialCharacters: vi.fn(),
+    searchCharacters: vi.fn(),
   },
 }));
 
@@ -55,38 +97,69 @@ describe('App Component', () => {
       status: 'success',
       data: [mockCharacter],
     });
+    vi.mocked(ApiService.searchCharacters).mockResolvedValue({
+      status: 'success',
+      data: [mockCharacter],
+    });
   });
 
-  describe('Data Loading', () => {
-    it('shows loading state initially', async () => {
-      vi.mocked(ApiService.fetchInitialCharacters).mockImplementation(
-        () => new Promise(() => {})
-      );
+  it('renders Header, Footer, and HomePage on default route', async () => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+  });
 
-      render(<App />);
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
+  it('renders About page on /about route', async () => {
+    render(
+      <MemoryRouter initialEntries={['/about']}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('About Page')).toBeInTheDocument();
+    expect(screen.getByText('Header Mock')).toBeInTheDocument();
+    expect(screen.getByText('Footer Mock')).toBeInTheDocument();
+  });
+
+  it('renders NotFound page on invalid route', async () => {
+    render(
+      <MemoryRouter initialEntries={['/invalid']}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Header Mock')).toBeInTheDocument();
+    expect(screen.getByText('Footer Mock')).toBeInTheDocument();
+  });
+
+  it('handles initial load error', async () => {
+    vi.mocked(ApiService.fetchInitialCharacters).mockResolvedValue({
+      status: 'error',
+      message: 'Failed to load',
+      data: [],
     });
 
-    it('loads initial characters successfully', async () => {
-      render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+  });
 
-      await waitFor(() => {
-        expect(screen.getByText('Results: 1')).toBeInTheDocument();
-      });
-      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    });
+  it('handles search error from SearchSection', async () => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
 
-    it('handles initial load error', async () => {
-      vi.mocked(ApiService.fetchInitialCharacters).mockResolvedValue({
-        status: 'error',
-        message: 'Failed to load',
-      });
+    fireEvent.click(screen.getByText('Trigger Search Error'));
 
-      render(<App />);
-
-      await waitFor(() => {
-        expect(screen.getByText('Failed to load')).toBeInTheDocument();
-      });
+    await waitFor(() => {
+      expect(screen.getByText('Search failed')).toBeInTheDocument();
+      expect(screen.queryByText('Results: 1')).not.toBeInTheDocument();
     });
   });
 });

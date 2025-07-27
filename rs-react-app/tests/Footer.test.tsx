@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Footer from '../src/components/layout/Footer/Footer';
+import '@testing-library/jest-dom/vitest';
 
 describe('Footer Component', () => {
   it('renders without crashing', () => {
@@ -8,10 +9,9 @@ describe('Footer Component', () => {
     expect(screen.getByRole('contentinfo')).toBeInTheDocument();
   });
 
-  it('displays the current year in copyright', () => {
-    const currentYear = new Date().getFullYear();
+  it('displays the static copyright notice', () => {
     render(<Footer />);
-    expect(screen.getByText(`© ${currentYear} My App`)).toBeInTheDocument();
+    expect(screen.getByText('© 2025 Lingua Voice')).toBeInTheDocument();
   });
 
   it('contains GitHub link with icon', () => {

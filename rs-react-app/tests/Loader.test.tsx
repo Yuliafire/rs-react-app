@@ -1,6 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import Loader from '../src/components/ui/Loader/Loader';
+import '@testing-library/jest-dom/vitest';
 
 vi.mock('./Loader.module.scss', () => ({
   loaderWrapper: 'loaderWrapper',

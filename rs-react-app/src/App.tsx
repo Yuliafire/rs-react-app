@@ -1,98 +1,41 @@
-import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
-import SearchSection from './components/SearchSection/SearchSection';
-import ResultsSection from './components/ResultsSection/ResultsSection';
-import type { CharacterDetails } from './types/types';
-import ApiService from './services/apiService';
-import Button from './components/ui/Button/Button';
+import Home from './pages/home/Home';
+import { About } from './pages/about/About';
+import { NotFound } from './pages/not-found/Notfound';
+import CharacterDetailsComponent from './components/CharacterDetails/CharacterDetails';
 
-interface AppState {
-  results: CharacterDetails[];
-  loading: boolean;
-  error: string | null;
-  shouldThrowError: boolean;
-  isSearchResult: boolean;
-}
+const HOME_PATH = '/';
+const DYNAMIC_PAGE_PATH = '/:page';
+const ABOUT_PATH = '/about';
+const NOT_FOUND_PATH = '*';
 
-class App extends React.Component<Record<string, never>, AppState> {
-  state: AppState = {
-    results: [],
-    loading: true,
-    error: null,
-    shouldThrowError: false,
-    isSearchResult: false,
-  };
-
-  async componentDidMount() {
-    await this.loadInitialData();
-  }
-
-  async loadInitialData() {
-    this.setState({ loading: true, error: null });
-    const response = await ApiService.fetchInitialCharacters();
-
-    if (response.status === 'success') {
-      this.setState({
-        results: response.data,
-        loading: false,
-        isSearchResult: false,
-      });
-    } else {
-      this.setState({
-        error: response.message,
-        loading: false,
-        results: [],
-      });
-    }
-  }
-
-  handleSearchResults = (results: CharacterDetails[], searchTerm: string) => {
-    this.setState({
-      results,
-      error:
-        results.length === 0 && searchTerm.trim()
-          ? 'No characters found'
-          : null,
-      isSearchResult: searchTerm.trim().length > 0,
-    });
-  };
-
-  handleLoadingChange = (loading: boolean) => {
-    this.setState({ loading });
-  };
-
-  handleErrorChange = (error: string | null) => {
-    this.setState({ error });
-  };
-
-  handleThrowError = () => {
-    this.setState({ shouldThrowError: true });
-  };
-
-  render() {
-    const { results, loading, error, shouldThrowError } = this.state;
-
-    if (shouldThrowError) {
-      throw new Error('Test error from Error button');
-    }
-
-    return (
-      <div className="app">
-        <Header />
-        <SearchSection
-          onSearchResults={this.handleSearchResults}
-          onLoadingChange={this.handleLoadingChange}
-          onErrorChange={this.handleErrorChange}
-        />
-        <ResultsSection results={results} loading={loading} error={error} />
-        <Button onClick={this.handleThrowError} type="button">
-          Error Button
-        </Button>
-        <Footer />
-      </div>
-    );
-  }
-}
+const App = () => {
+  return (
+    <div className="app">
+      <Header />
+      <main className="main">
+        <Routes>
+          <Route
+            path={HOME_PATH}
+            element={<Home />}
+            errorElement={<div>Error in Home or Details</div>}
+          />
+          <Route path={DYNAMIC_PAGE_PATH} element={<Home />}>
+            <Route path=":id" element={<CharacterDetailsComponent />} />
+          </Route>
+          <Route
+            path={ABOUT_PATH}
+            element={<About />}
+            errorElement={<div>Error in About</div>}
+          />
+          <Route path={NOT_FOUND_PATH} element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export default App;

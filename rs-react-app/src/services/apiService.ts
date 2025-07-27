@@ -1,37 +1,69 @@
-import type { CharacterDetails, ResultItem, ApiResponse } from '../types/types';
+import type { CharacterDetails } from '../types/types';
 
-type SuccessResponse<T> = {
-  status: 'success';
+interface ServiceResponse<T> {
+  status: 'success' | 'error';
   data: T;
-};
-
-type ErrorResponse = {
-  status: 'error';
-  message: string;
-};
-
-type ServiceResponse<T> = SuccessResponse<T> | ErrorResponse;
-
-const API_BASE_URL =
-  import.meta.env.VITE_RM_API_URL || 'https://rickandmortyapi.com/api';
+  message?: string;
+  info?: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+}
 
 class ApiService {
-  private async makeRequest<T>(url: string): Promise<ServiceResponse<T>> {
+  mapToResultItems() {
+    throw new Error('Method not implemented.');
+  }
+  private static instance: ApiService;
+  private readonly baseUrl: string;
+  private readonly maxRetries = 3;
+  private readonly retryDelay = 1000;
+
+  private constructor() {
+    this.baseUrl = import.meta.env.VITE_RM_API_URL;
+  }
+
+  public static getInstance(): ApiService {
+    if (!ApiService.instance) {
+      ApiService.instance = new ApiService();
+    }
+    return ApiService.instance;
+  }
+
+  private async makeRequest<T>(
+    url: string,
+    retryCount = 0
+  ): Promise<ServiceResponse<T>> {
     try {
+      await new Promise((resolve) =>
+        setTimeout(resolve, this.retryDelay * retryCount)
+      );
       const response = await fetch(url);
       if (!response.ok) {
+        if (response.status === 429 && retryCount < this.maxRetries) {
+          return this.makeRequest<T>(url, retryCount + 1);
+        }
         return {
           status: 'error',
+          data: {} as T,
           message: this.getErrorMessage(response.status),
         };
       }
+      const data = await response.json();
       return {
         status: 'success',
-        data: await response.json(),
+        data: data.results || data,
+        ...(data.info && { info: data.info }),
       };
     } catch (error) {
+      if (retryCount < this.maxRetries) {
+        return this.makeRequest<T>(url, retryCount + 1);
+      }
       return {
         status: 'error',
+        data: {} as T,
         message: error instanceof Error ? error.message : 'Network error',
       };
     }
@@ -41,95 +73,39 @@ class ApiService {
     const messages: Record<number, string> = {
       400: 'Invalid search parameters',
       404: 'No characters found',
-      429: 'Too many requests',
+      429: 'Too many requests, retrying...',
       500: 'Server error',
     };
     return messages[status] || `API error (${status})`;
   }
 
-  private isSuccessResponse<T>(
-    response: ServiceResponse<T>
-  ): response is SuccessResponse<T> {
-    return response.status === 'success';
-  }
-
   async fetchInitialCharacters(
-    limit = 20
+    page: number = 1
   ): Promise<ServiceResponse<CharacterDetails[]>> {
-    try {
-      const countResponse = await this.makeRequest<ApiResponse>(
-        `${API_BASE_URL}/character`
-      );
-      if (!this.isSuccessResponse(countResponse)) return countResponse;
-
-      const totalPages = Math.min(
-        Math.ceil(limit / 20),
-        Math.ceil(countResponse.data.info.count / 20)
-      );
-
-      const pageRequests = Array.from({ length: totalPages }, (_, i) =>
-        this.makeRequest<ApiResponse>(
-          `${API_BASE_URL}/character/?page=${i + 1}`
-        )
-      );
-
-      const responses = await Promise.all(pageRequests);
-      const characters: CharacterDetails[] = [];
-
-      for (const response of responses) {
-        if (!this.isSuccessResponse(response)) continue;
-        characters.push(...response.data.results);
-      }
-
-      return {
-        status: 'success',
-        data: characters.slice(0, limit),
-      };
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : 'Failed to load initial characters';
-      return {
-        status: 'error',
-        message: errorMessage,
-      };
-    }
+    return this.makeRequest<CharacterDetails[]>(
+      `${this.baseUrl}/character?page=${page}`
+    );
   }
 
   async searchCharacters(
-    term: string
+    query: string,
+    page: number = 1
   ): Promise<ServiceResponse<CharacterDetails[]>> {
-    const processedTerm = term.trim();
-
-    if (!processedTerm) {
-      return this.fetchInitialCharacters(20);
+    const processedQuery = query.trim();
+    if (!processedQuery) {
+      return this.fetchInitialCharacters(page);
     }
-
-    const response = await this.makeRequest<ApiResponse>(
-      `${API_BASE_URL}/character/?name=${encodeURIComponent(processedTerm)}`
+    const encodedQuery = encodeURIComponent(processedQuery);
+    return this.makeRequest<CharacterDetails[]>(
+      `${this.baseUrl}/character/?name=${encodedQuery}&page=${page}`
     );
-
-    if (!this.isSuccessResponse(response)) return response;
-
-    return {
-      status: 'success',
-      data: response.data.results,
-    };
   }
 
-  mapToResultItems(characters: CharacterDetails[]): ResultItem[] {
-    return characters.map((character) => ({
-      id: character.id,
-      name: character.name,
-      description: `${character.species} - ${character.status}`,
-      url: character.url,
-      gender: character.gender,
-      image: character.image,
-      status: character.status,
-      species: character.species,
-    }));
+  async getCharacter(id: number): Promise<ServiceResponse<CharacterDetails>> {
+    return this.makeRequest<CharacterDetails>(
+      `${this.baseUrl}/character/${id}`
+    );
   }
 }
 
-export default new ApiService();
+export default ApiService.getInstance();

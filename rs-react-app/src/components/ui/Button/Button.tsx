@@ -8,28 +8,22 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-class Button extends React.Component<ButtonProps> {
-  static defaultProps = {
-    type: 'button',
-    disabled: false,
-    children: null,
-  };
-
-  render() {
-    const { children, onClick, type, disabled } = this.props;
-
-    return (
-      <button
-        type={type}
-        className={styles.button}
-        onClick={onClick}
-        disabled={disabled}
-      >
-        {' '}
-        {children}{' '}
-      </button>
-    );
-  }
-}
+const Button = ({
+  children = null,
+  onClick,
+  type = 'button',
+  disabled = false,
+}: ButtonProps) => {
+  return (
+    <button
+      type={type}
+      className={styles.button}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
+};
 
 export default Button;

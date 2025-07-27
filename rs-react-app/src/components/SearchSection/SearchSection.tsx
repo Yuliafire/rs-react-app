@@ -1,99 +1,94 @@
-import React from 'react';
+import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styles from './SearchSection.module.scss';
 import Button from '../ui/Button/Button';
-import storageService from '../../services/storageService';
+import { useStorage } from '../../services/storageService';
 import ApiService from '../../services/apiService';
 import type { CharacterDetails } from '../../types/types';
 
 interface SearchSectionProps {
-  onSearchResults: (results: CharacterDetails[], searchTerm: string) => void;
+  onSearchResults: (
+    results: CharacterDetails[],
+    searchTerm: string,
+    totalPages: number
+  ) => void;
   onLoadingChange: (loading: boolean) => void;
   onErrorChange: (error: string | null) => void;
+  currentPage: number;
 }
 
-interface SearchSectionState {
-  inputValue: string;
-  isLoading: boolean;
-}
+const SearchSection = ({
+  onSearchResults,
+  onLoadingChange,
+  onErrorChange,
+  currentPage,
+}: SearchSectionProps) => {
+  const { getSearchTerm, saveSearchTerm } = useStorage();
+  const [searchParams] = useSearchParams();
+  const initialQuery = searchParams.get('query') || getSearchTerm() || '';
+  const [inputValue, setInputValue] = useState(initialQuery);
+  const [isLoading, setIsLoading] = useState(false);
 
-class SearchSection extends React.Component<
-  SearchSectionProps,
-  SearchSectionState
-> {
-  state: SearchSectionState = {
-    inputValue: storageService.getSearchTerm() || '',
-    isLoading: false,
+  useEffect(() => {
+    performSearch(inputValue.trim(), currentPage);
+  }, [currentPage]);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
-  componentDidMount() {
-    const searchTerm = this.state.inputValue.trim();
-    if (searchTerm) {
-      this.performSearch(searchTerm);
-    }
-  }
-
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value });
-  };
-
-  handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmedValue = this.state.inputValue.trim();
-    if (trimmedValue) {
-      await this.performSearch(trimmedValue);
-    }
-  };
-
-  performSearch = async (term: string) => {
-    this.setState({ isLoading: true });
-    this.props.onLoadingChange(true);
-    this.props.onErrorChange(null);
+  const performSearch = async (term: string, page: number) => {
+    setIsLoading(true);
+    onLoadingChange(true);
+    onErrorChange(null);
 
     try {
-      const response = (await ApiService.searchCharacters(term)) || {};
-
+      const response = await ApiService.searchCharacters(term, page);
       if (response.status === 'success') {
-        this.props.onSearchResults(response.data || [], term);
-        storageService.saveSearchTerm(term);
+        onSearchResults(response.data, term, response.info?.pages || 1);
+        if (term) saveSearchTerm(term);
       } else {
-        this.props.onErrorChange(response.message || 'Unknown error');
-        this.props.onSearchResults([], term);
+        onErrorChange(response.message || 'Unknown error');
+        onSearchResults([], term, 1);
       }
     } catch (error) {
-      this.props.onErrorChange('API request failed');
-      this.props.onSearchResults([], term);
-      console.log(error);
+      onErrorChange('API request failed');
+      onSearchResults([], term, 1);
+      console.error(error);
     } finally {
-      this.setState({ isLoading: false });
-      this.props.onLoadingChange(false);
+      setIsLoading(false);
+      onLoadingChange(false);
     }
   };
 
-  render() {
-    const { inputValue, isLoading } = this.state;
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const trimmedValue = inputValue.trim();
+    await performSearch(trimmedValue, 1);
+  };
 
-    return (
-      <section className={styles.searchSection}>
-        <form onSubmit={this.handleSubmit} className={styles.searchForm}>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={this.handleInputChange}
-            placeholder="Search characters..."
-            className={styles.searchInput}
-            disabled={isLoading}
-          />
-          <Button
-            type="submit"
-            disabled={isLoading}
-            aria-label={isLoading ? 'Searching...' : 'Search'}
-          >
-            {isLoading ? 'Searching...' : 'Search'}
-          </Button>
-        </form>
-      </section>
-    );
-  }
-}
+  return (
+    <section className={styles.searchSection}>
+      <form onSubmit={handleSubmit} className={styles.searchForm}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Search characters..."
+          className={styles.searchInput}
+          disabled={isLoading}
+          aria-label="Search characters"
+        />
+        <Button
+          type="submit"
+          disabled={isLoading}
+          aria-label={isLoading ? 'Searching...' : 'Search'}
+        >
+          {isLoading ? 'Searching...' : 'Search'}
+        </Button>
+      </form>
+    </section>
+  );
+};
 
 export default SearchSection;
