@@ -26,7 +26,7 @@ export const About = () => {
         <p>
           This project was developed as part of the{' '}
           <a
-            href="https://rs.school/react/"
+            href="https://rs.school/courses/reactjs"
             target="_blank"
             rel="noopener noreferrer"
           >
