@@ -3,7 +3,7 @@ import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
 import Home from './pages/home/Home';
 import { About } from './pages/about/About';
-import { NotFound } from './pages/not-found/Notfound';
+import { NotFound } from './pages/not-found/NotFound';
 import CharacterDetailsComponent from './components/CharacterDetails/CharacterDetails';
 
 const App = () => {
