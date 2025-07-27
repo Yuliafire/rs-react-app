@@ -12,24 +12,39 @@ import styles from './Home.module.scss';
 import type { CharacterDetails } from '../../types/types';
 
 const Home = () => {
-  const { id } = useParams<{ id?: string }>();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { page: pageParam, id: idParam } = useParams<{
+    page?: string;
+    id?: string;
+  }>();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const pageParam = searchParams.get('page') || '1';
+  const initialPage = !isNaN(parseInt(pageParam || '1', 10))
+    ? parseInt(pageParam || '1', 10)
+    : 1;
+  const id = idParam ? parseInt(idParam, 10) : undefined;
   const queryParam = searchParams.get('query') || '';
 
-  const [currentPage, setCurrentPage] = useState(parseInt(pageParam, 10));
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [query, setQuery] = useState(queryParam);
+  const [selectedId, setSelectedId] = useState<number | undefined>(id);
   const [results, setResults] = useState<CharacterDetails[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setCurrentPage(parseInt(searchParams.get('page') || '1', 10));
-    setQuery(searchParams.get('query') || '');
-  }, [searchParams]);
+    const newPage = !isNaN(parseInt(pageParam || '1', 10))
+      ? parseInt(pageParam || '1', 10)
+      : 1;
+    if (newPage !== currentPage || query !== queryParam) {
+      setCurrentPage(newPage);
+      setQuery(queryParam);
+      if (idParam) {
+        setSelectedId(parseInt(idParam, 10));
+      }
+    }
+  }, [pageParam, idParam, queryParam, currentPage, query]);
 
   const handleSearchResults = (
     results: CharacterDetails[],
@@ -40,33 +55,33 @@ const Home = () => {
     setTotalPages(totalPages);
 
     if (searchTerm !== query) {
+      setSelectedId(undefined);
       setCurrentPage(1);
-      setSearchParams({
-        page: '1',
-        ...(searchTerm && { query: searchTerm }),
-      });
+      navigate(
+        `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`
+      );
     } else {
-      setSearchParams({
-        page: currentPage.toString(),
-        ...(searchTerm && { query: searchTerm }),
-      });
+      navigate(
+        `/${currentPage}${query ? `?query=${encodeURIComponent(query)}` : ''}`
+      );
     }
     setQuery(searchTerm);
   };
 
   const handleResultClick = (id: number) => {
+    setSelectedId(id);
     navigate(
-      `/home/${id}?page=${currentPage}${query ? `&query=${encodeURIComponent(query)}` : ''}`
+      `/${currentPage}/${id}${query ? `?query=${encodeURIComponent(query)}` : ''}`
     );
   };
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
+      setSelectedId(undefined);
       setCurrentPage(newPage);
-      setSearchParams({
-        page: newPage.toString(),
-        ...(query && { query }),
-      });
+      navigate(
+        `/${newPage}${query ? `?query=${encodeURIComponent(query)}` : ''}`
+      );
     }
   };
 
@@ -75,14 +90,16 @@ const Home = () => {
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (
-      id &&
+      selectedId &&
+      !isNaN(selectedId) &&
       detailsRef.current &&
       !detailsRef.current.contains(event.target as Node) &&
       mainPanelRef.current &&
       mainPanelRef.current.contains(event.target as Node)
     ) {
+      setSelectedId(undefined);
       navigate(
-        `/home?page=${currentPage}${query ? `&query=${encodeURIComponent(query)}` : ''}`
+        `/${currentPage}${query ? `?query=${encodeURIComponent(query)}` : ''}`
       );
     }
   };
@@ -96,7 +113,6 @@ const Home = () => {
           onErrorChange={setError}
           currentPage={currentPage}
         />
-
         <div className="wrapper">
           <div className={styles.searchResults}>
             <ResultsSection

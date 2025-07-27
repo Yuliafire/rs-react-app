@@ -24,7 +24,7 @@ const CharacterDetailsComponent = forwardRef<HTMLDivElement>((_props, ref) => {
   const { id } = useParams<{ id?: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  useOutletContext<OutletContext>();
+  const { detailsRef } = useOutletContext<OutletContext>();
   const localRef = useRef<HTMLDivElement>(null);
 
   const [character, setCharacter] = useState<CharacterDetails | null>(null);
@@ -33,12 +33,12 @@ const CharacterDetailsComponent = forwardRef<HTMLDivElement>((_props, ref) => {
 
   useEffect(() => {
     const fetchCharacter = async () => {
-      if (!id) {
-        setError('Invalid character ID');
+      const characterId = id ? parseInt(id, 10) : undefined;
+      if (!characterId || isNaN(characterId)) {
+        setError('Invalid or missing character ID');
         setLoading(false);
         return;
       }
-      const characterId = parseInt(id, 10);
       setLoading(true);
       setError(null);
       try {
@@ -61,12 +61,14 @@ const CharacterDetailsComponent = forwardRef<HTMLDivElement>((_props, ref) => {
   const handleClose = () => {
     const page = searchParams.get('page') || '1';
     const query = searchParams.get('query') || '';
-    navigate(
-      `/home?page=${page}${query ? `&query=${encodeURIComponent(query)}` : ''}`
-    );
+    navigate(`/${page}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
   };
 
-  useImperativeHandle(ref, () => localRef.current as HTMLDivElement, []);
+  useImperativeHandle(
+    ref,
+    () => (detailsRef.current || localRef.current) as HTMLDivElement,
+    [detailsRef]
+  );
 
   if (loading) {
     return (
