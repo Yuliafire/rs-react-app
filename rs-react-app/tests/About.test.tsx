@@ -72,7 +72,10 @@ describe('About Component', () => {
     const rsSchoolLink = screen.getByRole('link', {
       name: 'RS School React Course',
     });
-    expect(rsSchoolLink).toHaveAttribute('href', 'https://rs.school/react/');
+    expect(rsSchoolLink).toHaveAttribute(
+      'href',
+      'https://rs.school/courses/reactjs'
+    );
     expect(rsSchoolLink).toHaveAttribute('target', '_blank');
     expect(rsSchoolLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
