@@ -4,8 +4,11 @@ import ApiService from '../../services/apiService';
 import type { CharacterDetails } from '../../types/types';
 import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
+import { useTheme } from '../../hooks/useTheme';
 
 const CharacterDetailsComponent = () => {
+  const { theme } = useTheme();
+
   const { id, page } = useParams<{ id?: string; page?: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -68,7 +71,7 @@ const CharacterDetailsComponent = () => {
     );
   }
   return (
-    <div className={styles.details}>
+    <div className={`${styles.details} ${styles[theme]}`}>
       <h3>{character.name}</h3>
       <img src={character.image} alt={character.name} />
       <p>Status: {character.status}</p>

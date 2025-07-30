@@ -1,8 +1,16 @@
+@use '../../assets/styles/globals' as *;
+
 .home {
   display: flex;
   gap: 2rem;
   padding: 1rem;
   height: auto;
+  background: var(--background-dark);
+  min-height: calc(100vh - 110px);
+
+  [data-theme="dark"] & {
+    background: var(--background);
+  }
 
   @media (max-width: 600px) {
     flex-direction: column;
@@ -20,6 +28,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  margin-bottom: 1rem;
 
   @media (max-width: 600px) {
     order: 1;
@@ -62,11 +71,26 @@
   button {
     padding: 0.5rem 1rem;
     cursor: pointer;
-  }
+    background: var(--primary);
+    color: var(--background-dark);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+    font-weight: 500;
 
-  button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+    &:hover:not(:disabled) {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
   }
 }
 
@@ -74,22 +98,61 @@
   flex: 0 0 auto;
   flex-basis: 40%;
   max-width: 600px;
-  background-color: #1a1a1a;
-  padding: 1rem;
-  border-left: 1px solid #41ead4;
-  display: block;
-  width: 100%;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-left: 1px solid var(--primary);
+  color: var(--text);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: all 0.3s ease;
+
+  [data-theme="light"] & {
+    border-left-color: var(--primary-hover);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="dark"] & {
+    background: var(--card-bg);
+    border-left-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0.75rem 0;
+    line-height: 1.5;
+  }
+
+  strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
 
   @media (max-width: 900px) {
     flex-basis: 30%;
     max-width: 300px;
+    padding: 1rem;
   }
 
   @media (max-width: 600px) {
     order: 3;
     flex-basis: 100%;
+    max-width: 100%;
     border-left: none;
-    border-top: 1px solid #41ead4;
+    border-top: 2px solid var(--primary);
+    margin-top: 1rem;
+    padding: 1.25rem;
+
+    [data-theme="light"] & {
+      border-top-color: var(--primary-hover);
+    }
   }
 }
 

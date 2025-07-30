@@ -1,14 +1,14 @@
-[data-theme="light"] {
+[data-theme='light'] {
   --background-dark: #ffffff;
   --text: #333333;
-  --primary:  skyblue;
+  --primary: skyblue;
   --primary-hover: #0056b3;
   --border: #cccccc;
   --card-bg: #f9f9f9;
   --shadow: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --background: #1a1a1a;
   --text: #e0e0e0;
   --primary: #333;

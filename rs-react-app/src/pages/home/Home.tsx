@@ -10,8 +10,10 @@ import ResultsSection from '../../components/ResultsSection/ResultsSection';
 import Pagination from '../../components/Pagination/Pagination';
 import styles from './Home.module.scss';
 import type { CharacterDetails } from '../../types/types';
+import { useTheme } from '../../hooks/useTheme';
 
 const Home = () => {
+  const { theme } = useTheme();
   const { page: pageParam, id: idParam } = useParams<{
     page?: string;
     id?: string;
@@ -91,7 +93,7 @@ const Home = () => {
   };
 
   return (
-    <div className={styles.home} ref={mainPanelRef}>
+    <div className={`${styles.home} ${styles[theme]} `} ref={mainPanelRef}>
       <div className={styles.container}>
         <SearchSection
           onSearchResults={handleSearchResults}

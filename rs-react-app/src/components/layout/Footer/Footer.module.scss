@@ -9,7 +9,7 @@
   position: relative;
   box-sizing: border-box;
 
-  [data-theme="dark"] & {
+  [data-theme='dark'] & {
     border-top-color: var(--border);
     background: var(--card-bg);
   }
