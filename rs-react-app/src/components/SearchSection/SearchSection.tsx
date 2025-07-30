@@ -5,6 +5,7 @@ import Button from '../ui/Button/Button';
 import { useStorage } from '../../services/storageService';
 import ApiService from '../../services/apiService';
 import type { CharacterDetails } from '../../types/types';
+import { useTheme } from '../../hooks/useTheme';
 
 interface SearchSectionProps {
   onSearchResults: (
@@ -23,6 +24,7 @@ const SearchSection = ({
   onErrorChange,
   currentPage,
 }: SearchSectionProps) => {
+  const { theme } = useTheme();
   const { getSearchTerm, saveSearchTerm } = useStorage();
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get('query') || getSearchTerm() || '';
@@ -68,7 +70,7 @@ const SearchSection = ({
   };
 
   return (
-    <section className={styles.searchSection}>
+    <section className={`${styles.searchSection} ${styles[theme]}`}>
       <form onSubmit={handleSubmit} className={styles.searchForm}>
         <input
           type="text"
