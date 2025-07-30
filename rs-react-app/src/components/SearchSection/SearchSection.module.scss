@@ -27,7 +27,7 @@
     animation: gradientBorder 8s ease infinite;
   }
 
-  [data-theme="dark"] & {
+  [data-theme='dark'] & {
     box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.3);
   }
 
@@ -52,9 +52,15 @@
 }
 
 @keyframes gradientBorder {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
 
 .searchForm {
@@ -93,14 +99,14 @@
   background-position: 1rem center;
   background-size: 1.2rem;
 
-  [data-theme="dark"] & {
+  [data-theme='dark'] & {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
   }
 
   &:focus {
     outline: none;
     background-color: var(--card-bg);
-    box-shadow: 
+    box-shadow:
       0 0 0 3px rgba(var(--primary-rgb), 0.2),
       inset 0 1px 3px var(--shadow);
   }
@@ -134,11 +140,11 @@
 
 .error {
   margin-top: 1rem;
-  color: #dc3545; 
+  color: #dc3545;
   font-size: 0.9rem;
   text-align: center;
 
-  [data-theme="dark"] & {
-    color: #ff6b6b; 
+  [data-theme='dark'] & {
+    color: #ff6b6b;
   }
 }
