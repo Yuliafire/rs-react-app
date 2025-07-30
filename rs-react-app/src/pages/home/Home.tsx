@@ -61,7 +61,7 @@ const Home = () => {
     setTotalPages(totalPages);
 
     if (searchTerm !== query) {
-      setSelectedId(undefined);
+      // setSelectedId(undefined);
       setCurrentPage(1);
       navigate(
         `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`

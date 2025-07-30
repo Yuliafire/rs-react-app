@@ -1,31 +1,81 @@
+@use '../../assets/styles/globals' as *;
+
 .details {
-  flex: 1;
-  padding: 1rem;
-  background: #333;
-  color: white;
-  border-left: 3px solid #41ead4;
-  height: auto;
+  flex: 0 0 auto;
+  flex-basis: 40%;
+  max-width: 600px;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-left: 1px solid var(--primary);
+  color: var(--text);
   border-radius: 8px;
-  width: 100%;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: all 0.3s ease;
+  height: auto;
   box-sizing: border-box;
 
-  @media (max-width: 600px) {
-    border: 3px solid #41ead4;
+  &[data-theme='light'] {
+    border-left-color: var(--primary-hover);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
-}
 
-.details img {
-  max-width: 400px;
-  max-width: 100%;
-  border-radius: 8px;
-}
+  &[data-theme='dark'] {
+    background: var(--card-bg);
+    border-left-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 
-.details button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border: 1px solid white;
-  border-radius: 10px;
-  color: black;
-  color: white;
+  h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin: 0.75rem 0;
+    line-height: 1.5;
+  }
+
+  button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background: var(--primary);
+    color: var(--background-dark);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+
+    &:hover {
+      background: var(--primary-hover);
+    }
+  }
+
+  @media (max-width: 900px) {
+    flex-basis: 30%;
+    max-width: 300px;
+    padding: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    flex-basis: 100%;
+    max-width: 100%;
+    border-left: none;
+    border-top: 2px solid var(--primary);
+    margin-top: 1rem;
+    padding: 1.25rem;
+
+    &[data-theme='light'] {
+      border-top-color: var(--primary-hover);
+    }
+  }
 }
