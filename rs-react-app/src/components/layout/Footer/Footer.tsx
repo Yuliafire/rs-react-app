@@ -1,6 +1,9 @@
 import styles from './Footer.module.scss';
+import { useTheme } from '../../../hooks/useTheme';
 
 const Footer = () => {
+  const { theme } = useTheme();
+
   const GitHubIcon = () => (
     <svg
       width="24"
@@ -30,7 +33,7 @@ const Footer = () => {
   );
 
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} ${styles[theme]}`}>
       <div className={styles.container}>
         <div className={styles.content}>
           <p className={styles.copyright}>© 2025 Lingua Voice</p>

@@ -1,0 +1,19 @@
+[data-theme="light"] {
+  --background-dark: #ffffff;
+  --text: #333333;
+  --primary:  skyblue;
+  --primary-hover: #0056b3;
+  --border: #cccccc;
+  --card-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --background: #1a1a1a;
+  --text: #e0e0e0;
+  --primary: #333;
+  --primary-hover: #3388cc;
+  --border: #444444;
+  --card-bg: #2c2c2c;
+  --shadow: rgba(0, 0, 0, 0.3);
+}

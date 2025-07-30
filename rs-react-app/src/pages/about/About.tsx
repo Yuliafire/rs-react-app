@@ -1,9 +1,12 @@
 import styles from './About.module.scss';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../../hooks/useTheme';
 
 export const About = () => {
+  const { theme } = useTheme();
+
   return (
-    <div className={styles.about}>
+    <div className={`${styles.about} ${styles[theme]}`}>
       <h2>About This Project</h2>
 
       <section className={styles.authorInfo}>
