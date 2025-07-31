@@ -1,11 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit';
-import charactersSlice from './charactersSlice';
+import charactersReducer from './charactersSlice';
+
+export interface RootState {
+  selectedCharacters: unknown;
+  characters: {
+    selectedCharacters: {
+      id: number;
+      name: string;
+      species: string;
+      status: string;
+      detailsUrl: string;
+    }[];
+  };
+}
 
 export const store = configureStore({
   reducer: {
-    selectedCharacters: charactersSlice,
+    characters: charactersReducer,
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

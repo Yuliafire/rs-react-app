@@ -5,6 +5,7 @@ import Home from './pages/home/Home';
 import { About } from './pages/about/About';
 import { NotFound } from './pages/not-found/Notfound';
 import CharacterDetailsComponent from './components/CharacterDetails/CharacterDetails';
+import Flyout from './components/Flyout/Flyout';
 
 const HOME_PATH = '/';
 const DYNAMIC_PAGE_PATH = '/:page';
@@ -33,6 +34,7 @@ const App = () => {
           <Route path={NOT_FOUND_PATH} element={<NotFound />} />
         </Routes>
       </main>
+      <Flyout />
       <Footer />
     </div>
   );

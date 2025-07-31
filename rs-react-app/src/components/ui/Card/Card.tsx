@@ -1,17 +1,49 @@
+import { useParams } from 'react-router-dom';
 import styles from './Card.module.scss';
 import type { CharacterDetails } from '../../../types/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { addCharacter, removeCharacter } from '../../../store/charactersSlice';
+import type { RootState, AppDispatch } from '../../../store/store';
+import { useTheme } from '../../../hooks/useTheme';
 
 interface CardProps {
   character: CharacterDetails;
-  onClick: () => void;
+  onSelect: () => void;
 }
 
-const Card = ({ character, onClick }: CardProps) => {
+const Card = ({ character, onSelect }: CardProps) => {
+  const { theme } = useTheme();
+  const { page = '1' } = useParams<{ page?: string }>();
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedCharacters = useSelector(
+    (state: RootState) => state.characters.selectedCharacters
+  );
+
+  const isSelected = selectedCharacters.some(
+    (item) => item.id === character.id
+  );
+
+  const handleCheckboxChange = () => {
+    if (isSelected) {
+      dispatch(removeCharacter(character.id));
+    } else {
+      dispatch(
+        addCharacter({
+          id: character.id,
+          name: character.name,
+          species: character.species,
+          status: character.status,
+          detailsUrl: `/character/${page}/${character.id}`,
+        })
+      );
+    }
+  };
+
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} ${styles[theme]}`}
+      onClick={onSelect}
       data-testid="card"
-      onClick={onClick}
       role="button"
       tabIndex={0}
       aria-label={`View details for ${character.name}`}
@@ -45,6 +77,14 @@ const Card = ({ character, onClick }: CardProps) => {
           Episodes: {character.episode.length}
         </div>
       </div>
+      <input
+        className={styles.flag}
+        type="checkbox"
+        checked={isSelected}
+        onChange={handleCheckboxChange}
+        onClick={(e) => e.stopPropagation()}
+        aria-label={`${isSelected ? 'Deselect' : 'Select'} ${character.name}`}
+      />
     </div>
   );
 };
