@@ -2,20 +2,29 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Footer from '../src/components/layout/Footer/Footer';
 import '@testing-library/jest-dom/vitest';
+import { ThemeProvider } from '../src/context/ThemeProvider';
 
 describe('Footer Component', () => {
+  const renderFooter = () => {
+    return render(
+      <ThemeProvider>
+        <Footer />
+      </ThemeProvider>
+    );
+  };
+
   it('renders without crashing', () => {
-    render(<Footer />);
+    renderFooter();
     expect(screen.getByRole('contentinfo')).toBeInTheDocument();
   });
 
   it('displays the static copyright notice', () => {
-    render(<Footer />);
+    renderFooter();
     expect(screen.getByText('© 2025 Lingua Voice')).toBeInTheDocument();
   });
 
   it('contains GitHub link with icon', () => {
-    render(<Footer />);
+    renderFooter();
     const githubLink = screen.getByRole('link', { name: 'GitHub' });
     expect(githubLink).toHaveAttribute('href', 'https://github.com/Yuliafire');
     expect(githubLink).toHaveAttribute('target', '_blank');
@@ -24,7 +33,7 @@ describe('Footer Component', () => {
   });
 
   it('contains RS School link with icon', () => {
-    render(<Footer />);
+    renderFooter();
     const rsLink = screen.getByRole('link', { name: 'RS School' });
     expect(rsLink).toHaveAttribute(
       'href',
@@ -36,7 +45,7 @@ describe('Footer Component', () => {
   });
 
   it('renders both icons', () => {
-    render(<Footer />);
+    renderFooter();
     const svgs = screen.getAllByRole('img', { hidden: true });
     expect(svgs.length).toBe(2);
   });

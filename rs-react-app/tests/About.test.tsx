@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import { About } from '../src/pages/about/About';
 import '@testing-library/jest-dom/vitest';
+import { ThemeProvider } from '../src/context/ThemeProvider';
 
 vi.mock('../src/pages/about/About.module.scss', () => ({
   default: {
@@ -16,9 +17,11 @@ vi.mock('../src/pages/about/About.module.scss', () => ({
 describe('About Component', () => {
   it('renders without crashing', () => {
     render(
-      <MemoryRouter>
-        <About />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <About />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     expect(screen.getByText('About This Project')).toBeInTheDocument();
@@ -35,9 +38,11 @@ describe('About Component', () => {
 
   it('applies correct CSS classes', () => {
     render(
-      <MemoryRouter>
-        <About />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <About />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const aboutDiv = screen.getByText('About This Project').closest('div');
@@ -51,9 +56,11 @@ describe('About Component', () => {
 
   it('renders GitHub link with correct attributes', () => {
     render(
-      <MemoryRouter>
-        <About />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <About />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const githubLink = screen.getByRole('link', { name: '@Yuliafire' });
@@ -64,9 +71,11 @@ describe('About Component', () => {
 
   it('renders RS School link with correct attributes', () => {
     render(
-      <MemoryRouter>
-        <About />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <About />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const rsSchoolLink = screen.getByRole('link', {

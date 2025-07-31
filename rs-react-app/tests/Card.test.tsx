@@ -3,6 +3,23 @@ import Card from '../src/components/ui/Card/Card';
 import type { CharacterDetails } from '../src/types/types';
 import '@testing-library/jest-dom/vitest';
 import { describe, expect, it, vi } from 'vitest';
+import { ThemeProvider } from '../src/context/ThemeProvider';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import charactersReducer from '../src/store/charactersSlice';
+
+const createTestStore = () => {
+  return configureStore({
+    reducer: {
+      characters: charactersReducer,
+    },
+    preloadedState: {
+      characters: {
+        selectedCharacters: [],
+      },
+    },
+  });
+};
 
 vi.mock('./Card.module.scss', () => ({
   card: 'card',
@@ -35,30 +52,27 @@ const createTestCharacter = (
 });
 
 describe('Card Component', () => {
+  const renderCard = (character: CharacterDetails) => {
+    const store = createTestStore();
+    return render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <Card character={character} onSelect={vi.fn()} />
+        </ThemeProvider>
+      </Provider>
+    );
+  };
+
   it('handles missing image', () => {
     const testCharacter = createTestCharacter({ image: '' });
-    render(
-      <Card
-        character={testCharacter}
-        onClick={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
-    );
+    renderCard(testCharacter);
     expect(screen.getByAltText(testCharacter.name)).toBeInTheDocument();
   });
 
   describe('Displays item name and description correctly', () => {
     it('should render character name prominently', () => {
       const testCharacter = createTestCharacter({ name: 'Rick Sanchez' });
-      render(
-        <Card
-          character={testCharacter}
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCard(testCharacter);
 
       const nameElement = screen.getByRole('heading', { level: 3 });
       expect(nameElement).toBeInTheDocument();
@@ -72,14 +86,7 @@ describe('Card Component', () => {
         origin: { name: 'Earth', url: '' },
         location: { name: 'Citadel of Ricks', url: '' },
       });
-      render(
-        <Card
-          character={testCharacter}
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCard(testCharacter);
       expect(screen.getByText(/Species:/)).toBeInTheDocument();
       expect(screen.getByText(/Gender:/)).toBeInTheDocument();
       expect(screen.getByText(/Origin:/)).toBeInTheDocument();
@@ -90,14 +97,7 @@ describe('Card Component', () => {
   describe('Status Badge', () => {
     it('should display status with correct attributes', () => {
       const testCharacter = createTestCharacter({ status: 'Dead' });
-      render(
-        <Card
-          character={testCharacter}
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCard(testCharacter);
 
       const statusBadge = screen.getByTestId('status-badge');
       expect(statusBadge).toBeInTheDocument();
@@ -109,28 +109,14 @@ describe('Card Component', () => {
       const testCharacter = createTestCharacter({
         episode: ['ep1', 'ep2', 'ep3'],
       });
-      render(
-        <Card
-          character={testCharacter}
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCard(testCharacter);
 
       expect(screen.getByText(/Episodes:/)).toHaveTextContent('3');
     });
 
     it('should handle empty episode list', () => {
       const testCharacter = createTestCharacter({ episode: [] });
-      render(
-        <Card
-          character={testCharacter}
-          onClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCard(testCharacter);
 
       expect(screen.getByText(/Episodes:/)).toHaveTextContent('0');
     });

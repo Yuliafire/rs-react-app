@@ -1,10 +1,26 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 import App from '../src/App';
 import type { CharacterDetails } from '../src/types/types';
-import ApiService from '../src/services/apiService';
 import '@testing-library/jest-dom/vitest';
+import { ThemeProvider } from '../src/context/ThemeProvider';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import charactersReducer from '../src/store/charactersSlice';
+
+const createTestStore = () => {
+  return configureStore({
+    reducer: {
+      characters: charactersReducer,
+    },
+    preloadedState: {
+      characters: {
+        selectedCharacters: [],
+      },
+    },
+  });
+};
 
 vi.mock('../src/components/layout/Header/Header', () => ({
   default: () => <div>Header Mock</div>,
@@ -68,12 +84,13 @@ vi.mock('../src/pages/not-found/Notfound', () => ({
   NotFound: () => <div>NotFound Page</div>,
 }));
 
-vi.mock('../src/services/apiService', () => ({
-  default: {
+vi.doMock('../src/services/apiService', () => {
+  const mockApiService = {
     fetchInitialCharacters: vi.fn(),
     searchCharacters: vi.fn(),
-  },
-}));
+  };
+  return { default: mockApiService };
+});
 
 describe('App Component', () => {
   const mockCharacter: CharacterDetails = {
@@ -91,32 +108,52 @@ describe('App Component', () => {
     episode: [],
   };
 
-  beforeEach(() => {
+  let mockApiService: {
+    fetchInitialCharacters: ReturnType<typeof vi.fn>;
+    searchCharacters: ReturnType<typeof vi.fn>;
+  };
+
+  beforeEach(async () => {
+    const apiServiceModule = await import('../src/services/apiService');
+    mockApiService = apiServiceModule.default;
+
     vi.clearAllMocks();
-    vi.mocked(ApiService.fetchInitialCharacters).mockResolvedValue({
+
+    mockApiService.fetchInitialCharacters.mockResolvedValue({
       status: 'success',
       data: [mockCharacter],
     });
-    vi.mocked(ApiService.searchCharacters).mockResolvedValue({
+    mockApiService.searchCharacters.mockResolvedValue({
       status: 'success',
       data: [mockCharacter],
     });
   });
 
-  it('renders Header, Footer, and HomePage on default route', async () => {
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+  const renderApp = (initialEntries = ['/']) => {
+    const store = createTestStore();
+    return render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={initialEntries}>
+            <App />
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
+  };
+
+  it('renders Header, Footer, and HomePage on default route', async () => {
+    renderApp();
+
+    await waitFor(() => {
+      expect(screen.getByText('Header Mock')).toBeInTheDocument();
+      expect(screen.getByText('Footer Mock')).toBeInTheDocument();
+      expect(screen.getByText('SearchSection Mock')).toBeInTheDocument();
+    });
   });
 
   it('renders About page on /about route', async () => {
-    render(
-      <MemoryRouter initialEntries={['/about']}>
-        <App />
-      </MemoryRouter>
-    );
+    renderApp(['/about']);
 
     expect(screen.getByText('About Page')).toBeInTheDocument();
     expect(screen.getByText('Header Mock')).toBeInTheDocument();
@@ -124,36 +161,14 @@ describe('App Component', () => {
   });
 
   it('renders NotFound page on invalid route', async () => {
-    render(
-      <MemoryRouter initialEntries={['/invalid']}>
-        <App />
-      </MemoryRouter>
-    );
+    renderApp(['/invalid']);
 
     expect(screen.getByText('Header Mock')).toBeInTheDocument();
     expect(screen.getByText('Footer Mock')).toBeInTheDocument();
   });
 
-  it('handles initial load error', async () => {
-    vi.mocked(ApiService.fetchInitialCharacters).mockResolvedValue({
-      status: 'error',
-      message: 'Failed to load',
-      data: [],
-    });
-
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    );
-  });
-
   it('handles search error from SearchSection', async () => {
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    );
+    renderApp();
 
     fireEvent.click(screen.getByText('Trigger Search Error'));
 

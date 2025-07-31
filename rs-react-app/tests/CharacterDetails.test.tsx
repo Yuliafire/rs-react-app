@@ -5,6 +5,7 @@ import { MemoryRouter, useNavigate } from 'react-router-dom';
 import CharacterDetailsComponent from '../src/components/CharacterDetails/CharacterDetails';
 import ApiService from '../src/services/apiService';
 import type { CharacterDetails } from '../src/types/types';
+import { ThemeProvider } from '../src/context/ThemeProvider';
 
 interface ServiceResponse<T> {
   status: 'success' | 'error';
@@ -66,9 +67,11 @@ describe('CharacterDetailsComponent', () => {
 
   it('fetches and displays character details', async () => {
     render(
-      <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
-        <CharacterDetailsComponent />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
+          <CharacterDetailsComponent />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     await waitFor(() => {
@@ -95,9 +98,11 @@ describe('CharacterDetailsComponent', () => {
     } as ServiceResponse<CharacterDetails>);
 
     render(
-      <MemoryRouter initialEntries={['/home/999?page=1&query=rick']}>
-        <CharacterDetailsComponent />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/home/999?page=1&query=rick']}>
+          <CharacterDetailsComponent />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     expect(await screen.findByText('Character not found')).toBeInTheDocument();
@@ -109,9 +114,11 @@ describe('CharacterDetailsComponent', () => {
     );
 
     render(
-      <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
-        <CharacterDetailsComponent />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
+          <CharacterDetailsComponent />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     expect(await screen.findByText('API request failed')).toBeInTheDocument();
@@ -119,9 +126,11 @@ describe('CharacterDetailsComponent', () => {
 
   it('navigates back with correct search params when close button is clicked', async () => {
     render(
-      <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
-        <CharacterDetailsComponent />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/home/1?page=1&query=rick']}>
+          <CharacterDetailsComponent />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     await waitFor(() => {
@@ -142,9 +151,11 @@ describe('CharacterDetailsComponent', () => {
     } as ServiceResponse<CharacterDetails>);
 
     render(
-      <MemoryRouter initialEntries={['/home/999?page=1&query=rick']}>
-        <CharacterDetailsComponent />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/home/999?page=1&query=rick']}>
+          <CharacterDetailsComponent />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     expect(await screen.findByText('Character not found')).toBeInTheDocument();

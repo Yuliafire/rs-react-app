@@ -13,6 +13,7 @@ import { MemoryRouter } from 'react-router-dom';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 import '@testing-library/jest-dom/vitest';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../src/context/ThemeProvider';
 
 interface CharacterResult {
   id: number;
@@ -95,9 +96,11 @@ describe('SearchSection Component', () => {
   describe('Rendering', () => {
     it('renders search input and button', () => {
       render(
-        <MemoryRouter>
-          <SearchSection {...mockProps} />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} />
+          </MemoryRouter>
+        </ThemeProvider>
       );
       expect(screen.getByRole('textbox')).toBeInTheDocument();
       expect(
@@ -107,9 +110,11 @@ describe('SearchSection Component', () => {
 
     it('shows empty input when no saved term exists', () => {
       render(
-        <MemoryRouter>
-          <SearchSection {...mockProps} />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} />
+          </MemoryRouter>
+        </ThemeProvider>
       );
       expect(screen.getByRole('textbox')).toHaveValue('');
     });
@@ -119,9 +124,11 @@ describe('SearchSection Component', () => {
     it('triggers search on button click', async () => {
       const user = userEvent.setup();
       render(
-        <MemoryRouter>
-          <SearchSection {...mockProps} />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} />
+          </MemoryRouter>
+        </ThemeProvider>
       );
       const input = screen.getByRole('textbox');
       await user.type(input, 'Rick');

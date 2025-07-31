@@ -2,8 +2,20 @@ import { render, screen } from '@testing-library/react';
 import CardList from '../src/components/ui/CardList/CardList';
 import type { CharacterDetails } from '../src/types/types';
 import { vi, describe, it, expect } from 'vitest';
+import { ThemeProvider } from '../src/context/ThemeProvider';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import charactersReducer from '../src/store/charactersSlice';
 
-vi.mock('../Card/Card', () => ({
+const createTestStore = () => {
+  return configureStore({
+    reducer: {
+      selectedCharacters: charactersReducer,
+    },
+  });
+};
+
+vi.mock('../src/components/ui/Card/Card', () => ({
   default: ({ character }: { character: CharacterDetails }) => (
     <div data-testid="card">{character.id}</div>
   ),
@@ -26,29 +38,26 @@ describe('CardList Component', () => {
       episode: [],
     }));
 
+  const renderCardList = (characters: CharacterDetails[]) => {
+    const store = createTestStore();
+    return render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <CardList characters={characters} onCardClick={vi.fn()} />
+        </ThemeProvider>
+      </Provider>
+    );
+  };
+
   describe('Rendering Behavior', () => {
     it('renders one card when given one character', () => {
-      render(
-        <CardList
-          characters={generateMockCharacters(1)}
-          onCardClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCardList(generateMockCharacters(1));
       expect(screen.getAllByTestId('card')).toHaveLength(1);
     });
 
     it('renders multiple cards when given multiple characters', () => {
       const testCount = 3;
-      render(
-        <CardList
-          characters={generateMockCharacters(testCount)}
-          onCardClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCardList(generateMockCharacters(testCount));
       expect(screen.getAllByTestId('card')).toHaveLength(testCount);
     });
   });
@@ -56,14 +65,7 @@ describe('CardList Component', () => {
   describe('Data Handling', () => {
     it('passes character data correctly to each Card', () => {
       const testData = generateMockCharacters(3);
-      render(
-        <CardList
-          characters={testData}
-          onCardClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCardList(testData);
 
       const cards = screen.getAllByTestId('card');
       testData.forEach((character, index) => {
@@ -75,15 +77,7 @@ describe('CardList Component', () => {
       const incompleteData = [
         { ...generateMockCharacters(1)[0], name: undefined, image: undefined },
       ] as unknown as CharacterDetails[];
-
-      render(
-        <CardList
-          characters={incompleteData}
-          onCardClick={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      );
+      renderCardList(incompleteData);
       expect(screen.getByTestId('card')).toBeInTheDocument();
     });
   });
@@ -91,16 +85,7 @@ describe('CardList Component', () => {
   describe('Performance', () => {
     it('renders large lists without crashing', () => {
       const largeList = generateMockCharacters(100);
-      expect(() =>
-        render(
-          <CardList
-            characters={largeList}
-            onCardClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-        )
-      ).not.toThrow();
+      expect(() => renderCardList(largeList)).not.toThrow();
     });
   });
 });
