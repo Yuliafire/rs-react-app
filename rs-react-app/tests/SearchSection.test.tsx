@@ -123,6 +123,7 @@ describe('SearchSection Component', () => {
   describe('Behavior', () => {
     it('triggers search on button click', async () => {
       const user = userEvent.setup();
+
       render(
         <ThemeProvider>
           <MemoryRouter>
@@ -130,9 +131,18 @@ describe('SearchSection Component', () => {
           </MemoryRouter>
         </ThemeProvider>
       );
+
       const input = screen.getByRole('textbox');
       await user.type(input, 'Rick');
-      await user.click(screen.getByRole('button', { name: /search/i }));
+
+      const searchButton = screen.getByRole('button', { name: /search/i });
+
+      await waitFor(() => {
+        expect(searchButton).not.toBeDisabled();
+      });
+
+      await user.click(searchButton);
+
       await waitFor(() => {
         expect(mockProps.onSearchResults).toHaveBeenCalled();
       });
