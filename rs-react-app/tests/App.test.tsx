@@ -84,13 +84,14 @@ vi.mock('../src/pages/not-found/Notfound', () => ({
   NotFound: () => <div>NotFound Page</div>,
 }));
 
-vi.doMock('../src/services/apiService', () => {
-  const mockApiService = {
-    fetchInitialCharacters: vi.fn(),
-    searchCharacters: vi.fn(),
-  };
-  return { default: mockApiService };
-});
+const mockApiService = {
+  fetchInitialCharacters: vi.fn(),
+  searchCharacters: vi.fn(),
+};
+
+vi.doMock('../src/services/apiService', () => ({
+  default: mockApiService,
+}));
 
 describe('App Component', () => {
   const mockCharacter: CharacterDetails = {
@@ -108,17 +109,8 @@ describe('App Component', () => {
     episode: [],
   };
 
-  let mockApiService: {
-    fetchInitialCharacters: ReturnType<typeof vi.fn>;
-    searchCharacters: ReturnType<typeof vi.fn>;
-  };
-
-  beforeEach(async () => {
-    const apiServiceModule = await import('../src/services/apiService');
-    mockApiService = apiServiceModule.default;
-
+  beforeEach(() => {
     vi.clearAllMocks();
-
     mockApiService.fetchInitialCharacters.mockResolvedValue({
       status: 'success',
       data: [mockCharacter],
@@ -144,7 +136,6 @@ describe('App Component', () => {
 
   it('renders Header, Footer, and HomePage on default route', async () => {
     renderApp();
-
     await waitFor(() => {
       expect(screen.getByText('Header Mock')).toBeInTheDocument();
       expect(screen.getByText('Footer Mock')).toBeInTheDocument();
@@ -154,7 +145,6 @@ describe('App Component', () => {
 
   it('renders About page on /about route', async () => {
     renderApp(['/about']);
-
     expect(screen.getByText('About Page')).toBeInTheDocument();
     expect(screen.getByText('Header Mock')).toBeInTheDocument();
     expect(screen.getByText('Footer Mock')).toBeInTheDocument();
@@ -162,16 +152,13 @@ describe('App Component', () => {
 
   it('renders NotFound page on invalid route', async () => {
     renderApp(['/invalid']);
-
     expect(screen.getByText('Header Mock')).toBeInTheDocument();
     expect(screen.getByText('Footer Mock')).toBeInTheDocument();
   });
 
   it('handles search error from SearchSection', async () => {
     renderApp();
-
     fireEvent.click(screen.getByText('Trigger Search Error'));
-
     await waitFor(() => {
       expect(screen.getByText('Search failed')).toBeInTheDocument();
       expect(screen.queryByText('Results: 1')).not.toBeInTheDocument();

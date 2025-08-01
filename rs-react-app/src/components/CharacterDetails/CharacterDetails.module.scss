@@ -45,19 +45,19 @@
   }
 
   button {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  cursor: pointer;
-  background: var(--card-bg);
-  color: var(--text);
-  transition:
-    background 0.2s,
-    color 0.2s;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--card-bg);
+    color: var(--text);
+    transition:
+      background 0.2s,
+      color 0.2s;
 
-  &:hover {
-    background: var(--btn-hover);
-    color: var(--btn-hover-color);
-  }
+    &:hover {
+      background: var(--btn-hover);
+      color: var(--btn-hover-color);
+    }
   }
 }

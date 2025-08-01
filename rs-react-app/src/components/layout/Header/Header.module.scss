@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var( --background-layout);
+  background: var(--background-layout);
   color: var(--text);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 4px var(--shadow);
@@ -15,44 +15,42 @@
     box-shadow: 0 4px 8px var(--shadow);
   }
 
-h1 {
-  margin: 0;
-  font-size: 1.5rem;
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text);
 
-  @media screen and (max-width: 768px) {
-    font-size: 1.25rem;
+    @media screen and (max-width: 768px) {
+      font-size: 1.25rem;
+    }
+
+    @media screen and (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
-
-  @media screen and (max-width: 480px) {
-    font-size: 1rem; 
-  }
-
-  color: var(--text);
-}
-
 }
 
 .nav {
   a {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  cursor: pointer;
-  background: var(--card-bg);
-  color: var(--text);
-  transition:
-    background 0.2s,
-    color 0.2s;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--card-bg);
+    color: var(--text);
+    transition:
+      background 0.2s,
+      color 0.2s;
 
-  &:hover {
-    background: var(--btn-hover);
-    color: var(--btn-hover-color);
-  }
+    &:hover {
+      background: var(--btn-hover);
+      color: var(--btn-hover-color);
+    }
 
     &.active {
-       font-weight: bold;
-       background: var(--btn-hover);
-       color: var(--btn-hover-color);
+      font-weight: bold;
+      background: var(--btn-hover);
+      color: var(--btn-hover-color);
     }
   }
 }
