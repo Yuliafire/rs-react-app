@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import styles from './Pagination.module.scss';
+import { useTheme } from '../../hooks/useTheme';
 
 interface PaginationProps {
   currentPage: number;
@@ -23,6 +24,8 @@ const Pagination = ({
     [onPageChange, totalPages, loading]
   );
 
+  const { theme } = useTheme();
+
   const getPageNumbers = () => {
     const delta = 2;
     const range = [];
@@ -41,7 +44,7 @@ const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div className={styles.pagination}>
+    <div className={`${styles.pagination} ${styles[theme]}`}>
       <button
         onClick={() => handlePageClick(currentPage - 1)}
         disabled={currentPage === 1 || loading}
