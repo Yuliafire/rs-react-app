@@ -131,20 +131,24 @@ describe('ResultsSection Component', () => {
   });
 });
 
-// describe('Error Handling', () => {
-//   const errorCases = [
-//     { type: 'Network', message: 'Network Error' },
-//     { type: 'Not Found', message: '404: Not Found' },
-//     { type: 'Server', message: '500: Server Error' },
-//   ];
+describe('Error Handling', () => {
+  const errorCases = [
+    { type: 'Network', message: 'Network Error' },
+    { type: 'Not Found', message: '404: Not Found' },
+    { type: 'Server', message: '500: Server Error' },
+  ];
 
-//   errorCases.forEach(({ type, message }) => {
-//     it(`handles ${type} errors`, () => {
-//       ResultsSection({
-//         error: message,
-//         results: [],
-//       });
-//       expect(screen.getByText(message)).toBeInTheDocument();
-//     });
-//   });
-// });
+  errorCases.forEach(({ type, message }) => {
+    it(`handles ${type} errors`, () => {
+      render(
+        <ResultsSection
+          error={message}
+          results={[]}
+          loading={false}
+          onResultClick={vi.fn()}
+        />
+      );
+      expect(screen.getByText(message)).toBeInTheDocument();
+    });
+  });
+});

@@ -7,14 +7,14 @@ interface ResultsSectionProps {
   results: CharacterDetails[];
   loading: boolean;
   error: string | null;
-  onResultClick: (id: number) => void;
+  onCardClick: (id: number) => void;
 }
 
 const ResultsSection = ({
   loading,
   error,
   results,
-  onResultClick,
+  onCardClick,
 }: ResultsSectionProps) => {
   if (error) {
     return (
@@ -39,9 +39,8 @@ const ResultsSection = ({
           <Loader minDisplayTime={2000} data-testid="loader" />
         </div>
       ) : (
-        <CardList characters={results} onCardClick={onResultClick} />
+        <CardList characters={results} onCardClick={onCardClick} />
       )}
-      ;
     </section>
   );
 };

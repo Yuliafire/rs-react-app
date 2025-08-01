@@ -8,10 +8,10 @@ import { useTheme } from '../../../hooks/useTheme';
 
 interface CardProps {
   character: CharacterDetails;
-  onSelect: () => void;
+  onCardClick: () => void;
 }
 
-const Card = ({ character, onSelect }: CardProps) => {
+const Card = ({ character, onCardClick }: CardProps) => {
   const { theme } = useTheme();
   const { page = '1' } = useParams<{ page?: string }>();
   const dispatch = useDispatch<AppDispatch>();
@@ -24,25 +24,37 @@ const Card = ({ character, onSelect }: CardProps) => {
   );
 
   const handleCheckboxChange = () => {
+    console.log(
+      'Checkbox changed for character:',
+      character.id,
+      'isSelected:',
+      isSelected
+    );
     if (isSelected) {
       dispatch(removeCharacter(character.id));
+      console.log('Dispatched removeCharacter:', character.id);
     } else {
-      dispatch(
-        addCharacter({
-          id: character.id,
-          name: character.name,
-          species: character.species,
-          status: character.status,
-          detailsUrl: `/character/${page}/${character.id}`,
-        })
-      );
+      const payload = {
+        id: character.id,
+        name: character.name,
+        species: character.species,
+        status: character.status,
+        detailsUrl: `/character/${page}/${character.id}`,
+      };
+      dispatch(addCharacter(payload));
+      console.log('Dispatched addCharacter:', payload);
     }
+  };
+
+  const handleCardClick = () => {
+    console.log('Card clicked for character:', character.id);
+    onCardClick();
   };
 
   return (
     <div
       className={`${styles.card} ${styles[theme]}`}
-      onClick={onSelect}
+      onClick={handleCardClick}
       data-testid="card"
       role="button"
       tabIndex={0}
