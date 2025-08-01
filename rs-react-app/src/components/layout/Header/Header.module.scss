@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--primary);
+  background: var( --background-layout);
   color: var(--text);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 4px var(--shadow);
@@ -15,26 +15,44 @@
     box-shadow: 0 4px 8px var(--shadow);
   }
 
-  h1 {
-    margin: 0;
-    font-size: 24px;
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.25rem;
   }
+
+  @media screen and (max-width: 480px) {
+    font-size: 1rem; 
+  }
+
+  color: var(--text);
+}
+
 }
 
 .nav {
   a {
-    color: var(--text);
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 4px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--card-bg);
+  color: var(--text);
+  transition:
+    background 0.2s,
+    color 0.2s;
 
-    &:hover {
-      background: var(--primary-hover);
-    }
+  &:hover {
+    background: var(--btn-hover);
+    color: var(--btn-hover-color);
+  }
 
     &.active {
-      background: var(--primary-hover);
-      font-weight: bold;
+       font-weight: bold;
+       background: var(--btn-hover);
+       color: var(--btn-hover-color);
     }
   }
 }
@@ -52,6 +70,6 @@
 
   &:hover {
     background: var(--btn-hover);
-    color: var(--text);
+    color: var(--btn-hover-color);
   }
 }

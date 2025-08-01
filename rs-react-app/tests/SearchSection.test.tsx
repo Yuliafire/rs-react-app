@@ -12,7 +12,6 @@ import {
 import { MemoryRouter } from 'react-router-dom';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 import '@testing-library/jest-dom/vitest';
-// import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '../src/context/ThemeProvider';
 
 interface CharacterResult {
@@ -119,33 +118,4 @@ describe('SearchSection Component', () => {
       expect(screen.getByRole('textbox')).toHaveValue('');
     });
   });
-
-  // describe('Behavior', () => {
-  //   it('triggers search on button click', async () => {
-  //     const user = userEvent.setup();
-
-  //     render(
-  //       <ThemeProvider>
-  //         <MemoryRouter>
-  //           <SearchSection {...mockProps} />
-  //         </MemoryRouter>
-  //       </ThemeProvider>
-  //     );
-
-  //     const input = screen.getByRole('textbox');
-  //     await user.type(input, 'Rick');
-
-  //     const searchButton = screen.getByRole('button', { name: /search/i });
-
-  //     await waitFor(() => {
-  //       expect(searchButton).not.toBeDisabled();
-  //     });
-
-  //     await user.click(searchButton);
-
-  //     await waitFor(() => {
-  //       expect(mockProps.onSearchResults).toHaveBeenCalled();
-  //     });
-  //   });
-  // });
 });

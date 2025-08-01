@@ -8,15 +8,15 @@
   flex-direction: column;
   gap: 1rem;
   padding: 1.5rem;
-  background: var(--card-bg);
+  background: var(--background-layout);
   color: var(--text);
   border-radius: 8px;
   box-shadow: 0 4px 12px var(--shadow);
   border: 1px solid var(--border);
   z-index: 100;
   transition: all 0.3s ease;
-  max-width: 300px;
-  width: 100%;
+  width: 80%;
+  max-width: 80%;
 
   [data-theme='dark'] & {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -30,7 +30,18 @@
   }
 }
 
+.flyout {
+  background: var(--background-layout);
+  width: 80%;
+  max-width: 80%;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: var(--btn-hover-color);
+}
+
+
 .title {
+  text-align: center;
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--text);
@@ -51,7 +62,7 @@
 .button {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: none;
+  border: 1px solid var(--background-layout);
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
