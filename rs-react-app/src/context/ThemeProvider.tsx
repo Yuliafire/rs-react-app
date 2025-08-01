@@ -24,7 +24,6 @@ import { ThemeContext, type Theme } from './themeContext';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
-    // Optional: Check for saved theme preference in localStorage
     return (localStorage.getItem('theme') as Theme) || 'dark';
   });
 
@@ -39,11 +38,16 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.documentElement.className = theme;
+    document.documentElement.setAttribute('data-testid', 'theme-root');
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, toggleTheme }}
+      data-testid="theme-provider"
+    >
       {children}
     </ThemeContext.Provider>
   );
 };
+export type { Theme };
