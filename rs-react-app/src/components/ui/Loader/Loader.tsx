@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './Loader.module.scss';
 import timerService from '../../../utils/timerService';
+import { useTheme } from '../../../hooks/useTheme';
 
 interface LoaderProps {
   minDisplayTime?: number;
@@ -9,6 +10,7 @@ interface LoaderProps {
 const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     let mounted = true;
@@ -39,7 +41,7 @@ const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
   }
 
   return (
-    <div className={styles.loaderWrapper}>
+    <div className={`${styles.loaderWrapper} ${styles[theme]}`}>
       <div
         className={`${styles.loaderContainer} ${isVisible ? styles.visible : ''}`}
         aria-busy="true"
