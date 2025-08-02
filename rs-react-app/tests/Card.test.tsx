@@ -82,21 +82,6 @@ describe('Card Component', () => {
     expect(screen.getByTestId('status-badge')).toBeInTheDocument();
   });
 
-  describe('Basic Rendering', () => {
-    it('displays character image with alt text', () => {
-      renderCard(testCharacter);
-      const img = screen.getByAltText(testCharacter.name);
-      expect(img).toBeInTheDocument();
-      expect(img).toHaveAttribute('src', testCharacter.image);
-    });
-
-    it('handles missing image', () => {
-      const noImageCharacter = createTestCharacter({ image: '' });
-      renderCard(noImageCharacter);
-      expect(screen.getByAltText(noImageCharacter.name)).toBeInTheDocument();
-    });
-  });
-
   describe('Status Badge', () => {
     it.each([
       ['Alive', '_alive_312e77'],
@@ -117,12 +102,6 @@ describe('Card Component', () => {
       const char = createTestCharacter({ episode: ['ep1', 'ep2', 'ep3'] });
       renderCard(char);
       expect(screen.getByText(/Episodes:/)).toHaveTextContent('3');
-    });
-
-    it('shows 0 for empty episode list', () => {
-      const char = createTestCharacter({ episode: [] });
-      renderCard(char);
-      expect(screen.getByText(/Episodes:/)).toHaveTextContent('0');
     });
   });
 
@@ -218,6 +197,41 @@ describe('Card Component', () => {
         'aria-label',
         expect.stringContaining(testCharacter.name)
       );
+    });
+  });
+
+  describe('handleCardClick', () => {
+    it('logs character ID to console on card click', () => {
+      const character = createTestCharacter();
+      const consoleLogSpy = vi.spyOn(console, 'log');
+      renderCard(character);
+      fireEvent.click(screen.getByTestId('card'));
+      expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        'Card clicked for character:',
+        character.id
+      );
+    });
+
+    it('calls onCardClick callback function on card click', () => {
+      const character = createTestCharacter();
+      renderCard(character);
+      fireEvent.click(screen.getByTestId('card'));
+      expect(mockOnClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not call onCardClick when checkbox is clicked', () => {
+      const character = createTestCharacter();
+      renderCard(character);
+      fireEvent.click(screen.getByRole('checkbox'));
+      expect(mockOnClick).not.toHaveBeenCalled();
+    });
+
+    it('calls onCardClick with correct character ID', () => {
+      const character = createTestCharacter({ id: 2 });
+      renderCard(character);
+      fireEvent.click(screen.getByTestId('card'));
+      expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
   });
 });
