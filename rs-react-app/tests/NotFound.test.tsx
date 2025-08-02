@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import { NotFound } from '../src/pages/not-found/Notfound';
 import '@testing-library/jest-dom/vitest';
+import { ThemeProvider } from '../src/context/ThemeProvider';
 
 vi.mock('../src/pages/not-found/Notfound.module.scss', () => ({
   default: {
@@ -14,9 +15,11 @@ vi.mock('../src/pages/not-found/Notfound.module.scss', () => ({
 describe('NotFound Component', () => {
   it('renders without crashing', () => {
     render(
-      <MemoryRouter>
-        <NotFound />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <NotFound />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     expect(screen.getByText('04 - Page Not Found')).toBeInTheDocument();
@@ -30,9 +33,11 @@ describe('NotFound Component', () => {
 
   it('applies correct CSS classes', () => {
     render(
-      <MemoryRouter>
-        <NotFound />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <NotFound />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const notFoundDiv = screen.getByText('04 - Page Not Found').closest('div');
@@ -44,9 +49,11 @@ describe('NotFound Component', () => {
 
   it('renders home link with correct route', () => {
     render(
-      <MemoryRouter>
-        <NotFound />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <NotFound />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const homeLink = screen.getByRole('link', { name: 'Return to Home' });
