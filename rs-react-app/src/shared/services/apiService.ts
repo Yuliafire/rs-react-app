@@ -1,4 +1,4 @@
-import type { CharacterDetails } from '../types/types';
+import type { CharacterDetails } from '../../types/types';
 
 interface ServiceResponse<T> {
   status: 'success' | 'error';

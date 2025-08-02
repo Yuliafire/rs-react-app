@@ -19,8 +19,13 @@ const Card = ({ character, onCardClick }: CardProps) => {
     (state: RootState) => state.characters.selectedCharacters
   );
 
-  const isSelected = selectedCharacters.some(
-    (item) => item.id === character.id
+  if (!character) {
+    console.error('Character is null or undefined in Card component');
+    return null;
+  }
+
+  const isSelected = selectedCharacters?.some(
+    (item) => item?.id === character.id
   );
 
   const handleCheckboxChange = () => {
@@ -61,32 +66,36 @@ const Card = ({ character, onCardClick }: CardProps) => {
       aria-label={`View details for ${character.name}`}
     >
       <div className={styles.cardImage}>
-        <img src={character.image} alt={character.name} />
+        {character.image ? (
+          <img src={character.image} alt={character.name} />
+        ) : (
+          <span>No image available</span>
+        )}
         <span
-          className={`${styles.statusBadge} ${styles[character.status.toLowerCase()]}`}
+          className={`${styles.statusBadge} ${styles[character.status?.toLowerCase()]}`}
           data-testid="status-badge"
         >
-          {character.status}
+          {character.status || 'Unknown'}
         </span>
       </div>
       <div className={styles.cardContent}>
-        <h3>{character.name}</h3>
+        <h3>{character.name || 'Unknown'}</h3>
         <div className={styles.details}>
           <p>
-            <strong>Species:</strong> {character.species}
+            <strong>Species:</strong> {character.species || 'Unknown'}
           </p>
           <p>
-            <strong>Gender:</strong> {character.gender}
+            <strong>Gender:</strong> {character.gender || 'Unknown'}
           </p>
           <p>
-            <strong>Origin:</strong> {character.origin.name}
+            <strong>Origin:</strong> {character.origin?.name || 'Unknown'}
           </p>
           <p>
-            <strong>Location:</strong> {character.location.name}
+            <strong>Location:</strong> {character.location?.name || 'Unknown'}
           </p>
         </div>
         <div className={styles.episodes}>
-          Episodes: {character.episode.length}
+          Episodes: {character.episode?.length || 'Unknown'}
         </div>
       </div>
       <input

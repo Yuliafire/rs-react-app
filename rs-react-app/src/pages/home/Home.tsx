@@ -49,39 +49,69 @@ const Home = () => {
   }, [pageParam, idParam, queryParam, currentPage, query, id]);
 
   const handleSearchResults = (
-    results: CharacterDetails[],
+    results: CharacterDetails[] | null,
     searchTerm: string,
     totalPages: number
   ) => {
+    if (results === null) {
+      throw new Error('Search results are null');
+    }
     setResults(results);
     setTotalPages(totalPages);
 
     if (searchTerm !== query) {
-      setCurrentPage(1);
-      navigate(
-        `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`
-      );
+      try {
+        setCurrentPage(1);
+        navigate(
+          `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`
+        );
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       const path = selectedId
         ? `/${currentPage}/${selectedId}`
         : `/${currentPage}`;
-      navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
+      try {
+        navigate(
+          `${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
     setQuery(searchTerm);
   };
 
-  const handleCardClick = (id: number) => {
+  const handleCardClick = (id: number | undefined) => {
+    if (id === undefined) {
+      throw new Error('Character ID is undefined in handleCardClick');
+    }
     setSelectedId(id);
-    navigate(
-      `/${currentPage}/${id}${query ? `?query=${encodeURIComponent(query)}` : ''}`
-    );
+    try {
+      navigate(
+        `/${currentPage}/${id}${query ? `?query=${encodeURIComponent(query)}` : ''}`
+      );
+    } catch (error) {
+      console.error(
+        'Error occurred while navigating to character details:',
+        error
+      );
+    }
   };
 
   const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
+    if (newPage < 1 || newPage > totalPages) {
+      console.error('Invalid page number:', newPage);
+      return;
+    }
+
+    setCurrentPage(newPage);
+    const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
+    try {
       navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
     }
   };
 
