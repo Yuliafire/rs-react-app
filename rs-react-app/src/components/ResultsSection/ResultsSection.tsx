@@ -2,6 +2,7 @@ import type { CharacterDetails } from '../../types/types';
 import styles from './ResultsSection.module.scss';
 import Loader from '../ui/Loader/Loader';
 import CardList from '../ui/CardList/CardList';
+// import { useTheme } from '../../../shared/hooks/useTheme';
 
 interface ResultsSectionProps {
   results: CharacterDetails[];

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeAllCharacters } from '../../store/charactersSlice';
 import type { RootState, AppDispatch } from '../../store/store';
 import { saveAs } from 'file-saver';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../shared/hooks/useTheme';
 import styles from './Flyout.module.scss';
 
 const Flyout = () => {

@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
 import CharacterDetailsComponent from '../src/components/CharacterDetails/CharacterDetails';
-import ApiService from '../src/services/apiService';
+import ApiService from '../src/shared/services/apiService';
 import type { CharacterDetails } from '../src/types/types';
 import { ThemeProvider } from '../src/context/ThemeProvider';
 
@@ -27,7 +27,7 @@ vi.mock('react-router-dom', async (importOriginal) => {
   };
 });
 
-vi.mock('../src/services/apiService');
+vi.mock('../src/shared/services/apiService');
 
 const mockCharacter: CharacterDetails = {
   id: 1,

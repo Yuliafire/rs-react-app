@@ -2,10 +2,10 @@ import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styles from './SearchSection.module.scss';
 import Button from '../ui/Button/Button';
-import { useStorage } from '../../services/storageService';
-import ApiService from '../../services/apiService';
+import { useStorage } from '../../shared/services/storageService';
+import ApiService from '../../shared/services/apiService';
 import type { CharacterDetails } from '../../types/types';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 interface SearchSectionProps {
   onSearchResults: (

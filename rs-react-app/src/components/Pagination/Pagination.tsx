@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import styles from './Pagination.module.scss';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 interface PaginationProps {
   currentPage: number;

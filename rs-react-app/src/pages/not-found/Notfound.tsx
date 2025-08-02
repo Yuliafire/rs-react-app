@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './Notfound.module.scss';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 export const NotFound = () => {
   const { theme } = useTheme();

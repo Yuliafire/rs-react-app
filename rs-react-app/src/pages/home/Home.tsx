@@ -10,7 +10,7 @@ import ResultsSection from '../../components/ResultsSection/ResultsSection';
 import Pagination from '../../components/Pagination/Pagination';
 import styles from './Home.module.scss';
 import type { CharacterDetails } from '../../types/types';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 const Home = () => {
   const { theme } = useTheme();

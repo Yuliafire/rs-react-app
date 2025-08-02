@@ -4,7 +4,7 @@ import type { CharacterDetails } from '../../../types/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCharacter, removeCharacter } from '../../../store/charactersSlice';
 import type { RootState, AppDispatch } from '../../../store/store';
-import { useTheme } from '../../../hooks/useTheme';
+import { useTheme } from '../../../shared/hooks/useTheme';
 
 interface CardProps {
   character: CharacterDetails;

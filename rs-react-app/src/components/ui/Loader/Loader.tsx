@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './Loader.module.scss';
 import timerService from '../../../utils/timerService';
-import { useTheme } from '../../../hooks/useTheme';
+import { useTheme } from '../../../shared/hooks/useTheme';
 
 interface LoaderProps {
   minDisplayTime?: number;

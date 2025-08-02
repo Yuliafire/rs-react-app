@@ -1,5 +1,5 @@
 import styles from './Footer.module.scss';
-import { useTheme } from '../../../hooks/useTheme';
+import { useTheme } from '../../../shared/hooks/useTheme';
 
 const Footer = () => {
   const { theme } = useTheme();

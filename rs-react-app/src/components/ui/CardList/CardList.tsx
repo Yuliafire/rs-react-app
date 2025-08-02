@@ -1,7 +1,7 @@
 import Card from '../Card/Card';
 import styles from './CardList.module.scss';
 import type { CharacterDetails } from '../../../types/types';
-import { useTheme } from '../../../hooks/useTheme';
+import { useTheme } from '../../../shared/hooks/useTheme';
 
 interface CardListProps {
   characters: CharacterDetails[];

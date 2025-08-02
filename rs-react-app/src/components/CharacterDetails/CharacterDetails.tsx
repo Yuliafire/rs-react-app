@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import ApiService from '../../services/apiService';
+import ApiService from '../../shared/services/apiService';
 import type { CharacterDetails } from '../../types/types';
 import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
-import { useTheme } from '../../hooks/useTheme';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 const CharacterDetailsComponent = () => {
   const { theme } = useTheme();
