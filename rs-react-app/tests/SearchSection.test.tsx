@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   describe,
   expect,
@@ -116,6 +116,47 @@ describe('SearchSection Component', () => {
         </ThemeProvider>
       );
       expect(screen.getByRole('textbox')).toHaveValue('');
+    });
+  });
+
+  describe('Loading State', () => {
+    it('disables input and button during loading', async () => {
+      mockSearchCharacters.mockImplementation(() => new Promise(() => {})); // Never resolves
+      render(
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} />
+          </MemoryRouter>
+        </ThemeProvider>
+      );
+      const input = screen.getByRole('textbox', { name: /search characters/i });
+      const button = screen.getByRole('button', { name: /searching/i });
+      expect(input).toBeDisabled();
+      expect(button).toBeDisabled();
+      expect(button).toHaveTextContent('Searching...');
+    });
+  });
+
+  describe('Page Change', () => {
+    it('calls performSearch when currentPage changes', async () => {
+      const { rerender } = render(
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} currentPage={1} />
+          </MemoryRouter>
+        </ThemeProvider>
+      );
+      rerender(
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} currentPage={2} />
+          </MemoryRouter>
+        </ThemeProvider>
+      );
+      await waitFor(() => {
+        expect(mockProps.onLoadingChange).toHaveBeenCalledWith(true);
+        expect(mockProps.onLoadingChange).toHaveBeenCalledWith(false);
+      });
     });
   });
 });

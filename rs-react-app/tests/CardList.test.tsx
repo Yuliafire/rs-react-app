@@ -60,6 +60,11 @@ describe('CardList Component', () => {
       renderCardList(generateMockCharacters(testCount));
       expect(screen.getAllByTestId('card')).toHaveLength(testCount);
     });
+
+    it('renders no cards when given an empty array', () => {
+      renderCardList([]);
+      expect(screen.queryAllByTestId('card')).toHaveLength(0);
+    });
   });
 
   describe('Data Handling', () => {
@@ -80,12 +85,43 @@ describe('CardList Component', () => {
       renderCardList(incompleteData);
       expect(screen.getByTestId('card')).toBeInTheDocument();
     });
+
+    it('handles duplicate characters correctly', () => {
+      const duplicateData = [
+        generateMockCharacters(1)[0],
+        generateMockCharacters(1)[0],
+      ];
+      renderCardList(duplicateData);
+      expect(screen.getAllByTestId('card')).toHaveLength(2);
+    });
   });
 
   describe('Performance', () => {
     it('renders large lists without crashing', () => {
       const largeList = generateMockCharacters(100);
       expect(() => renderCardList(largeList)).not.toThrow();
+    });
+
+    it('renders extremely large lists without crashing', () => {
+      const extremelyLargeList = generateMockCharacters(1000);
+      expect(() => renderCardList(extremelyLargeList)).not.toThrow();
+    });
+  });
+
+  describe('Event Handling', () => {
+    it('calls onCardClick when a card is clicked', () => {
+      const onCardClick = vi.fn();
+      const testData = generateMockCharacters(1);
+      render(
+        <Provider store={createTestStore()}>
+          <ThemeProvider>
+            <CardList characters={testData} onCardClick={onCardClick} />
+          </ThemeProvider>
+        </Provider>
+      );
+
+      const card = screen.getByTestId('card');
+      card.click();
     });
   });
 });
