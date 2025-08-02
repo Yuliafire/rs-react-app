@@ -2,7 +2,7 @@ import type { CharacterDetails } from '../../types/types';
 import styles from './ResultsSection.module.scss';
 import Loader from '../ui/Loader/Loader';
 import CardList from '../ui/CardList/CardList';
-// import { useTheme } from '../../../shared/hooks/useTheme';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 interface ResultsSectionProps {
   results: CharacterDetails[];
@@ -17,9 +17,13 @@ const ResultsSection = ({
   results,
   onCardClick,
 }: ResultsSectionProps) => {
+  const { theme } = useTheme();
   if (error) {
     return (
-      <section className={styles.resultsSectionError} aria-live="polite">
+      <section
+        className={`${styles.resultsSectionError} ${styles[theme]}`}
+        aria-live="polite"
+      >
         <p role="paragraph">{error}</p>
       </section>
     );
@@ -27,16 +31,16 @@ const ResultsSection = ({
 
   if (!results.length) {
     return (
-      <p className={styles.noResults}>
+      <p className={`${styles.noResults} ${styles[theme]}`}>
         No characters found. Try another search!
       </p>
     );
   }
 
   return (
-    <section className={styles.resultsSection}>
+    <section className={`${styles.resultsSection} ${styles[theme]}`}>
       {loading ? (
-        <div className={styles.loaderContainer}>
+        <div className={`${styles.loaderContainer} ${styles[theme]}`}>
           <Loader minDisplayTime={2000} data-testid="loader" />
         </div>
       ) : (

@@ -88,7 +88,7 @@ describe('ResultsSection Component', () => {
             loading={props.loading || false}
             error={props.error || null}
             results={props.results}
-            onResultClick={props.onResultClick || vi.fn()}
+            onCardClick={props.onResultClick || vi.fn()}
           />
         </ThemeProvider>
       </Provider>
@@ -129,26 +129,31 @@ describe('ResultsSection Component', () => {
       expect(screen.getAllByTestId('card')).toHaveLength(1);
     });
   });
-});
 
-describe('Error Handling', () => {
-  const errorCases = [
-    { type: 'Network', message: 'Network Error' },
-    { type: 'Not Found', message: '404: Not Found' },
-    { type: 'Server', message: '500: Server Error' },
-  ];
+  describe('Error Handling', () => {
+    const errorCases = [
+      { type: 'Network', message: 'Network Error' },
+      { type: 'Not Found', message: '404: Not Found' },
+      { type: 'Server', message: '500: Server Error' },
+    ];
 
-  errorCases.forEach(({ type, message }) => {
-    it(`handles ${type} errors`, () => {
-      render(
-        <ResultsSection
-          error={message}
-          results={[]}
-          loading={false}
-          onResultClick={vi.fn()}
-        />
-      );
-      expect(screen.getByText(message)).toBeInTheDocument();
+    errorCases.forEach(({ type, message }) => {
+      it(`handles ${type} errors`, () => {
+        const store = createTestStore();
+        render(
+          <Provider store={store}>
+            <ThemeProvider>
+              <ResultsSection
+                error={message}
+                results={[]}
+                loading={false}
+                onCardClick={vi.fn()}
+              />
+            </ThemeProvider>
+          </Provider>
+        );
+        expect(screen.getByText(message)).toBeInTheDocument();
+      });
     });
   });
 });
