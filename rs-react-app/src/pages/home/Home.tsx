@@ -53,10 +53,6 @@ const Home = () => {
     searchTerm: string,
     totalPages: number
   ) => {
-    console.log('handleSearchResults', {
-      totalPages,
-      resultsLength: results.length,
-    });
     setResults(results);
     setTotalPages(totalPages);
 
@@ -83,7 +79,6 @@ const Home = () => {
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      console.log('handlePageChange', { newPage, selectedId, query });
       setCurrentPage(newPage);
       const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
       navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
