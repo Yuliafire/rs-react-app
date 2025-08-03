@@ -16,10 +16,13 @@
   }
 
   h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: var(--text);
+    @include responsive-typography($font-size-md, $font-size-base);
+  }
 
+
+  h1 {
+    margin: 0;
+    color: var(--text);
     @media screen and (max-width: 768px) {
       font-size: 1.25rem;
     }
@@ -32,6 +35,10 @@
 
 .nav {
   a {
+    @include responsive-typography($font-size-base, $font-size-xs);
+  }
+
+   a {
     padding: 8px 12px;
     border: 1px solid var(--border);
     border-radius: 4px;
@@ -54,6 +61,11 @@
     }
   }
 }
+
+.themeToggle {
+  @include responsive-typography($font-size-base, $font-size-xs);
+}
+
 
 .themeToggle {
   padding: 8px 12px;

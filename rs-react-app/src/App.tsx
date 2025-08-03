@@ -8,6 +8,7 @@ import CharacterDetailsComponent from './components/CharacterDetails/CharacterDe
 import Flyout from './components/Flyout/Flyout';
 
 const HOME_PATH = '/';
+const RESERVE_HOME_PATH = '/index.html';
 const DYNAMIC_PAGE_PATH = '/:page';
 const ABOUT_PATH = '/about';
 const NOT_FOUND_PATH = '*';
@@ -23,6 +24,7 @@ const App = () => {
             element={<Home />}
             errorElement={<div>Error in Home or Details</div>}
           />
+          <Route path={RESERVE_HOME_PATH} element={<Home />} />
           <Route path={DYNAMIC_PAGE_PATH} element={<Home />}>
             <Route
               path=":id"
