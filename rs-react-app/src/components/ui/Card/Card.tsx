@@ -20,7 +20,6 @@ const Card = ({ character, onCardClick }: CardProps) => {
   );
 
   if (!character) {
-    console.error('Character is null or undefined in Card component');
     return null;
   }
 
@@ -29,15 +28,8 @@ const Card = ({ character, onCardClick }: CardProps) => {
   );
 
   const handleCheckboxChange = () => {
-    console.log(
-      'Checkbox changed for character:',
-      character.id,
-      'isSelected:',
-      isSelected
-    );
     if (isSelected) {
       dispatch(removeCharacter(character.id));
-      console.log('Dispatched removeCharacter:', character.id);
     } else {
       const payload = {
         id: character.id,
@@ -47,12 +39,10 @@ const Card = ({ character, onCardClick }: CardProps) => {
         detailsUrl: `/character/${page}/${character.id}`,
       };
       dispatch(addCharacter(payload));
-      console.log('Dispatched addCharacter:', payload);
     }
   };
 
   const handleCardClick = () => {
-    console.log('Card clicked for character:', character.id);
     onCardClick();
   };
 

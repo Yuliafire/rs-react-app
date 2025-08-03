@@ -22,7 +22,7 @@ describe('NotFound Component', () => {
       </ThemeProvider>
     );
 
-    expect(screen.getByText('04 - Page Not Found')).toBeInTheDocument();
+    expect(screen.getByText('404 - Page Not Found')).toBeInTheDocument();
     expect(
       screen.getByText("The page you're looking for doesn't exist.")
     ).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe('NotFound Component', () => {
       </ThemeProvider>
     );
 
-    const notFoundDiv = screen.getByText('04 - Page Not Found').closest('div');
+    const notFoundDiv = screen.getByText('404 - Page Not Found').closest('div');
     expect(notFoundDiv).toHaveClass('notFound');
 
     const homeLink = screen.getByRole('link', { name: 'Return to Home' });

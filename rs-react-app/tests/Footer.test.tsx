@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Footer from '../src/components/layout/Footer/Footer';
 import '@testing-library/jest-dom/vitest';
 import { ThemeProvider } from '../src/context/ThemeProvider';
+import '@testing-library/jest-dom/vitest';
 
 describe('Footer Component', () => {
   const renderFooter = () => {

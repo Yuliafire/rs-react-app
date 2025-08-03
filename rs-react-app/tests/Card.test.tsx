@@ -201,18 +201,6 @@ describe('Card Component', () => {
   });
 
   describe('handleCardClick', () => {
-    it('logs character ID to console on card click', () => {
-      const character = createTestCharacter();
-      const consoleLogSpy = vi.spyOn(console, 'log');
-      renderCard(character);
-      fireEvent.click(screen.getByTestId('card'));
-      expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        'Card clicked for character:',
-        character.id
-      );
-    });
-
     it('calls onCardClick callback function on card click', () => {
       const character = createTestCharacter();
       renderCard(character);

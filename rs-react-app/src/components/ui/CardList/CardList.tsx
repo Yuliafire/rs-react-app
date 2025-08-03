@@ -18,7 +18,6 @@ const CardList = ({ characters, onCardClick }: CardListProps) => {
           key={character.id}
           character={character}
           onCardClick={() => {
-            console.log('CardList: Card clicked, id:', character.id);
             onCardClick(character.id);
           }}
         />

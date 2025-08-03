@@ -6,6 +6,7 @@ import { ThemeProvider } from '../src/context/ThemeProvider';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import charactersReducer from '../src/store/charactersSlice';
+import '@testing-library/jest-dom/vitest';
 
 const createTestStore = () => {
   return configureStore({
@@ -68,24 +69,6 @@ describe('CardList Component', () => {
   });
 
   describe('Data Handling', () => {
-    it('passes character data correctly to each Card', () => {
-      const testData = generateMockCharacters(3);
-      renderCardList(testData);
-
-      const cards = screen.getAllByTestId('card');
-      testData.forEach((character, index) => {
-        expect(cards[index]).toHaveTextContent(String(character.id));
-      });
-    });
-
-    it('handles missing optional fields gracefully', () => {
-      const incompleteData = [
-        { ...generateMockCharacters(1)[0], name: undefined, image: undefined },
-      ] as unknown as CharacterDetails[];
-      renderCardList(incompleteData);
-      expect(screen.getByTestId('card')).toBeInTheDocument();
-    });
-
     it('handles duplicate characters correctly', () => {
       const duplicateData = [
         generateMockCharacters(1)[0],

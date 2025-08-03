@@ -27,20 +27,23 @@ const CharacterDetailsComponent = () => {
       }
       setLoading(true);
       setError(null);
-      try {
-        const response = await ApiService.getCharacter(characterId);
-        if (response.status === 'success') {
-          setCharacter(response.data);
-        } else {
-          setError(response.message || 'Failed to load character');
-        }
-      } catch (error) {
-        setError('API request failed');
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
+
+      ApiService.getCharacter(characterId)
+        .then((response) => {
+          if (response.status === 'success') {
+            setCharacter(response.data);
+          } else {
+            setError(response.message || 'Failed to load character');
+          }
+        })
+        .catch(() => {
+          setError('API request failed');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     };
+
     fetchCharacter();
   }, [id]);
 
@@ -49,7 +52,6 @@ const CharacterDetailsComponent = () => {
       ? `?${searchParams.toString()}`
       : '';
     const basePath = page ? `/${page}` : '/';
-    console.log('handleClose', { page, queryString, currentId: id, basePath });
     navigate(`${basePath}${queryString}`);
   };
 

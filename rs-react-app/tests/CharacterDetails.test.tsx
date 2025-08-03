@@ -6,6 +6,7 @@ import CharacterDetailsComponent from '../src/components/CharacterDetails/Charac
 import ApiService from '../src/shared/services/apiService';
 import type { CharacterDetails } from '../src/types/types';
 import { ThemeProvider } from '../src/context/ThemeProvider';
+import '@testing-library/jest-dom/vitest';
 
 interface ServiceResponse<T> {
   status: 'success' | 'error';
