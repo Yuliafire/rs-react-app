@@ -23,6 +23,7 @@ const ResultsSection = ({
       <section
         className={`${styles.resultsSectionError} ${styles[theme]}`}
         aria-live="polite"
+        data-testid="results-section"
       >
         <p role="paragraph">{error}</p>
       </section>
@@ -31,7 +32,11 @@ const ResultsSection = ({
 
   if (!results.length) {
     return (
-      <p className={`${styles.noResults} ${styles[theme]}`}>
+      <p
+        className={`${styles.noResults} ${styles[theme]}`}
+        aria-live="polite"
+        data-testid="results-section"
+      >
         No characters found. Try another search!
       </p>
     );

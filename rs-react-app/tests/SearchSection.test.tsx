@@ -121,7 +121,7 @@ describe('SearchSection Component', () => {
 
   describe('Loading State', () => {
     it('disables input and button during loading', async () => {
-      mockSearchCharacters.mockImplementation(() => new Promise(() => {})); // Never resolves
+      mockSearchCharacters.mockImplementation(() => new Promise(() => {}));
       render(
         <ThemeProvider>
           <MemoryRouter>

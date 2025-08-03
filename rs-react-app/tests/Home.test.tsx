@@ -1,13 +1,7 @@
-import {
-  render,
-  //   screen,
-  //   fireEvent,
-  //   waitFor,
-  cleanup,
-} from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { describe, it, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, vi, beforeEach, afterEach, expect } from 'vitest';
 import { MemoryRouter, useNavigate, useParams } from 'react-router-dom';
 import Home from '../src/pages/home/Home';
 import charactersReducer from '../src/store/charactersSlice';
@@ -58,7 +52,7 @@ describe('Home component', () => {
         </ThemeProvider>
       </Provider>
     );
-    // expect(screen.getByText('Search')).toBeInTheDocument();
+    expect(screen.getByTestId('search-section')).toBeInTheDocument();
   });
 
   it('renders results section', () => {
@@ -71,68 +65,6 @@ describe('Home component', () => {
         </ThemeProvider>
       </Provider>
     );
-    // expect(screen.getByText('Search Results')).toBeInTheDocument();
-  });
-
-  it('calls handleCardClick when card is clicked', async () => {
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/1/190?query=ara']}>
-            <Home />
-          </MemoryRouter>
-        </ThemeProvider>
-      </Provider>
-    );
-    // const card = screen.getByText('Character 1');
-    // fireEvent.click(card);
-    // await waitFor(() => {
-    //   expect(mockNavigate).toHaveBeenCalledWith('/character/1');
-    // });
-  });
-
-  it('calls handlePageChange when page is changed', async () => {
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/1/190?query=ara']}>
-            <Home />
-          </MemoryRouter>
-        </ThemeProvider>
-      </Provider>
-    );
-    // const nextPageButton = screen.getByText('Next');
-    // fireEvent.click(nextPageButton);
-    // await waitFor(() => {
-    //   expect(mockNavigate).toHaveBeenCalledWith('/2');
-    // });
-  });
-
-  it('renders error message when error occurs', () => {
-    vi.mocked(useParams).mockReturnValue({ page: 'invalid' });
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/invalid']}>
-            <Home />
-          </MemoryRouter>
-        </ThemeProvider>
-      </Provider>
-    );
-    // expect(mockNavigate).toHaveBeenCalledWith('/404');
-  });
-
-  it('renders loading indicator when loading', () => {
-    store.dispatch({ type: 'characters/setLoading', payload: true });
-    render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/1/190?query=ara']}>
-            <Home />
-          </MemoryRouter>
-        </ThemeProvider>
-      </Provider>
-    );
-    // expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByTestId('results-section')).toBeInTheDocument();
   });
 });

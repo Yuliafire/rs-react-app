@@ -73,6 +73,7 @@ const Pagination = ({
         onClick={() => handlePageClick(currentPage + 1)}
         disabled={currentPage === totalPages || loading}
         aria-label="Next page"
+        role="button"
       >
         Next
       </button>

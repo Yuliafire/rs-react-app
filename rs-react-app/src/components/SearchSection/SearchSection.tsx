@@ -70,7 +70,10 @@ const SearchSection = ({
   };
 
   return (
-    <section className={`${styles.searchSection} ${styles[theme]}`}>
+    <section
+      className={`${styles.searchSection} ${styles[theme]}`}
+      data-testid="search-section"
+    >
       <form onSubmit={handleSubmit} className={styles.searchForm}>
         <input
           type="text"
