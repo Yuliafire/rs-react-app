@@ -33,20 +33,20 @@
 
   @media (max-width: 768px) {
     padding: 1.5rem 0.75rem;
-    margin-bottom: 2rem;
+     margin-bottom: $spacing-lg;
     border-radius: 12px;
     min-height: 120px;
   }
 
   @media (max-width: 480px) {
     padding: 1rem 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: $spacing-md;
     border-radius: 10px;
   }
 
   @media (max-width: 360px) {
     padding: 0.75rem 0.25rem;
-    margin-bottom: 1rem;
+    margin-bottom: $spacing-sm;
     min-height: 100px;
   }
 }
@@ -75,7 +75,7 @@
 
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: $spacing-xs;
   }
 }
 
@@ -85,12 +85,16 @@
 }
 
 .searchInput {
+@include responsive-typography($font-size-base, $font-size-xs);
+}
+
+.searchInput {
   width: 100%;
   padding: 1.1rem 1.5rem 1.1rem 3rem;
   border: none;
   border-radius: 12px;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: $transition-long;
   background-color: var(--background-dark);
   box-shadow: inset 0 1px 3px var(--shadow);
   color: var(--text);
@@ -131,6 +135,10 @@
     background-size: 0.9rem;
     font-size: 0.9rem;
   }
+}
+
+.error {
+ @include responsive-typography($font-size-xs, $font-size-xs);
 }
 
 .error {
