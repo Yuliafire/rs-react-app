@@ -17,12 +17,12 @@
   text-align: center;
   padding: 2rem;
   background-color: rgba(255, 68, 68, 0.1);
-   border-radius: $border-radius-md;
+  border-radius: $border-radius-md;
   margin: $spacing-sm;
 }
 
 .noResults {
-   @include responsive-typography($font-size-sm, $font-size-xs);
+  @include responsive-typography($font-size-sm, $font-size-xs);
 }
 
 .noResults {
@@ -32,12 +32,11 @@
   padding: 2rem;
 }
 
-
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
- gap: $spacing-sm;
+  gap: $spacing-sm;
   margin-top: $spacing-lg;
   padding: 1rem;
 }
@@ -47,7 +46,7 @@
   background-color: #42b4ca;
   color: white;
   border: none;
- border-radius: $border-radius-sm;
+  border-radius: $border-radius-sm;
   cursor: pointer;
   transition: $transition-short;
 

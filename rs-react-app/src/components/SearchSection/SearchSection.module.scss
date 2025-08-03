@@ -33,7 +33,7 @@
 
   @media (max-width: 768px) {
     padding: 1.5rem 0.75rem;
-     margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-lg;
     border-radius: 12px;
     min-height: 120px;
   }
@@ -85,7 +85,7 @@
 }
 
 .searchInput {
-@include responsive-typography($font-size-base, $font-size-xs);
+  @include responsive-typography($font-size-base, $font-size-xs);
 }
 
 .searchInput {
@@ -138,7 +138,7 @@
 }
 
 .error {
- @include responsive-typography($font-size-xs, $font-size-xs);
+  @include responsive-typography($font-size-xs, $font-size-xs);
 }
 
 .error {
