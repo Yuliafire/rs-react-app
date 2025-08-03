@@ -44,23 +44,24 @@ const SearchSection = ({
     onLoadingChange(true);
     onErrorChange(null);
 
-    try {
-      const response = await ApiService.searchCharacters(term, page);
-      if (response.status === 'success') {
-        onSearchResults(response.data, term, response.info?.pages || 1);
-        if (term) saveSearchTerm(term);
-      } else {
-        onErrorChange(response.message || 'Unknown error');
+    ApiService.searchCharacters(term, page)
+      .then((response) => {
+        if (response.status === 'success') {
+          onSearchResults(response.data, term, response.info?.pages || 1);
+          if (term) saveSearchTerm(term);
+        } else {
+          onErrorChange(response.message || 'Unknown error');
+          onSearchResults([], term, 1);
+        }
+      })
+      .catch(() => {
+        onErrorChange('API request failed');
         onSearchResults([], term, 1);
-      }
-    } catch (error) {
-      onErrorChange('API request failed');
-      onSearchResults([], term, 1);
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-      onLoadingChange(false);
-    }
+      })
+      .finally(() => {
+        setIsLoading(false);
+        onLoadingChange(false);
+      });
   };
 
   const handleSubmit = async (e: FormEvent) => {

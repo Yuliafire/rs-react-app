@@ -60,25 +60,15 @@ const Home = () => {
     setTotalPages(totalPages);
 
     if (searchTerm !== query) {
-      try {
-        setCurrentPage(1);
-        navigate(
-          `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`
-        );
-      } catch (error) {
-        console.error(error);
-      }
+      setCurrentPage(1);
+      navigate(
+        `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`
+      );
     } else {
       const path = selectedId
         ? `/${currentPage}/${selectedId}`
         : `/${currentPage}`;
-      try {
-        navigate(
-          `${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`
-        );
-      } catch (error) {
-        console.error(error);
-      }
+      navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
     }
     setQuery(searchTerm);
   };
@@ -88,31 +78,19 @@ const Home = () => {
       throw new Error('Character ID is undefined in handleCardClick');
     }
     setSelectedId(id);
-    try {
-      navigate(
-        `/${currentPage}/${id}${query ? `?query=${encodeURIComponent(query)}` : ''}`
-      );
-    } catch (error) {
-      console.error(
-        'Error occurred while navigating to character details:',
-        error
-      );
-    }
+    navigate(
+      `/${currentPage}/${id}${query ? `?query=${encodeURIComponent(query)}` : ''}`
+    );
   };
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) {
-      console.error('Invalid page number:', newPage);
       return;
     }
 
     setCurrentPage(newPage);
     const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
-    try {
-      navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
-    } catch (error) {
-      console.error('Navigation error:', error);
-    }
+    navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
   };
 
   return (
