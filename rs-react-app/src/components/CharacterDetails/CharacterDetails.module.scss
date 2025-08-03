@@ -27,10 +27,10 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
-    h3,
-    p {
-       @include responsive-typography($font-size-md, $font-size-sm);
-    }
+  h3,
+  p {
+    @include responsive-typography($font-size-md, $font-size-sm);
+  }
 
   h3 {
     color: var(--primary);
@@ -49,7 +49,7 @@
   }
 
   p {
-   margin: $spacing-xs * 1.5 0;
+    margin: $spacing-xs * 1.5 0;
     line-height: $line-height;
     font-family: $font-stack;
   }
@@ -71,9 +71,7 @@
     }
   }
 
-   button {
-      @include responsive-typography($font-size-base, $font-size-xs);
+  button {
+    @include responsive-typography($font-size-base, $font-size-xs);
   }
 }
-
- 

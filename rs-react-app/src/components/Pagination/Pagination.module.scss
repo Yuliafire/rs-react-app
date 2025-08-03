@@ -12,7 +12,7 @@
   display: inline-flex;
 }
 
-button { 
+button {
   @include responsive-typography($font-size-base, $font-size-xs);
 }
 
