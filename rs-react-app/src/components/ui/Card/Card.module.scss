@@ -38,9 +38,9 @@
     @include responsive-typography($font-size-base, $font-size-xs);
   }
 
-    .statusBadge {
-       @include responsive-typography($font-size-xs, $font-size-xs);
-    }
+  .statusBadge {
+    @include responsive-typography($font-size-xs, $font-size-xs);
+  }
 
   .statusBadge {
     position: absolute;
@@ -76,13 +76,13 @@
       line-height: $line-height;
     }
 
-      h3 {
-         @include responsive-typography($font-size-md, $font-size-sm);
-      }
+    h3 {
+      @include responsive-typography($font-size-md, $font-size-sm);
+    }
 
     .details {
       p {
-       margin: $spacing-xs 0;
+        margin: $spacing-xs 0;
         font-family: $font-stack;
         line-height: $line-height;
 
@@ -91,30 +91,29 @@
         }
       }
 
-       p {
-         @include responsive-typography($font-size-base, $font-size-xs);
-       }
-
+      p {
+        @include responsive-typography($font-size-base, $font-size-xs);
+      }
     }
 
     .episodes {
-       font-family: $font-stack;
+      font-family: $font-stack;
       line-height: $line-height;
-       margin-top: $spacing-sm;
+      margin-top: $spacing-sm;
       font-size: 13px;
       color: var(--primary);
       font-weight: bold;
       text-align: right;
     }
 
-      .episodes {
-          @include responsive-typography($font-size-base, $font-size-xs);
-      }
+    .episodes {
+      @include responsive-typography($font-size-base, $font-size-xs);
+    }
   }
 
   .flag {
     position: absolute;
-   top: $spacing-sm;
+    top: $spacing-sm;
     left: $spacing-sm;
     width: $spacing-lg;
     height: $spacing-lg;
@@ -131,7 +130,7 @@
     }
   }
 
-   .flag {
-     @include responsive-typography($font-size-base, $font-size-xs);
-   }
+  .flag {
+    @include responsive-typography($font-size-base, $font-size-xs);
+  }
 }
