@@ -10,8 +10,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.className = theme;
-    document.documentElement.setAttribute('data-testid', 'theme-root');
   }, [theme]);
 
   return (
