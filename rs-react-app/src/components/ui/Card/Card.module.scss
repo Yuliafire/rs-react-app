@@ -1,15 +1,20 @@
+@use '../../../assets/styles/globals' as *;
+
 .card {
-  background: skyblue;
+  background: var(--card-bg);
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--shadow);
   overflow: hidden;
-  transition: transform 0.3s ease;
-  margin-bottom: 20px;
-  color: white;
+  transition: $transition-long;
+  margin-bottom: $spacing-lg;
+  color: var(--text);
+  position: relative;
+  font-family: $font-stack;
+  line-height: $line-height;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--shadow);
   }
 
   .cardImage {
@@ -29,26 +34,35 @@
     }
   }
 
+  .card {
+    @include responsive-typography($font-size-base, $font-size-xs);
+  }
+
+  .statusBadge {
+    @include responsive-typography($font-size-xs, $font-size-xs);
+  }
+
   .statusBadge {
     position: absolute;
     top: 10px;
     right: 10px;
     padding: 3px 10px;
     border-radius: 10px;
-    font-size: 12px;
+    font-family: $font-stack;
+    line-height: $line-height;
     font-weight: bold;
-    color: white;
+    color: var(--text);
 
     &.alive {
-      background-color: #55cc44;
+      background-color: var(--status-alive);
     }
 
     &.dead {
-      background-color: #d63d2e;
+      background-color: var(--status-dead);
     }
 
     &.unknown {
-      background-color: #9e9e9e;
+      background-color: var(--status-unknown);
     }
   }
 
@@ -56,27 +70,67 @@
     padding: 15px;
 
     h3 {
-      margin: 0 0 10px 0;
-      color: #333;
+      margin: 0 0 $spacing-sm 0;
+      color: var(--text);
+      font-family: $font-stack;
+      line-height: $line-height;
+    }
+
+    h3 {
+      @include responsive-typography($font-size-md, $font-size-sm);
     }
 
     .details {
       p {
-        margin: 5px 0;
-        font-size: 14px;
+        margin: $spacing-xs 0;
+        font-family: $font-stack;
+        line-height: $line-height;
 
         strong {
-          color: #666;
+          color: var(--secondary-text);
         }
+      }
+
+      p {
+        @include responsive-typography($font-size-base, $font-size-xs);
       }
     }
 
     .episodes {
-      margin-top: 10px;
+      font-family: $font-stack;
+      line-height: $line-height;
+      margin-top: $spacing-sm;
       font-size: 13px;
-      color: #42b4ca;
+      color: var(--primary);
       font-weight: bold;
       text-align: right;
     }
+
+    .episodes {
+      @include responsive-typography($font-size-base, $font-size-xs);
+    }
+  }
+
+  .flag {
+    position: absolute;
+    top: $spacing-sm;
+    left: $spacing-sm;
+    width: $spacing-lg;
+    height: $spacing-lg;
+    cursor: pointer;
+    accent-color: var(--primary);
+    border-radius: $border-radius-sm;
+    background: transparent;
+    transition: $transition-short;
+    font-family: $font-stack;
+    line-height: $line-height;
+
+    &:hover {
+      background-color: var(--btn-hover);
+    }
+  }
+
+  .flag {
+    @include responsive-typography($font-size-base, $font-size-xs);
   }
 }

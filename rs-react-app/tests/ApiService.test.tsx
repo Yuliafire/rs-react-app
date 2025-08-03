@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { CharacterDetails } from '../src/types/types';
-import ApiService from '../src/services/apiService';
+import ApiService from '../src/shared/services/apiService';
 
 const mockCharacter: CharacterDetails = {
   id: 1,

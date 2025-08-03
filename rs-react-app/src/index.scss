@@ -6,10 +6,9 @@ body {
     Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #0a0e17;
-  height: auto;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 #root {

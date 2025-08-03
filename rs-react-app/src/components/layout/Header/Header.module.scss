@@ -1,35 +1,79 @@
+@use '../../../assets/styles/globals' as *;
+
 .header {
-  background-color: #1a1a1a;
-  padding: 15px 20px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  background: var(--background-layout);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  box-shadow: $shadow-normal;
+
+  [data-theme='dark'] & {
+    border-bottom-width: 2px;
+    box-shadow: $shadow-hover;
+  }
+
+  h1 {
+    @include responsive-typography($font-size-md, $font-size-base);
+  }
 
   h1 {
     margin: 0;
-    font-size: 1.5rem;
+    color: var(--text);
+    @media screen and (max-width: 768px) {
+      font-size: 1.25rem;
+    }
+
+    @media screen and (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 }
 
 .nav {
-  display: flex;
-  gap: 20px;
-  text-decoration: none;
-}
+  a {
+    @include responsive-typography($font-size-base, $font-size-xs);
+  }
 
-.link {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s;
+  a {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    background: var(--card-bg);
+    color: var(--text);
+    transition: $transition-short;
 
-  &:hover {
-    color: #41ead4;
+    &:hover {
+      background: var(--btn-hover);
+      color: var(--btn-hover-color);
+    }
+
+    &.active {
+      font-weight: bold;
+      background: var(--btn-hover);
+      color: var(--btn-hover-color);
+    }
   }
 }
 
-.active {
-  color: #41ead4;
-  font-weight: bold;
+.themeToggle {
+  @include responsive-typography($font-size-base, $font-size-xs);
+}
+
+.themeToggle {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  background: var(--card-bg);
+  color: var(--text);
+  transition: $transition-short;
+
+  &:hover {
+    background: var(--btn-hover);
+    color: var(--btn-hover-color);
+  }
 }

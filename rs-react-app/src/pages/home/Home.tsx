@@ -10,8 +10,10 @@ import ResultsSection from '../../components/ResultsSection/ResultsSection';
 import Pagination from '../../components/Pagination/Pagination';
 import styles from './Home.module.scss';
 import type { CharacterDetails } from '../../types/types';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 const Home = () => {
+  const { theme } = useTheme();
   const { page: pageParam, id: idParam } = useParams<{
     page?: string;
     id?: string;
@@ -47,19 +49,17 @@ const Home = () => {
   }, [pageParam, idParam, queryParam, currentPage, query, id]);
 
   const handleSearchResults = (
-    results: CharacterDetails[],
+    results: CharacterDetails[] | null,
     searchTerm: string,
     totalPages: number
   ) => {
-    console.log('handleSearchResults', {
-      totalPages,
-      resultsLength: results.length,
-    });
+    if (results === null) {
+      throw new Error('Search results are null');
+    }
     setResults(results);
     setTotalPages(totalPages);
 
     if (searchTerm !== query) {
-      setSelectedId(undefined);
       setCurrentPage(1);
       navigate(
         `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`
@@ -73,7 +73,10 @@ const Home = () => {
     setQuery(searchTerm);
   };
 
-  const handleResultClick = (id: number) => {
+  const handleCardClick = (id: number | undefined) => {
+    if (id === undefined) {
+      throw new Error('Character ID is undefined in handleCardClick');
+    }
     setSelectedId(id);
     navigate(
       `/${currentPage}/${id}${query ? `?query=${encodeURIComponent(query)}` : ''}`
@@ -81,17 +84,17 @@ const Home = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      console.log('handlePageChange', { newPage, selectedId, query });
-      setSelectedId(undefined);
-      setCurrentPage(newPage);
-      const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
-      navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
+    if (newPage < 1 || newPage > totalPages) {
+      return;
     }
+
+    setCurrentPage(newPage);
+    const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;
+    navigate(`${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`);
   };
 
   return (
-    <div className={styles.home} ref={mainPanelRef}>
+    <div className={`${styles.home} ${styles[theme]}`} ref={mainPanelRef}>
       <div className={styles.container}>
         <SearchSection
           onSearchResults={handleSearchResults}
@@ -106,7 +109,7 @@ const Home = () => {
                 results={results}
                 loading={loading}
                 error={error}
-                onResultClick={handleResultClick}
+                onCardClick={handleCardClick}
               />
             </div>
             {totalPages > 1 && (

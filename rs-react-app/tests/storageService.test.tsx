@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { useStorage } from '../src/services/storageService';
+import { useStorage } from '../src/shared/services/storageService';
 
 const RICKMORTY_SEARCH_KEY = 'rickmorty-search-term';
 const RICKMORTY_HISTORY_KEY = 'rickmorty-search-history';

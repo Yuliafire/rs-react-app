@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import ApiService from '../../services/apiService';
+import ApiService from '../../shared/services/apiService';
 import type { CharacterDetails } from '../../types/types';
 import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 const CharacterDetailsComponent = () => {
+  const { theme } = useTheme();
+
   const { id, page } = useParams<{ id?: string; page?: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -24,20 +27,23 @@ const CharacterDetailsComponent = () => {
       }
       setLoading(true);
       setError(null);
-      try {
-        const response = await ApiService.getCharacter(characterId);
-        if (response.status === 'success') {
-          setCharacter(response.data);
-        } else {
-          setError(response.message || 'Failed to load character');
-        }
-      } catch (error) {
-        setError('API request failed');
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
+
+      ApiService.getCharacter(characterId)
+        .then((response) => {
+          if (response.status === 'success') {
+            setCharacter(response.data);
+          } else {
+            setError(response.message || 'Failed to load character');
+          }
+        })
+        .catch(() => {
+          setError('API request failed');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     };
+
     fetchCharacter();
   }, [id]);
 
@@ -46,7 +52,6 @@ const CharacterDetailsComponent = () => {
       ? `?${searchParams.toString()}`
       : '';
     const basePath = page ? `/${page}` : '/';
-    console.log('handleClose', { page, queryString, currentId: id, basePath });
     navigate(`${basePath}${queryString}`);
   };
 
@@ -68,7 +73,7 @@ const CharacterDetailsComponent = () => {
     );
   }
   return (
-    <div className={styles.details}>
+    <div className={`${styles.details} ${styles[theme]}`}>
       <h3>{character.name}</h3>
       <img src={character.image} alt={character.name} />
       <p>Status: {character.status}</p>

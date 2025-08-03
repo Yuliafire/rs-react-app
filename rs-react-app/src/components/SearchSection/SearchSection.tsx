@@ -2,9 +2,10 @@ import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styles from './SearchSection.module.scss';
 import Button from '../ui/Button/Button';
-import { useStorage } from '../../services/storageService';
-import ApiService from '../../services/apiService';
+import { useStorage } from '../../shared/services/storageService';
+import ApiService from '../../shared/services/apiService';
 import type { CharacterDetails } from '../../types/types';
+import { useTheme } from '../../shared/hooks/useTheme';
 
 interface SearchSectionProps {
   onSearchResults: (
@@ -23,6 +24,7 @@ const SearchSection = ({
   onErrorChange,
   currentPage,
 }: SearchSectionProps) => {
+  const { theme } = useTheme();
   const { getSearchTerm, saveSearchTerm } = useStorage();
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get('query') || getSearchTerm() || '';
@@ -42,23 +44,24 @@ const SearchSection = ({
     onLoadingChange(true);
     onErrorChange(null);
 
-    try {
-      const response = await ApiService.searchCharacters(term, page);
-      if (response.status === 'success') {
-        onSearchResults(response.data, term, response.info?.pages || 1);
-        if (term) saveSearchTerm(term);
-      } else {
-        onErrorChange(response.message || 'Unknown error');
+    ApiService.searchCharacters(term, page)
+      .then((response) => {
+        if (response.status === 'success') {
+          onSearchResults(response.data, term, response.info?.pages || 1);
+          if (term) saveSearchTerm(term);
+        } else {
+          onErrorChange(response.message || 'Unknown error');
+          onSearchResults([], term, 1);
+        }
+      })
+      .catch(() => {
+        onErrorChange('API request failed');
         onSearchResults([], term, 1);
-      }
-    } catch (error) {
-      onErrorChange('API request failed');
-      onSearchResults([], term, 1);
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-      onLoadingChange(false);
-    }
+      })
+      .finally(() => {
+        setIsLoading(false);
+        onLoadingChange(false);
+      });
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -68,7 +71,10 @@ const SearchSection = ({
   };
 
   return (
-    <section className={styles.searchSection}>
+    <section
+      className={`${styles.searchSection} ${styles[theme]}`}
+      data-testid="search-section"
+    >
       <form onSubmit={handleSubmit} className={styles.searchForm}>
         <input
           type="text"

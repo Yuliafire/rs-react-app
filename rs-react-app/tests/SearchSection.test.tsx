@@ -12,7 +12,7 @@ import {
 import { MemoryRouter } from 'react-router-dom';
 import SearchSection from '../src/components/SearchSection/SearchSection';
 import '@testing-library/jest-dom/vitest';
-import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '../src/context/ThemeProvider';
 
 interface CharacterResult {
   id: number;
@@ -95,9 +95,11 @@ describe('SearchSection Component', () => {
   describe('Rendering', () => {
     it('renders search input and button', () => {
       render(
-        <MemoryRouter>
-          <SearchSection {...mockProps} />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} />
+          </MemoryRouter>
+        </ThemeProvider>
       );
       expect(screen.getByRole('textbox')).toBeInTheDocument();
       expect(
@@ -107,27 +109,53 @@ describe('SearchSection Component', () => {
 
     it('shows empty input when no saved term exists', () => {
       render(
-        <MemoryRouter>
-          <SearchSection {...mockProps} />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} />
+          </MemoryRouter>
+        </ThemeProvider>
       );
       expect(screen.getByRole('textbox')).toHaveValue('');
     });
   });
 
-  describe('Behavior', () => {
-    it('triggers search on button click', async () => {
-      const user = userEvent.setup();
+  describe('Loading State', () => {
+    it('disables input and button during loading', async () => {
+      mockSearchCharacters.mockImplementation(() => new Promise(() => {}));
       render(
-        <MemoryRouter>
-          <SearchSection {...mockProps} />
-        </MemoryRouter>
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} />
+          </MemoryRouter>
+        </ThemeProvider>
       );
-      const input = screen.getByRole('textbox');
-      await user.type(input, 'Rick');
-      await user.click(screen.getByRole('button', { name: /search/i }));
+      const input = screen.getByRole('textbox', { name: /search characters/i });
+      const button = screen.getByRole('button', { name: /searching/i });
+      expect(input).toBeDisabled();
+      expect(button).toBeDisabled();
+      expect(button).toHaveTextContent('Searching...');
+    });
+  });
+
+  describe('Page Change', () => {
+    it('calls performSearch when currentPage changes', async () => {
+      const { rerender } = render(
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} currentPage={1} />
+          </MemoryRouter>
+        </ThemeProvider>
+      );
+      rerender(
+        <ThemeProvider>
+          <MemoryRouter>
+            <SearchSection {...mockProps} currentPage={2} />
+          </MemoryRouter>
+        </ThemeProvider>
+      );
       await waitFor(() => {
-        expect(mockProps.onSearchResults).toHaveBeenCalled();
+        expect(mockProps.onLoadingChange).toHaveBeenCalledWith(true);
+        expect(mockProps.onLoadingChange).toHaveBeenCalledWith(false);
       });
     });
   });
