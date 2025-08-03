@@ -38,7 +38,9 @@ section {
   border-radius: $border-radius-md;
   box-shadow: $shadow-normal;
   border: 1px solid var(--border);
-  transition: transform $transition-short, box-shadow $transition-short;
+  transition:
+    transform $transition-short,
+    box-shadow $transition-short;
 
   &:hover {
     transform: translateY(-2px);
@@ -60,7 +62,7 @@ p {
 }
 
 p {
-    margin-bottom: $spacing-sm;
+  margin-bottom: $spacing-sm;
   margin: 0 0 1rem;
   color: var(--text);
 }
@@ -93,9 +95,11 @@ a {
   margin-top: $spacing-lg;
   color: var(--primary);
   text-decoration: none;
-   padding: $spacing-xs $spacing-sm;
+  padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
-  transition: background-color $transition-short, color $transition-short;
+  transition:
+    background-color $transition-short,
+    color $transition-short;
 
   &:hover,
   &:focus {
