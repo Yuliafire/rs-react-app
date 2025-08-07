@@ -77,6 +77,7 @@ const customBaseQuery = async (
 export const rickAndMortyApi = createApi({
   reducerPath: 'rickAndMortyApi',
   baseQuery: customBaseQuery, // Step 6: Use custom baseQuery to integrate ApiService's retry logic
+  tagTypes: ['Character', 'CharacterList'],
   endpoints: (builder) => ({
     fetchInitialCharacters: builder.query<
       ServiceResponse<CharacterDetails[]>,
@@ -115,6 +116,9 @@ export const rickAndMortyApi = createApi({
           message: getErrorMessage(status),
         };
       },
+      providesTags: (_result, _error, page) => [
+        { type: 'CharacterList', id: `PAGE_${page}` }, // Tag by page
+      ],
     }),
     searchCharacters: builder.query<
       ServiceResponse<CharacterDetails[]>,
@@ -156,7 +160,11 @@ export const rickAndMortyApi = createApi({
           message: getErrorMessage(status),
         };
       },
+      providesTags: (_result, _error, { query, page }) => [
+        { type: 'CharacterList', id: `SEARCH_${query}_PAGE_${page}` }, // Tag by query and page
+      ],
     }),
+
     getCharacter: builder.query<ServiceResponse<CharacterDetails>, number>({
       // Step 13: Migrate ApiService's getCharacter URL structure
       query: (id: number) => `/character/${id}`, // Explicitly typed id
@@ -182,6 +190,9 @@ export const rickAndMortyApi = createApi({
           message: getErrorMessage(status),
         };
       },
+      providesTags: (_result, _error, id) => [
+        { type: 'Character', id: `CHAR_${id}` }, // Tag by character ID
+      ],
     }),
   }),
 });

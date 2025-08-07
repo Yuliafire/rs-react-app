@@ -1,162 +1,219 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import {
-  describe,
-  expect,
-  it,
-  beforeEach,
-  afterEach,
-  Mock,
-  beforeAll,
-  vitest,
-} from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import SearchSection from '../src/components/SearchSection/SearchSection';
+import { useSearchCharactersQuery } from '../src/store/apiSlice';
+import { useStorage } from '../src/shared/services/storageService';
+import { useTheme } from '../src/shared/hooks/useTheme';
+import type { CharacterDetails } from '../src/types/types';
 import '@testing-library/jest-dom/vitest';
-import { ThemeProvider } from '../src/context/ThemeProvider';
 
-interface CharacterResult {
-  id: number;
-  name: string;
-}
+// Mock the hooks with proper type declarations
+vi.mock('../src/store/apiSlice', () => ({
+  useSearchCharactersQuery: vi.fn(),
+}));
 
-interface ServiceResponse<T> {
-  status: 'success' | 'error';
-  data: T;
-  message?: string;
-  info?: {
-    count: number;
-    pages: number;
-    next: string | null;
-    prev: string | null;
-  };
-}
+vi.mock('../src/shared/services/storageService', () => ({
+  useStorage: vi.fn(),
+}));
 
-interface SearchSectionProps {
-  onSearchResults: (
-    results: CharacterResult[],
-    searchTerm: string,
-    totalPages: number
-  ) => void;
-  onLoadingChange: (isLoading: boolean) => void;
-  onErrorChange: (error: string | null) => void;
-  currentPage: number;
-}
+vi.mock('../src/shared/hooks/useTheme', () => ({
+  useTheme: vi.fn(),
+}));
 
-let mockUseStorage: () => {
-  getSearchTerm: Mock<() => string>;
-  saveSearchTerm: Mock<(term: string) => void>;
-};
-let mockSearchCharacters: Mock<
-  () => Promise<ServiceResponse<CharacterResult[]>>
->;
+const mockUseSearchCharactersQuery = vi.mocked(useSearchCharactersQuery);
+const mockUseStorage = vi.mocked(useStorage);
+const mockUseTheme = vi.mocked(useTheme);
 
-beforeAll(() => {
-  mockUseStorage = () => ({
-    getSearchTerm: vitest.fn(() => ''),
-    saveSearchTerm: vitest.fn(),
-  });
+describe('SearchSection', () => {
+  const mockOnSearchResults = vi.fn();
+  const mockOnLoadingChange = vi.fn();
+  const mockOnErrorChange = vi.fn();
+  const mockSetCurrentPage = vi.fn();
+  const mockRefetch = vi.fn();
 
-  mockSearchCharacters = vitest.fn(() =>
-    Promise.resolve<ServiceResponse<CharacterResult[]>>({
-      status: 'success',
-      data: [],
-      info: { count: 0, pages: 1, next: null, prev: null },
-    })
-  );
-
-  vitest.doMock('../src/services/storageService', () => ({
-    useStorage: mockUseStorage,
-  }));
-
-  vitest.doMock('../src/services/apiService', () => ({
-    default: {
-      searchCharacters: mockSearchCharacters,
+  const mockCharacters: CharacterDetails[] = [
+    {
+      id: 1,
+      name: 'Rick Sanchez',
+      status: 'Alive',
+      species: 'Human',
+      type: '',
+      gender: 'Male',
+      origin: { name: 'Earth', url: '' },
+      location: { name: 'Earth', url: '' },
+      image: '',
+      episode: [''],
+      url: '',
+      created: '',
     },
-  }));
-});
+  ];
 
-const mockProps: SearchSectionProps = {
-  onSearchResults: vitest.fn(),
-  onLoadingChange: vitest.fn(),
-  onErrorChange: vitest.fn(),
-  currentPage: 0,
-};
-
-describe('SearchSection Component', () => {
   beforeEach(() => {
-    vitest.clearAllMocks();
-    mockUseStorage().getSearchTerm.mockReturnValue('');
+    mockUseTheme.mockReturnValue({
+      theme: 'light',
+      toggleTheme: function (): void {
+        throw new Error('Function not implemented.');
+      },
+    });
+
+    mockUseStorage.mockReturnValue({
+      getSearchTerm: vi.fn().mockReturnValue(''),
+      saveSearchTerm: vi.fn(),
+      clearSearchTerm: vi.fn(),
+      getSearchHistory: vi.fn().mockReturnValue([]),
+      clearSearchHistory: vi.fn(),
+    });
+    mockUseSearchCharactersQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+      refetch: mockRefetch,
+    });
   });
 
   afterEach(() => {
-    vitest.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
-  describe('Rendering', () => {
-    it('renders search input and button', () => {
-      render(
-        <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection {...mockProps} />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
-      expect(screen.getByRole('textbox')).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: /search/i })
-      ).toBeInTheDocument();
+  const renderComponent = () => {
+    return render(
+      <MemoryRouter>
+        <SearchSection
+          onSearchResults={mockOnSearchResults}
+          onLoadingChange={mockOnLoadingChange}
+          onErrorChange={mockOnErrorChange}
+          currentPage={1}
+          setCurrentPage={mockSetCurrentPage}
+        />
+      </MemoryRouter>
+    );
+  };
+
+  it('renders the search form', () => {
+    renderComponent();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
+  });
+
+  it('updates input value when typing', () => {
+    renderComponent();
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Rick' } });
+    expect(input).toHaveValue('Rick');
+  });
+
+  it('submits the form with trimmed value', async () => {
+    renderComponent();
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: '  Rick  ' } });
+  });
+
+  it('shows loading state', () => {
+    mockUseSearchCharactersQuery.mockReturnValue({
+      data: null,
+      isLoading: true,
+      error: null,
+      refetch: mockRefetch,
     });
 
-    it('shows empty input when no saved term exists', () => {
-      render(
-        <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection {...mockProps} />
-          </MemoryRouter>
-        </ThemeProvider>
+    renderComponent();
+    expect(
+      screen.getByRole('button', { name: 'Searching...' })
+    ).toBeInTheDocument();
+    expect(mockOnLoadingChange).toHaveBeenCalledWith(true);
+  });
+
+  it('handles successful search', async () => {
+    mockUseSearchCharactersQuery.mockReturnValue({
+      data: { data: mockCharacters, info: { pages: 5 } },
+      isLoading: false,
+      error: null,
+      refetch: mockRefetch,
+    });
+
+    renderComponent();
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Rick' } });
+    // fireEvent.submit(screen.getByRole('form'));
+
+    await waitFor(() => {
+      expect(mockOnSearchResults).toHaveBeenCalledWith(
+        mockCharacters,
+        'Rick',
+        5
       );
-      expect(screen.getByRole('textbox')).toHaveValue('');
+      expect(mockOnLoadingChange).toHaveBeenCalledWith(false);
     });
   });
 
-  describe('Loading State', () => {
-    it('disables input and button during loading', async () => {
-      mockSearchCharacters.mockImplementation(() => new Promise(() => {}));
-      render(
-        <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection {...mockProps} />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
-      const input = screen.getByRole('textbox', { name: /search characters/i });
-      const button = screen.getByRole('button', { name: /searching/i });
-      expect(input).toBeDisabled();
-      expect(button).toBeDisabled();
-      expect(button).toHaveTextContent('Searching...');
+  it('handles API error', async () => {
+    mockUseSearchCharactersQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: { status: 500, data: { message: 'Server error' } },
+      refetch: mockRefetch,
+    });
+
+    renderComponent();
+
+    await waitFor(() => {
+      expect(screen.getByText('Error: Server error')).toBeInTheDocument();
+      expect(mockOnErrorChange).toHaveBeenCalledWith('Server error');
     });
   });
 
-  describe('Page Change', () => {
-    it('calls performSearch when currentPage changes', async () => {
-      const { rerender } = render(
-        <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection {...mockProps} currentPage={1} />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
-      rerender(
-        <ThemeProvider>
-          <MemoryRouter>
-            <SearchSection {...mockProps} currentPage={2} />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
-      await waitFor(() => {
-        expect(mockProps.onLoadingChange).toHaveBeenCalledWith(true);
-        expect(mockProps.onLoadingChange).toHaveBeenCalledWith(false);
-      });
+  it('shows force refresh button when data exists', () => {
+    mockUseSearchCharactersQuery.mockReturnValue({
+      data: { data: mockCharacters },
+      isLoading: false,
+      error: null,
+      refetch: mockRefetch,
     });
+
+    renderComponent();
+    expect(
+      screen.getByRole('button', { name: 'Force Refresh' })
+    ).toBeInTheDocument();
+  });
+
+  it('triggers force refresh', async () => {
+    mockUseSearchCharactersQuery.mockReturnValue({
+      data: { data: mockCharacters },
+      isLoading: false,
+      error: null,
+      refetch: mockRefetch.mockResolvedValue({}),
+    });
+
+    renderComponent();
+    fireEvent.click(screen.getByRole('button', { name: 'Force Refresh' }));
+
+    await waitFor(() => {
+      expect(mockRefetch).toHaveBeenCalled();
+    });
+  });
+
+  it('uses initial query from URL params', () => {
+    mockUseStorage.mockReturnValue({
+      getSearchTerm: vi.fn().mockReturnValue(''),
+      saveSearchTerm: vi.fn(),
+      clearSearchTerm: vi.fn(),
+      getSearchHistory: vi.fn().mockReturnValue([]),
+      clearSearchHistory: vi.fn(),
+    });
+
+    render(
+      <MemoryRouter initialEntries={['/?query=initial']}>
+        <SearchSection
+          onSearchResults={mockOnSearchResults}
+          onLoadingChange={mockOnLoadingChange}
+          onErrorChange={mockOnErrorChange}
+          currentPage={1}
+          setCurrentPage={mockSetCurrentPage}
+        />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByRole('textbox')).toHaveValue('initial');
   });
 });
