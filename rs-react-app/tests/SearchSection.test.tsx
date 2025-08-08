@@ -2,7 +2,10 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import SearchSection from '../src/components/SearchSection/SearchSection';
-import { useSearchCharactersQuery } from '../src/store/apiSlice';
+import {
+  useSearchCharactersQuery,
+  useGetCharacterQuery,
+} from '../src/store/apiSlice';
 import { useStorage } from '../src/shared/services/storageService';
 import { useTheme } from '../src/shared/hooks/useTheme';
 import type { CharacterDetails } from '../src/types/types';
@@ -10,6 +13,7 @@ import '@testing-library/jest-dom/vitest';
 
 vi.mock('../src/store/apiSlice', () => ({
   useSearchCharactersQuery: vi.fn(),
+  useGetCharacterQuery: vi.fn(),
 }));
 
 vi.mock('../src/shared/services/storageService', () => ({
@@ -21,6 +25,7 @@ vi.mock('../src/shared/hooks/useTheme', () => ({
 }));
 
 const mockUseSearchCharactersQuery = vi.mocked(useSearchCharactersQuery);
+const mockUseGetCharacterQuery = vi.mocked(useGetCharacterQuery);
 const mockUseStorage = vi.mocked(useStorage);
 const mockUseTheme = vi.mocked(useTheme);
 
@@ -29,7 +34,8 @@ describe('SearchSection', () => {
   const mockOnLoadingChange = vi.fn();
   const mockOnErrorChange = vi.fn();
   const mockSetCurrentPage = vi.fn();
-  const mockRefetch = vi.fn();
+  const mockRefetchSearch = vi.fn();
+  const mockRefetchCharacter = vi.fn();
 
   const mockCharacters: CharacterDetails[] = [
     {
@@ -51,9 +57,7 @@ describe('SearchSection', () => {
   beforeEach(() => {
     mockUseTheme.mockReturnValue({
       theme: 'light',
-      toggleTheme: function (): void {
-        throw new Error('Function not implemented.');
-      },
+      toggleTheme: vi.fn(),
     });
 
     mockUseStorage.mockReturnValue({
@@ -63,11 +67,19 @@ describe('SearchSection', () => {
       getSearchHistory: vi.fn().mockReturnValue([]),
       clearSearchHistory: vi.fn(),
     });
+
     mockUseSearchCharactersQuery.mockReturnValue({
       data: null,
       isLoading: false,
       error: null,
-      refetch: mockRefetch,
+      refetch: mockRefetchSearch,
+    });
+
+    mockUseGetCharacterQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+      refetch: mockRefetchCharacter,
     });
   });
 
@@ -75,9 +87,9 @@ describe('SearchSection', () => {
     vi.clearAllMocks();
   });
 
-  const renderComponent = () => {
+  const renderComponent = (initialEntries = ['/1']) => {
     return render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={initialEntries}>
         <SearchSection
           onSearchResults={mockOnSearchResults}
           onLoadingChange={mockOnLoadingChange}
@@ -113,7 +125,7 @@ describe('SearchSection', () => {
       data: null,
       isLoading: true,
       error: null,
-      refetch: mockRefetch,
+      refetch: mockRefetchSearch,
     });
 
     renderComponent();
@@ -128,7 +140,7 @@ describe('SearchSection', () => {
       data: { data: mockCharacters, info: { pages: 5 } },
       isLoading: false,
       error: null,
-      refetch: mockRefetch,
+      refetch: mockRefetchSearch,
     });
 
     renderComponent();
@@ -150,7 +162,7 @@ describe('SearchSection', () => {
       data: null,
       isLoading: false,
       error: { status: 500, data: { message: 'Server error' } },
-      refetch: mockRefetch,
+      refetch: mockRefetchSearch,
     });
 
     renderComponent();
@@ -166,7 +178,7 @@ describe('SearchSection', () => {
       data: { data: mockCharacters },
       isLoading: false,
       error: null,
-      refetch: mockRefetch,
+      refetch: mockRefetchSearch,
     });
 
     renderComponent();
@@ -180,14 +192,20 @@ describe('SearchSection', () => {
       data: { data: mockCharacters },
       isLoading: false,
       error: null,
-      refetch: mockRefetch.mockResolvedValue({}),
+      refetch: mockRefetchSearch.mockResolvedValue({}),
+    });
+    mockUseGetCharacterQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+      refetch: mockRefetchCharacter.mockResolvedValue({}),
     });
 
-    renderComponent();
+    renderComponent(['/1/1']);
     fireEvent.click(screen.getByRole('button', { name: 'Force Refresh' }));
 
     await waitFor(() => {
-      expect(mockRefetch).toHaveBeenCalled();
+      expect(mockRefetchSearch).toHaveBeenCalled();
     });
   });
 

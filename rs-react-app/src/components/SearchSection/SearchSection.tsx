@@ -1,9 +1,12 @@
 import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
 import styles from './SearchSection.module.scss';
 import Button from '../ui/Button/Button';
 import { useStorage } from '../../shared/services/storageService';
-import { useSearchCharactersQuery } from '../../store/apiSlice';
+import {
+  useSearchCharactersQuery,
+  useGetCharacterQuery,
+} from '../../store/apiSlice';
 import type { CharacterDetails } from '../../types/types';
 import { useTheme } from '../../shared/hooks/useTheme';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
@@ -30,14 +33,24 @@ const SearchSection = ({
   const { theme } = useTheme();
   const { getSearchTerm, saveSearchTerm } = useStorage();
   const [searchParams] = useSearchParams();
+  const { id } = useParams<{ id?: string }>();
   const initialQuery = searchParams.get('query') || getSearchTerm() || '';
 
   const [inputValue, setInputValue] = useState(initialQuery);
   const [isRefetching, setIsRefetching] = useState(false);
-  const { data, isLoading, error, refetch } = useSearchCharactersQuery({
+  const {
+    data,
+    isLoading,
+    error,
+    refetch: refetchSearch,
+  } = useSearchCharactersQuery({
     query: inputValue.trim(),
     page: currentPage,
   });
+  const { refetch: refetchCharacter } = useGetCharacterQuery(
+    id ? parseInt(id, 10) || 0 : 0,
+    { skip: !id }
+  );
 
   useEffect(() => {
     if (data) {
@@ -77,13 +90,18 @@ const SearchSection = ({
     if (trimmedValue !== inputValue.trim()) {
       setInputValue(trimmedValue);
     }
-    refetch();
+    refetchSearch();
   };
 
   const handleForceRefresh = () => {
     if (!isRefetching) {
       setIsRefetching(true);
-      refetch().finally(() => setIsRefetching(false));
+      refetchSearch().finally(() => {
+        if (id) {
+          refetchCharacter();
+        }
+        setIsRefetching(false);
+      });
     }
   };
 
