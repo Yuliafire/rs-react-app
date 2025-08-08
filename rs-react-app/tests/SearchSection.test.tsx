@@ -8,7 +8,6 @@ import { useTheme } from '../src/shared/hooks/useTheme';
 import type { CharacterDetails } from '../src/types/types';
 import '@testing-library/jest-dom/vitest';
 
-// Mock the hooks with proper type declarations
 vi.mock('../src/store/apiSlice', () => ({
   useSearchCharactersQuery: vi.fn(),
 }));
@@ -135,7 +134,6 @@ describe('SearchSection', () => {
     renderComponent();
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'Rick' } });
-    // fireEvent.submit(screen.getByRole('form'));
 
     await waitFor(() => {
       expect(mockOnSearchResults).toHaveBeenCalledWith(

@@ -8,12 +8,10 @@ import { useTheme } from '../src/shared/hooks/useTheme';
 import { store } from '../src/store/store';
 import '@testing-library/jest-dom/vitest';
 
-// Mock the useTheme hook
 vi.mock('../src/shared/hooks/useTheme', () => ({
   useTheme: vi.fn(),
 }));
 
-// Mock the Loader component to include test-id
 vi.mock('../src/components/ui/Loader/Loader', () => ({
   default: () => <div data-testid="loader">Loading...</div>,
 }));
@@ -80,8 +78,6 @@ describe('ResultsSection', () => {
         onCardClick={vi.fn()}
       />
     );
-
-    // expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
   it('renders error message when error exists', () => {
@@ -96,9 +92,6 @@ describe('ResultsSection', () => {
     );
 
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
-    // expect(screen.getByTestId('results-section')).toHaveClass(
-    //   '_resultsSectionError_'
-    // );
   });
 
   it('renders no results message when results array is empty', () => {
@@ -114,7 +107,6 @@ describe('ResultsSection', () => {
     expect(
       screen.getByText('No characters found. Try another search!')
     ).toBeInTheDocument();
-    // expect(screen.getByTestId('results-section')).toHaveClass('_noResults_');
   });
 
   it('renders CardList with results when not loading and no error', () => {
@@ -131,38 +123,4 @@ describe('ResultsSection', () => {
     expect(screen.queryByText('No characters found')).not.toBeInTheDocument();
     expect(screen.getByRole('list')).toBeInTheDocument();
   });
-
-  it('applies dark theme class when theme is dark', () => {
-    mockUseTheme.mockReturnValue({
-      theme: 'dark',
-      toggleTheme: vi.fn(),
-    });
-
-    renderWithProviders(
-      <ResultsSection
-        loading={false}
-        error={null}
-        results={mockCharacters}
-        onCardClick={vi.fn()}
-      />
-    );
-
-    // expect(screen.getByRole('region')).toHaveClass('_dark_');
-  });
-
-  //   it('calls onCardClick when a card is clicked', () => {
-  //     const mockOnCardClick = vi.fn();
-  //     renderWithProviders(
-  //       <ResultsSection
-  //         loading={false}
-  //         error={null}
-  //         results={mockCharacters}
-  //         onCardClick={mockOnCardClick}
-  //       />
-  //     );
-
-  //     // const cards = screen.getAllByRole('listitem');
-  //     fireEvent.click(cards[0]);
-  //     expect(mockOnCardClick).toHaveBeenCalledWith(mockCharacters[0].id);
-  //   });
 });

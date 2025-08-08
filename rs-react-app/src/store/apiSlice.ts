@@ -18,23 +18,20 @@ interface ServiceResponse<T> {
     prev: string | null;
   };
 }
-// Use the same base URL as ApiService for continuity
+
 const baseUrl = import.meta.env.VITE_RM_API_URL;
 
-// Custom baseQuery to migrate ApiService's retry logic
 const customBaseQuery = async (
   args: string,
   api: BaseQueryApi,
   extraOptions: BaseQueryExtraOptions<ReturnType<typeof fetchBaseQuery>>
 ) => {
-  // Step 1: Extract maxRetries and retryDelay constants from ApiService's makeRequest
   const maxRetries = 3;
   const retryDelay = 1000;
   let retryCount = 0;
 
   while (retryCount < maxRetries) {
     try {
-      // Step 2: Implement ApiService's delay mechanism before each retry
       await new Promise((resolve) =>
         setTimeout(resolve, retryDelay * retryCount)
       );
@@ -43,7 +40,6 @@ const customBaseQuery = async (
         api,
         extraOptions
       );
-      // Step 3: Check for 429 status and retry, mirroring ApiService's rate limit handling
       if (
         response.error &&
         'status' in response.error &&
@@ -56,7 +52,6 @@ const customBaseQuery = async (
       }
       return response;
     } catch (error: unknown) {
-      // Step 4: Handle general errors with retry, replicating ApiService's catch block
       if (retryCount < maxRetries - 1) {
         retryCount++;
         continue;
@@ -70,22 +65,19 @@ const customBaseQuery = async (
       return { error: { status: 'FETCH_ERROR', data: { message } } };
     }
   }
-  // Step 5: Return max retries exceeded error, consistent with ApiService's final fallback
   return { error: { status: 500, data: { message: 'Max retries exceeded' } } };
 };
 
 export const rickAndMortyApi = createApi({
   reducerPath: 'rickAndMortyApi',
-  baseQuery: customBaseQuery, // Step 6: Use custom baseQuery to integrate ApiService's retry logic
+  baseQuery: customBaseQuery,
   tagTypes: ['Character', 'CharacterList'],
   endpoints: (builder) => ({
     fetchInitialCharacters: builder.query<
       ServiceResponse<CharacterDetails[]>,
       number
     >({
-      // Step 7: Migrate ApiService's fetchInitialCharacters URL structure
-      query: (page: number) => `/character?page=${page}`, // Explicitly typed page
-      // Step 8: Transform response to match ApiService's ServiceResponse format
+      query: (page: number) => `/character?page=${page}`,
       transformResponse: (response: unknown) => {
         if (typeof response !== 'object' || response === null)
           throw new Error('Invalid response format');
@@ -104,7 +96,6 @@ export const rickAndMortyApi = createApi({
           ...(resp.info && { info: resp.info }),
         };
       },
-      // Step 9: Handle errors with ApiService's getErrorMessage logic
       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
         const status =
           typeof baseQueryReturnValue.status === 'number'
@@ -117,19 +108,17 @@ export const rickAndMortyApi = createApi({
         };
       },
       providesTags: (_result, _error, page) => [
-        { type: 'CharacterList', id: `PAGE_${page}` }, // Tag by page
+        { type: 'CharacterList', id: `PAGE_${page}` },
       ],
     }),
     searchCharacters: builder.query<
       ServiceResponse<CharacterDetails[]>,
       { query: string; page: number }
     >({
-      // Step 10: Migrate ApiService's searchCharacters query logic, including trim and fallback
       query: ({ query, page }: { query: string; page: number }) =>
         query.trim()
           ? `/character/?name=${encodeURIComponent(query.trim())}&page=${page}`
-          : `/character?page=${page}`, // Explicitly typed destructured object
-      // Step 11: Transform response to maintain ServiceResponse consistency
+          : `/character?page=${page}`,
       transformResponse: (response: unknown) => {
         if (typeof response !== 'object' || response === null)
           throw new Error('Invalid response format');
@@ -148,7 +137,6 @@ export const rickAndMortyApi = createApi({
           ...(resp.info && { info: resp.info }),
         };
       },
-      // Step 12: Apply error transformation using ApiService's error messages
       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
         const status =
           typeof baseQueryReturnValue.status === 'number'
@@ -161,14 +149,12 @@ export const rickAndMortyApi = createApi({
         };
       },
       providesTags: (_result, _error, { query, page }) => [
-        { type: 'CharacterList', id: `SEARCH_${query}_PAGE_${page}` }, // Tag by query and page
+        { type: 'CharacterList', id: `SEARCH_${query}_PAGE_${page}` },
       ],
     }),
 
     getCharacter: builder.query<ServiceResponse<CharacterDetails>, number>({
-      // Step 13: Migrate ApiService's getCharacter URL structure
-      query: (id: number) => `/character/${id}`, // Explicitly typed id
-      // Step 14: Transform single character response to ServiceResponse format
+      query: (id: number) => `/character/${id}`,
       transformResponse: (response: unknown) => {
         if (typeof response !== 'object' || response === null)
           throw new Error('Invalid response format');
@@ -178,7 +164,6 @@ export const rickAndMortyApi = createApi({
           data: resp,
         };
       },
-      // Step 15: Handle errors for single character fetch
       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
         const status =
           typeof baseQueryReturnValue.status === 'number'
@@ -191,13 +176,12 @@ export const rickAndMortyApi = createApi({
         };
       },
       providesTags: (_result, _error, id) => [
-        { type: 'Character', id: `CHAR_${id}` }, // Tag by character ID
+        { type: 'Character', id: `CHAR_${id}` },
       ],
     }),
   }),
 });
 
-// Step 16: Reuse ApiService's error message function for consistency
 const getErrorMessage = (status: number): string => {
   const messages: Record<number, string> = {
     400: 'Invalid search parameters',
@@ -214,5 +198,4 @@ export const {
   useGetCharacterQuery,
 } = rickAndMortyApi;
 
-// Step 17: Export API and hooks for component integration
 export default rickAndMortyApi;

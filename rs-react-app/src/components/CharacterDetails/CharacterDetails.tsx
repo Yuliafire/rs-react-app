@@ -5,7 +5,6 @@ import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
 import { useTheme } from '../../shared/hooks/useTheme';
 
-// Define a custom error type based on ServiceResponse
 interface CustomError {
   status: string;
   data: {
@@ -22,17 +21,14 @@ const CharacterDetailsComponent = () => {
 
   const characterId = id ? parseInt(id, 10) : undefined;
 
-  // Step 1: Remove skip, handle invalid id with error state
   const {
     data: characterResponse,
     isLoading,
     error,
   } = useGetCharacterQuery(characterId || 0);
 
-  // Step 2: Extract character data from ServiceResponse
   const character = characterResponse?.data as CharacterDetails | undefined;
 
-  // Step 3: Handle navigation on close
   const handleClose = () => {
     const queryString = searchParams.toString()
       ? `?${searchParams.toString()}`
@@ -41,7 +37,6 @@ const CharacterDetailsComponent = () => {
     navigate(`${basePath}${queryString}`);
   };
 
-  // Step 4: Render based on loading, error, and data states
   if (isLoading) {
     return (
       <div className={styles.details}>
