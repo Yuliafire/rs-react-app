@@ -24,6 +24,11 @@ const App = () => {
             element={<Home />}
             errorElement={<div>Error in Home or Details</div>}
           />
+          <Route
+            path={ABOUT_PATH}
+            element={<About />}
+            errorElement={<div>Error in About</div>}
+          />
           <Route path={RESERVE_HOME_PATH} element={<Home />} />
           <Route path={DYNAMIC_PAGE_PATH} element={<Home />}>
             <Route
@@ -31,12 +36,11 @@ const App = () => {
               element={<CharacterDetailsComponent />}
               errorElement={<div>Error in Character Details</div>}
             />
+            <Route path="/:page(\d+)" element={<Home />}>
+              <Route path=":id" element={<CharacterDetailsComponent />} />
+            </Route>
           </Route>
-          <Route
-            path={ABOUT_PATH}
-            element={<About />}
-            errorElement={<div>Error in About</div>}
-          />
+
           <Route path={NOT_FOUND_PATH} element={<NotFound />} />
         </Routes>
       </main>

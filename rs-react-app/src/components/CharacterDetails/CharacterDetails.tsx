@@ -1,4 +1,9 @@
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import {
+  useParams,
+  useSearchParams,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
 import { useGetCharacterQuery } from '../../store/apiSlice';
 import type { CharacterDetails } from '../../types/types';
 import Loader from '../ui/Loader/Loader';
@@ -14,8 +19,8 @@ interface CustomError {
 
 const CharacterDetailsComponent = () => {
   const { theme } = useTheme();
-
-  const { id, page } = useParams<{ id?: string; page?: string }>();
+  const location = useLocation();
+  const { id } = useParams<{ id?: string; page?: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -33,8 +38,9 @@ const CharacterDetailsComponent = () => {
     const queryString = searchParams.toString()
       ? `?${searchParams.toString()}`
       : '';
-    const basePath = page ? `/${page}` : '/';
-    navigate(`${basePath}${queryString}`);
+
+    const parentPath = location.pathname.replace(/\/[^/]+$/, '') || '/';
+    navigate(`${parentPath}${queryString}`, { replace: true });
   };
 
   if (isLoading) {

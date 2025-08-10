@@ -1,9 +1,10 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import {
   useSearchParams,
   useParams,
   useNavigate,
   Outlet,
+  useLocation,
 } from 'react-router-dom';
 import SearchSection from '../../components/SearchSection/SearchSection';
 import ResultsSection from '../../components/ResultsSection/ResultsSection';
@@ -20,7 +21,7 @@ const Home = () => {
   }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
+  const location = useLocation();
   const initialPage = !isNaN(parseInt(pageParam || '1', 10))
     ? parseInt(pageParam || '1', 10)
     : 1;
@@ -46,32 +47,50 @@ const Home = () => {
     [navigate]
   );
 
+  useEffect(() => {
+    setSelectedId(id);
+  }, [id]);
+
+  useEffect(() => {
+    setCurrentPage(initialPage);
+  }, [initialPage]);
+
+  useEffect(() => {
+    setQuery(queryParam);
+  }, [queryParam]);
+
+  useEffect(() => {
+    if (navigationTimeout.current) {
+      clearTimeout(navigationTimeout.current);
+      navigationTimeout.current = null;
+    }
+  }, [location.pathname, location.search]);
+
   const handleSearchResults = (
-    results: CharacterDetails[] | null,
+    searchResults: CharacterDetails[] | null,
     searchTerm: string,
-    totalPages: number
+    pages: number
   ) => {
-    if (results === null) throw new Error('Search results are null');
-    setResults(results);
-    setTotalPages(totalPages);
+    if (searchResults === null) throw new Error('Search results are null');
+    setResults(searchResults);
+    setTotalPages(pages);
     if (searchTerm !== query) {
       setCurrentPage(1);
       const path = `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`;
       performNavigation(path);
     } else {
-      const path = selectedId
-        ? `/${currentPage}/${selectedId}`
-        : `/${currentPage}`;
+      const path = id ? `/${currentPage}/${id}` : `/${currentPage}`;
       performNavigation(
         `${path}${query ? `?query=${encodeURIComponent(query)}` : ''}`
       );
     }
+
     setQuery(searchTerm);
   };
 
-  const handleCardClick = (id: number) => {
-    setSelectedId(id);
-    const path = `/${currentPage}/${id}${query ? `?query=${encodeURIComponent(query)}` : ''}`;
+  const handleCardClick = (cardId: number) => {
+    setSelectedId(cardId);
+    const path = `/${currentPage}/${cardId}${query ? `?query=${encodeURIComponent(query)}` : ''}`;
     performNavigation(path);
   };
 

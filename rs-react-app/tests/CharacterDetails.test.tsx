@@ -5,6 +5,7 @@ import CharacterDetailsComponent from '../src/components/CharacterDetails/Charac
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CharacterDetails } from '../src/types/types';
 import { ThemeProvider } from '../src/context/ThemeProvider';
+import '@testing-library/jest-dom/vitest';
 
 interface MockQueryOverrides {
   data?: unknown;
@@ -31,6 +32,27 @@ vi.mock('../src/shared/hooks/useTheme', () => ({
     toggleTheme: vi.fn(),
   })),
 }));
+
+vi.mock('react-router-dom', async () => {
+  const actual =
+    await vi.importActual<typeof import('react-router-dom')>(
+      'react-router-dom'
+    );
+
+  return {
+    ...actual,
+    useParams: vi.fn(),
+    useSearchParams: vi.fn(() => [new URLSearchParams(), vi.fn()]),
+    useNavigate: vi.fn(() => vi.fn()),
+    useLocation: vi.fn(() => ({
+      pathname: '/1',
+      search: '',
+      hash: '',
+      state: null,
+      key: 'test-key',
+    })),
+  };
+});
 
 vi.mock('../src/components/ui/Loader/Loader', () => ({
   default: () => <div>Loading...</div>,
@@ -118,7 +140,9 @@ describe('CharacterDetailsComponent', () => {
     screen.getByText('Close').click();
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/2?search=rick');
+      expect(mockNavigate).toHaveBeenCalledWith('/?search=rick', {
+        replace: true,
+      });
     });
   });
 
@@ -140,7 +164,9 @@ describe('CharacterDetailsComponent', () => {
     screen.getByText('Close').click();
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/?search=rick');
+      expect(mockNavigate).toHaveBeenCalledWith('/?search=rick', {
+        replace: true,
+      });
     });
   });
 });
