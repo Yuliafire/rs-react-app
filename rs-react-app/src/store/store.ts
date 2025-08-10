@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import charactersReducer from './charactersSlice';
+import rickAndMortyApi from './apiSlice';
 
 export interface RootState {
   selectedCharacters: unknown;
@@ -17,7 +18,10 @@ export interface RootState {
 export const store = configureStore({
   reducer: {
     characters: charactersReducer,
+    [rickAndMortyApi.reducerPath]: rickAndMortyApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(rickAndMortyApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

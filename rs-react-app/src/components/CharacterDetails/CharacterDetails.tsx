@@ -1,71 +1,62 @@
-import { useEffect, useState } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import ApiService from '../../shared/services/apiService';
+import {
+  useParams,
+  useSearchParams,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
+import { useGetCharacterQuery } from '../../store/apiSlice';
 import type { CharacterDetails } from '../../types/types';
 import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
 import { useTheme } from '../../shared/hooks/useTheme';
 
+interface CustomError {
+  status: string;
+  data: {
+    message: string;
+  };
+}
+
 const CharacterDetailsComponent = () => {
   const { theme } = useTheme();
-
-  const { id, page } = useParams<{ id?: string; page?: string }>();
+  const location = useLocation();
+  const { id } = useParams<{ id?: string; page?: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [character, setCharacter] = useState<CharacterDetails | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const characterId = id ? parseInt(id, 10) : undefined;
 
-  useEffect(() => {
-    const fetchCharacter = async () => {
-      const characterId = id ? parseInt(id, 10) : undefined;
-      if (!characterId || isNaN(characterId)) {
-        setError('Invalid or missing character ID');
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      setError(null);
+  const {
+    data: characterResponse,
+    isLoading,
+    error,
+  } = useGetCharacterQuery(characterId || 0);
 
-      ApiService.getCharacter(characterId)
-        .then((response) => {
-          if (response.status === 'success') {
-            setCharacter(response.data);
-          } else {
-            setError(response.message || 'Failed to load character');
-          }
-        })
-        .catch(() => {
-          setError('API request failed');
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    };
-
-    fetchCharacter();
-  }, [id]);
+  const character = characterResponse?.data as CharacterDetails | undefined;
 
   const handleClose = () => {
     const queryString = searchParams.toString()
       ? `?${searchParams.toString()}`
       : '';
-    const basePath = page ? `/${page}` : '/';
-    navigate(`${basePath}${queryString}`);
+
+    const parentPath = location.pathname.replace(/\/[^/]+$/, '') || '/';
+    navigate(`${parentPath}${queryString}`, { replace: true });
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className={styles.details}>
         <Loader minDisplayTime={1000} data-testid="details-loader" />
       </div>
     );
   }
-  if (error || !character) {
+  if (error || !character || isNaN(characterId || 0)) {
+    const errorMessage = error
+      ? (error as CustomError).data.message || 'Failed to load character'
+      : 'Character not found or invalid ID';
     return (
       <div className={styles.details}>
-        <p>{error || 'Character not found'}</p>
+        <p>{errorMessage}</p>
         <button onClick={handleClose} aria-label="Close details">
           Close
         </button>

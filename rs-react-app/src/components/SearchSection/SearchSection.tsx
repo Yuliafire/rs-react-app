@@ -1,11 +1,15 @@
 import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
 import styles from './SearchSection.module.scss';
 import Button from '../ui/Button/Button';
 import { useStorage } from '../../shared/services/storageService';
-import ApiService from '../../shared/services/apiService';
+import {
+  useSearchCharactersQuery,
+  useGetCharacterQuery,
+} from '../../store/apiSlice';
 import type { CharacterDetails } from '../../types/types';
 import { useTheme } from '../../shared/hooks/useTheme';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 interface SearchSectionProps {
   onSearchResults: (
@@ -16,6 +20,7 @@ interface SearchSectionProps {
   onLoadingChange: (loading: boolean) => void;
   onErrorChange: (error: string | null) => void;
   currentPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
 const SearchSection = ({
@@ -23,51 +28,81 @@ const SearchSection = ({
   onLoadingChange,
   onErrorChange,
   currentPage,
+  setCurrentPage,
 }: SearchSectionProps) => {
   const { theme } = useTheme();
   const { getSearchTerm, saveSearchTerm } = useStorage();
   const [searchParams] = useSearchParams();
+  const { id } = useParams<{ id?: string }>();
   const initialQuery = searchParams.get('query') || getSearchTerm() || '';
+
   const [inputValue, setInputValue] = useState(initialQuery);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isRefetching, setIsRefetching] = useState(false);
+  const {
+    data,
+    isLoading,
+    error,
+    refetch: refetchSearch,
+  } = useSearchCharactersQuery({
+    query: inputValue.trim(),
+    page: currentPage,
+  });
+  const { refetch: refetchCharacter } = useGetCharacterQuery(
+    id ? parseInt(id, 10) || 0 : 0,
+    { skip: !id }
+  );
 
   useEffect(() => {
-    performSearch(inputValue.trim(), currentPage);
-  }, [currentPage]);
+    if (data) {
+      onSearchResults(data.data, inputValue.trim(), data.info?.pages || 1);
+      if (inputValue.trim()) saveSearchTerm(inputValue.trim());
+    }
+    onLoadingChange(isLoading || isRefetching);
+    onErrorChange(
+      error
+        ? isFetchBaseQueryError(error) &&
+          typeof error.data === 'object' &&
+          'message' in (error.data as object)
+          ? (error.data as { message: string }).message
+          : 'API request failed'
+        : null
+    );
+  }, [
+    data,
+    isLoading,
+    isRefetching,
+    error,
+    inputValue,
+    onSearchResults,
+    onLoadingChange,
+    onErrorChange,
+    saveSearchTerm,
+  ]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const performSearch = async (term: string, page: number) => {
-    setIsLoading(true);
-    onLoadingChange(true);
-    onErrorChange(null);
-
-    ApiService.searchCharacters(term, page)
-      .then((response) => {
-        if (response.status === 'success') {
-          onSearchResults(response.data, term, response.info?.pages || 1);
-          if (term) saveSearchTerm(term);
-        } else {
-          onErrorChange(response.message || 'Unknown error');
-          onSearchResults([], term, 1);
-        }
-      })
-      .catch(() => {
-        onErrorChange('API request failed');
-        onSearchResults([], term, 1);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        onLoadingChange(false);
-      });
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const trimmedValue = inputValue.trim();
-    await performSearch(trimmedValue, 1);
+    setCurrentPage(1);
+    if (trimmedValue !== inputValue.trim()) {
+      setInputValue(trimmedValue);
+    }
+    refetchSearch();
+  };
+
+  const handleForceRefresh = () => {
+    if (!isRefetching) {
+      setIsRefetching(true);
+      refetchSearch().finally(() => {
+        if (id) {
+          refetchCharacter();
+        }
+        setIsRefetching(false);
+      });
+    }
   };
 
   return (
@@ -93,8 +128,40 @@ const SearchSection = ({
           {isLoading ? 'Searching...' : 'Search'}
         </Button>
       </form>
+      {error && (
+        <div className={styles.error}>
+          Error:{' '}
+          {isFetchBaseQueryError(error) &&
+          typeof error.data === 'object' &&
+          'message' in (error.data as object)
+            ? (error.data as { message: string }).message
+            : 'Unknown error'}
+        </div>
+      )}
+      {data && (
+        <button
+          onClick={handleForceRefresh}
+          disabled={isLoading || isRefetching}
+        >
+          {isLoading || isRefetching ? 'Refreshing...' : 'Force Refresh'}
+        </button>
+      )}
     </section>
   );
+};
+
+const isFetchBaseQueryError = (
+  error: unknown
+): error is FetchBaseQueryError => {
+  if (error === null || typeof error !== 'object') {
+    return false;
+  }
+  const errorObj = error as FetchBaseQueryError;
+  try {
+    return 'status' in errorObj && typeof errorObj.status === 'number';
+  } catch {
+    return false;
+  }
 };
 
 export default SearchSection;

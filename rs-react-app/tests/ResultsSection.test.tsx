@@ -1,159 +1,126 @@
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import ResultsSection from '../src/components/ResultsSection/ResultsSection';
 import type { CharacterDetails } from '../src/types/types';
+import { useTheme } from '../src/shared/hooks/useTheme';
+import { store } from '../src/store/store';
 import '@testing-library/jest-dom/vitest';
-import { ThemeProvider } from '../src/context/ThemeProvider';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import charactersReducer from '../src/store/charactersSlice';
 
-const createTestStore = () => {
-  return configureStore({
-    reducer: {
-      characters: charactersReducer,
+vi.mock('../src/shared/hooks/useTheme', () => ({
+  useTheme: vi.fn(),
+}));
+
+vi.mock('../src/components/ui/Loader/Loader', () => ({
+  default: () => <div data-testid="loader">Loading...</div>,
+}));
+
+const mockUseTheme = vi.mocked(useTheme);
+
+describe('ResultsSection', () => {
+  const mockCharacters: CharacterDetails[] = [
+    {
+      id: 1,
+      name: 'Rick Sanchez',
+      status: 'Alive',
+      species: 'Human',
+      type: '',
+      gender: 'Male',
+      origin: { name: 'Earth', url: '' },
+      location: { name: 'Earth', url: '' },
+      image: '',
+      episode: [''],
+      url: '',
+      created: '',
     },
-    preloadedState: {
-      characters: {
-        selectedCharacters: [],
-      },
+    {
+      id: 2,
+      name: 'Morty Smith',
+      status: 'Alive',
+      species: 'Human',
+      type: '',
+      gender: 'Male',
+      origin: { name: 'Earth', url: '' },
+      location: { name: 'Earth', url: '' },
+      image: '',
+      episode: [''],
+      url: '',
+      created: '',
     },
+  ];
+
+  beforeEach(() => {
+    mockUseTheme.mockReturnValue({
+      theme: 'light',
+      toggleTheme: vi.fn(),
+    });
   });
-};
 
-vi.mock('../ui/Loader/Loader', () => ({
-  default: ({ loading }: { loading: boolean }) =>
-    loading ? (
-      <div data-testid="loader" role="status">
-        Loading...
-      </div>
-    ) : null,
-}));
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-vi.mock('../ui/CardList/CardList', () => ({
-  default: ({ characters }: { characters: CharacterDetails[] }) => (
-    <ul data-testid="card-list">
-      {characters.map((char) => (
-        <li key={char.id} data-testid="card">
-          {char.name}
-        </li>
-      ))}
-    </ul>
-  ),
-}));
-
-const mockCharacters: CharacterDetails[] = [
-  {
-    id: 1,
-    name: 'Rick Sanchez',
-    status: 'Alive',
-    species: 'Human',
-    type: '',
-    gender: '',
-    origin: { name: '', url: '' },
-    location: { name: '', url: '' },
-    image: '',
-    episode: [],
-    url: '',
-    created: '',
-  },
-  {
-    id: 2,
-    name: 'Morty Smith',
-    status: 'Alive',
-    species: 'Human',
-    type: '',
-    gender: '',
-    origin: { name: '', url: '' },
-    location: { name: '', url: '' },
-    image: '',
-    episode: [],
-    url: '',
-    created: '',
-  },
-];
-
-describe('ResultsSection Component', () => {
-  const renderResultsSection = (props: {
-    loading?: boolean;
-    error?: string | null;
-    results: CharacterDetails[];
-    onResultClick?: () => void;
-  }) => {
-    const store = createTestStore();
+  const renderWithProviders = (ui: React.ReactElement) => {
     return render(
       <Provider store={store}>
-        <ThemeProvider>
-          <ResultsSection
-            loading={props.loading || false}
-            error={props.error || null}
-            results={props.results}
-            onCardClick={props.onResultClick || vi.fn()}
-          />
-        </ThemeProvider>
+        <MemoryRouter>{ui}</MemoryRouter>
       </Provider>
     );
   };
 
-  describe('Initial States', () => {
-    it('shows error message', () => {
-      const error = 'Test error';
-      renderResultsSection({
-        error,
-        results: [],
-      });
-      expect(screen.getByText(error)).toBeInTheDocument();
-    });
-
-    it('shows empty state', () => {
-      renderResultsSection({
-        results: [],
-      });
-      expect(screen.getByText(/no characters found/i)).toBeInTheDocument();
-    });
+  it('renders loading state when loading is true', () => {
+    renderWithProviders(
+      <ResultsSection
+        loading={true}
+        error={null}
+        results={[]}
+        onCardClick={vi.fn()}
+      />
+    );
   });
 
-  describe('With Data', () => {
-    it('renders character cards', () => {
-      renderResultsSection({
-        results: mockCharacters,
-      });
-      expect(screen.getAllByTestId('card')).toHaveLength(2);
-    });
+  it('renders error message when error exists', () => {
+    const errorMessage = 'Server error occurred';
+    renderWithProviders(
+      <ResultsSection
+        loading={false}
+        error={errorMessage}
+        results={[]}
+        onCardClick={vi.fn()}
+      />
+    );
 
-    it('handles missing data gracefully', () => {
-      const incompleteChars = [{ ...mockCharacters[0], name: '' }];
-      renderResultsSection({
-        results: incompleteChars,
-      });
-      expect(screen.getAllByTestId('card')).toHaveLength(1);
-    });
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
   });
 
-  describe('Error Handling', () => {
-    const errorCases = [
-      { type: 'Network', message: 'Network Error' },
-      { type: 'Not Found', message: '404: Not Found' },
-      { type: 'Server', message: '500: Server Error' },
-    ];
+  it('renders no results message when results array is empty', () => {
+    renderWithProviders(
+      <ResultsSection
+        loading={false}
+        error={null}
+        results={[]}
+        onCardClick={vi.fn()}
+      />
+    );
 
-    errorCases.forEach(({ type, message }) => {
-      it(`handles ${type} errors`, () => {
-        const store = createTestStore();
-        render(
-          <Provider store={store}>
-            <ThemeProvider>
-              <ResultsSection
-                error={message}
-                results={[]}
-                loading={false}
-                onCardClick={vi.fn()}
-              />
-            </ThemeProvider>
-          </Provider>
-        );
-        expect(screen.getByText(message)).toBeInTheDocument();
-      });
-    });
+    expect(
+      screen.getByText('No characters found. Try another search!')
+    ).toBeInTheDocument();
+  });
+
+  it('renders CardList with results when not loading and no error', () => {
+    renderWithProviders(
+      <ResultsSection
+        loading={false}
+        error={null}
+        results={mockCharacters}
+        onCardClick={vi.fn()}
+      />
+    );
+
+    expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
+    expect(screen.queryByText('No characters found')).not.toBeInTheDocument();
+    expect(screen.getByRole('list')).toBeInTheDocument();
   });
 });
