@@ -22,6 +22,7 @@ const Home = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
+
   const initialPage = !isNaN(parseInt(pageParam || '1', 10))
     ? parseInt(pageParam || '1', 10)
     : 1;
@@ -48,18 +49,25 @@ const Home = () => {
   );
 
   useEffect(() => {
+    if (location.pathname.startsWith('/about')) {
+      return;
+    }
+
     setSelectedId(id);
-  }, [id]);
+  }, [id, location.pathname]);
 
   useEffect(() => {
+    if (location.pathname.startsWith('/about')) return;
     setCurrentPage(initialPage);
-  }, [initialPage]);
+  }, [initialPage, location.pathname]);
 
   useEffect(() => {
+    if (location.pathname.startsWith('/about')) return;
     setQuery(queryParam);
-  }, [queryParam]);
+  }, [queryParam, location.pathname]);
 
   useEffect(() => {
+    if (location.pathname.startsWith('/about')) return;
     if (navigationTimeout.current) {
       clearTimeout(navigationTimeout.current);
       navigationTimeout.current = null;
@@ -71,9 +79,11 @@ const Home = () => {
     searchTerm: string,
     pages: number
   ) => {
+    if (location.pathname.startsWith('/about')) return;
     if (searchResults === null) throw new Error('Search results are null');
     setResults(searchResults);
     setTotalPages(pages);
+
     if (searchTerm !== query) {
       setCurrentPage(1);
       const path = `/${1}${searchTerm ? `?query=${encodeURIComponent(searchTerm)}` : ''}`;
@@ -89,12 +99,14 @@ const Home = () => {
   };
 
   const handleCardClick = (cardId: number) => {
+    if (location.pathname.startsWith('/about')) return;
     setSelectedId(cardId);
     const path = `/${currentPage}/${cardId}${query ? `?query=${encodeURIComponent(query)}` : ''}`;
     performNavigation(path);
   };
 
   const handlePageChange = (newPage: number) => {
+    if (location.pathname.startsWith('/about')) return;
     if (newPage < 1 || newPage > totalPages) return;
     setCurrentPage(newPage);
     const path = selectedId ? `/${newPage}/${selectedId}` : `/${newPage}`;

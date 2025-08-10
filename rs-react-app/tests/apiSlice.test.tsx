@@ -115,11 +115,11 @@ describe('rickAndMortyApi with real API', () => {
   });
 
   describe('fetchInitialCharacters', () => {
-    it('should handle 429 rate limit with retries from real API', async () => {
+    it('should handle 429 rate limit with one retry from real API', async () => {
       let callCount = 0;
       vi.mocked(fetch).mockImplementation(() => {
         callCount++;
-        if (callCount < 3) {
+        if (callCount === 1) {
           const mockResponse: MockResponse = {
             ok: false,
             status: 429,
@@ -165,13 +165,330 @@ describe('rickAndMortyApi with real API', () => {
         rickAndMortyApi.endpoints.fetchInitialCharacters.initiate(1)
       );
 
-      expect(callCount).toBe(3);
+      expect(callCount).toBe(2);
       expect(result).toMatchObject({
         status: 'fulfilled',
         data: {
           status: 'success',
           data: [expect.objectContaining({ id: 1, name: 'Rick Sanchez' })],
           info: expect.objectContaining({ count: 826, pages: 42 }),
+        },
+      });
+    });
+
+    it('should fetch characters successfully on valid response', async () => {
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: true,
+          status: 200,
+          statusText: 'OK',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character?page=1',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => mockCharactersResponse,
+          text: async () => JSON.stringify(mockCharactersResponse),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.fetchInitialCharacters.initiate(1)
+      );
+
+      expect(result).toMatchObject({
+        status: 'fulfilled',
+        data: {
+          status: 'success',
+          data: [expect.objectContaining({ id: 1, name: 'Rick Sanchez' })],
+          info: expect.objectContaining({ count: 826, pages: 42 }),
+        },
+      });
+    });
+
+    it('should handle 404 error for invalid page', async () => {
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: false,
+          status: 404,
+          statusText: 'Not Found',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character?page=999',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => ({ error: 'Page not found' }),
+          text: async () => JSON.stringify({ error: 'Page not found' }),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.fetchInitialCharacters.initiate(999)
+      );
+
+      expect(result).toMatchObject({
+        status: 'rejected',
+        error: {
+          status: 'error',
+          data: [] as CharacterDetails[],
+          message: 'No characters found',
+        },
+      });
+    });
+
+    it('should handle 500 server error', async () => {
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: false,
+          status: 500,
+          statusText: 'Internal Server Error',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character?page=1',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => ({ error: 'Server error' }),
+          text: async () => JSON.stringify({ error: 'Server error' }),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.fetchInitialCharacters.initiate(1)
+      );
+
+      expect(result).toMatchObject({
+        status: 'rejected',
+        error: {
+          status: 'error',
+          data: [] as CharacterDetails[],
+          message: 'Server error',
+        },
+      });
+    });
+  });
+
+  describe('searchCharacters', () => {
+    it('should search characters successfully with query', async () => {
+      const mockSearchResponse = {
+        results: [mockCharacter],
+        info: {
+          count: 1,
+          pages: 1,
+          next: null,
+          prev: null,
+        },
+      };
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: true,
+          status: 200,
+          statusText: 'OK',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character/?name=Rick&page=1',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => mockSearchResponse,
+          text: async () => JSON.stringify(mockSearchResponse),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.searchCharacters.initiate({
+          query: 'Rick',
+          page: 1,
+        })
+      );
+
+      expect(result).toMatchObject({
+        status: 'fulfilled',
+        data: {
+          status: 'success',
+          data: [expect.objectContaining({ id: 1, name: 'Rick Sanchez' })],
+          info: expect.objectContaining({ count: 1, pages: 1 }),
+        },
+      });
+    });
+
+    it('should handle empty query as initial fetch', async () => {
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: true,
+          status: 200,
+          statusText: 'OK',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character?page=1',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => mockCharactersResponse,
+          text: async () => JSON.stringify(mockCharactersResponse),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.searchCharacters.initiate({
+          query: '',
+          page: 1,
+        })
+      );
+
+      expect(result).toMatchObject({
+        status: 'fulfilled',
+        data: {
+          status: 'success',
+          data: [expect.objectContaining({ id: 1, name: 'Rick Sanchez' })],
+          info: expect.objectContaining({ count: 826, pages: 42 }),
+        },
+      });
+    });
+
+    it('should handle 400 error for invalid query', async () => {
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: false,
+          status: 400,
+          statusText: 'Bad Request',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character/?name=invalid&page=1',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => ({ error: 'Invalid query' }),
+          text: async () => JSON.stringify({ error: 'Invalid query' }),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.searchCharacters.initiate({
+          query: 'invalid',
+          page: 1,
+        })
+      );
+
+      expect(result).toMatchObject({
+        status: 'rejected',
+        error: {
+          status: 'error',
+          data: [] as CharacterDetails[],
+          message: 'Invalid search parameters',
+        },
+      });
+    });
+  });
+
+  describe('getCharacter', () => {
+    it('should fetch character successfully by id', async () => {
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: true,
+          status: 200,
+          statusText: 'OK',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character/1',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => mockCharacter,
+          text: async () => JSON.stringify(mockCharacter),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.getCharacter.initiate(1)
+      );
+
+      expect(result).toMatchObject({
+        status: 'fulfilled',
+        data: {
+          status: 'success',
+          data: expect.objectContaining({ id: 1, name: 'Rick Sanchez' }),
+        },
+      });
+    });
+
+    it('should handle 404 error for non-existent character', async () => {
+      vi.mocked(fetch).mockImplementation(() => {
+        const mockResponse: MockResponse = {
+          ok: false,
+          status: 404,
+          statusText: 'Not Found',
+          type: 'basic',
+          url: 'https://rickandmortyapi.com/api/character/999',
+          redirected: false,
+          headers: new Headers(),
+          body: null,
+          bodyUsed: false,
+          json: async () => ({ error: 'Character not found' }),
+          text: async () => JSON.stringify({ error: 'Character not found' }),
+          arrayBuffer: async () => new ArrayBuffer(0),
+          blob: async () => new Blob(),
+          formData: async () => new FormData(),
+          clone: () => ({ ...mockResponse }) as Response,
+          bytes: async () => new Uint8Array(),
+        };
+        return Promise.resolve(mockResponse);
+      });
+
+      const result = await dispatch(
+        rickAndMortyApi.endpoints.getCharacter.initiate(999)
+      );
+
+      expect(result).toMatchObject({
+        status: 'rejected',
+        error: {
+          status: 'error',
+          data: {} as CharacterDetails,
+          message: 'No characters found',
         },
       });
     });

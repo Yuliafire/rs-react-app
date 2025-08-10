@@ -26,11 +26,11 @@ const customBaseQuery = async (
   api: BaseQueryApi,
   extraOptions: BaseQueryExtraOptions<ReturnType<typeof fetchBaseQuery>>
 ) => {
-  const maxRetries = 3;
-  const retryDelay = 1000;
+  const maxRetries = 1;
+  const retryDelay = 500;
   let retryCount = 0;
 
-  while (retryCount < maxRetries) {
+  while (retryCount <= maxRetries) {
     try {
       await new Promise((resolve) =>
         setTimeout(resolve, retryDelay * retryCount)
@@ -45,14 +45,20 @@ const customBaseQuery = async (
         'status' in response.error &&
         typeof response.error.status === 'number' &&
         response.error.status === 429 &&
-        retryCount < maxRetries - 1
+        retryCount < maxRetries
       ) {
+        console.log(
+          `Attempt ${retryCount + 1}/${maxRetries + 1} for ${args}, retrying due to 429`
+        );
         retryCount++;
         continue;
       }
       return response;
     } catch (error: unknown) {
-      if (retryCount < maxRetries - 1) {
+      if (retryCount < maxRetries) {
+        console.log(
+          `Attempt ${retryCount + 1}/${maxRetries + 1} for ${args}, retrying due to error`
+        );
         retryCount++;
         continue;
       }
@@ -152,7 +158,6 @@ export const rickAndMortyApi = createApi({
         { type: 'CharacterList', id: `SEARCH_${query}_PAGE_${page}` },
       ],
     }),
-
     getCharacter: builder.query<ServiceResponse<CharacterDetails>, number>({
       query: (id: number) => `/character/${id}`,
       transformResponse: (response: unknown) => {
@@ -186,7 +191,7 @@ const getErrorMessage = (status: number): string => {
   const messages: Record<number, string> = {
     400: 'Invalid search parameters',
     404: 'No characters found',
-    429: 'Too many requests, retrying...',
+    429: 'Too many requests, retrying once...',
     500: 'Server error',
   };
   return messages[status] || `API error (${status})`;
