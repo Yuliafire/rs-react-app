@@ -1,3 +1,5 @@
+'use client';
+
 import type { CharacterDetails } from '../../types/types';
 import styles from './ResultsSection.module.scss';
 import Loader from '../ui/Loader/Loader';

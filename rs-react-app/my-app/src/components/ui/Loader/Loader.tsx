@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import styles from './Loader.module.scss';
 import timerService from '../../../utils/timerService';

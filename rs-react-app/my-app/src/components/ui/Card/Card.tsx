@@ -1,3 +1,5 @@
+'use client';
+
 import { useParams } from 'react-router-dom';
 import styles from './Card.module.scss';
 import type { CharacterDetails } from '../../../types/types';

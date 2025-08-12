@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
 import { useSearchParams, useParams } from 'react-router-dom';
 import styles from './SearchSection.module.scss';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { removeAllCharacters } from '../../store/charactersSlice';
 import type { RootState, AppDispatch } from '../../store/store';
