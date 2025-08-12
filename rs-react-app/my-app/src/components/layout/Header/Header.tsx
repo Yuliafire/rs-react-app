@@ -1,20 +1,27 @@
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { useTheme } from '../../../shared/hooks/useTheme';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+
 import styles from './Header.module.scss';
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
+  const t = useTranslations('Header');
+  const pathname = usePathname();
 
   return (
     <header className={`${styles.header} ${styles[theme]}`}>
-      <h1>Rick and Morty Portal</h1>
+      <h1>{t('title')}</h1>
       <nav className={styles.nav}>
-        <NavLink
-          to="/about"
-          className={({ isActive }) => (isActive ? styles.active : '')}
+        <Link
+          href="/about"
+          className={pathname === '/about' ? styles.active : ''}
         >
-          About
-        </NavLink>
+          {t('about')}
+        </Link>
       </nav>
       <button
         onClick={toggleTheme}

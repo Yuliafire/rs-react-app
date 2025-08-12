@@ -9,29 +9,27 @@
   line-height: $line-height;
   min-height: calc(100vh - 110px);
 
-  [data-theme='light'] & {
+  &.light {
     background: var(--background-dark);
   }
 
-  [data-theme='dark'] & {
+  &.dark {
     background: var(--background);
   }
+
   @media (max-width: $breakpoint-mobile) {
     padding: 1rem;
   }
 }
 
-h2 {
+.about h2 {
   @include responsive-typography($font-size-lg, $font-size-md);
-}
-
-h2 {
   margin-bottom: 1.5rem;
   text-align: center;
   color: var(--text);
 }
 
-section {
+.about section {
   margin-bottom: $spacing-lg;
   padding: $spacing-md;
   background: var(--card-bg);
@@ -48,26 +46,20 @@ section {
   }
 }
 
-h3 {
+.about h3 {
   @include responsive-typography($font-size-md, $font-size-sm);
-}
-
-h3 {
   color: var(--primary);
   margin-bottom: $spacing-sm;
 }
 
-p {
+.about p {
   @include responsive-typography($font-size-base, $font-size-xs);
-}
-
-p {
   margin-bottom: $spacing-sm;
   margin: 0 0 1rem;
   color: var(--text);
 }
 
-a {
+.about a {
   color: var(--primary);
   text-decoration: none;
   transition: all 0.3s ease;
@@ -84,11 +76,8 @@ a {
   }
 }
 
-.backLink {
+.about .backLink {
   @include responsive-typography($font-size-base, $font-size-xs);
-}
-
-.backLink {
   display: inline-flex;
   align-items: center;
   gap: $spacing-xs;

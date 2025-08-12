@@ -1,8 +1,11 @@
 import styles from './Footer.module.scss';
 import { useTheme } from '../../../shared/hooks/useTheme';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 const Footer = () => {
   const { theme } = useTheme();
+  const t = useTranslations('Footer');
 
   const GitHubIcon = () => (
     <svg
@@ -38,22 +41,22 @@ const Footer = () => {
         <div className={styles.content}>
           <p className={styles.copyright}>© 2025 Lingua Voice</p>
           <div className={styles.links}>
-            <a
+            <Link
               href="https://github.com/Yuliafire"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-            >
+            > {t('developer')}
               <GitHubIcon />
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://www.instagram.com/yulia_speakandcode?igsh=cGloenRtcmcwM2N0"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="RS School"
             >
               <RSSchoolIcon />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
