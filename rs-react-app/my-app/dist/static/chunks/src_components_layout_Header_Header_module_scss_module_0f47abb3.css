@@ -1,0 +1,127 @@
+/* [project]/src/components/layout/Header/Header.module.scss.module.css [app-client] (css) */
+.Header-module-scss-module__klcqGG__light {
+  --background-light: #fff;
+  --text: #333;
+  --primary: skyblue;
+  --primary-hover: #0056b3;
+  --border: #ccc;
+  --card-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, .1);
+  --btn-hover: #41ead4;
+  --btn-hover-color: grey;
+  --background-layout: #38c;
+}
+
+.Header-module-scss-module__klcqGG__dark {
+  --background: #1a1a1a;
+  --text: #e0e0e0;
+  --primary: white;
+  --primary-hover: #38c;
+  --border: #444;
+  --card-bg: #2c2c2c;
+  --shadow: rgba(0, 0, 0, .3);
+  --btn-hover: #41ead4;
+  --btn-hover-color: #333;
+  --background-layout: #333;
+}
+
+.Header-module-scss-module__klcqGG__header {
+  background: var(--background-layout);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 4px var(--shadow);
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  display: flex;
+}
+
+[data-theme="dark"] .Header-module-scss-module__klcqGG__header {
+  box-shadow: 0 4px 8px var(--shadow);
+  border-bottom-width: 2px;
+}
+
+.Header-module-scss-module__klcqGG__header h1 {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .Header-module-scss-module__klcqGG__header h1 {
+    font-size: 1rem;
+  }
+}
+
+.Header-module-scss-module__klcqGG__header h1 {
+  color: var(--text);
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .Header-module-scss-module__klcqGG__header h1 {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Header-module-scss-module__klcqGG__header h1 {
+    font-size: 1rem;
+  }
+}
+
+.Header-module-scss-module__klcqGG__nav a {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .Header-module-scss-module__klcqGG__nav a {
+    font-size: .9rem;
+  }
+}
+
+.Header-module-scss-module__klcqGG__nav a {
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 8px 12px;
+  transition: all .2s;
+}
+
+.Header-module-scss-module__klcqGG__nav a:hover {
+  background: var(--btn-hover);
+  color: var(--btn-hover-color);
+}
+
+.Header-module-scss-module__klcqGG__nav a.Header-module-scss-module__klcqGG__active {
+  background: var(--btn-hover);
+  color: var(--btn-hover-color);
+  font-weight: bold;
+}
+
+.Header-module-scss-module__klcqGG__themeToggle {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .Header-module-scss-module__klcqGG__themeToggle {
+    font-size: .9rem;
+  }
+}
+
+.Header-module-scss-module__klcqGG__themeToggle {
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 8px 12px;
+  transition: all .2s;
+}
+
+.Header-module-scss-module__klcqGG__themeToggle:hover {
+  background: var(--btn-hover);
+  color: var(--btn-hover-color);
+}
+
+/*# sourceMappingURL=src_components_layout_Header_Header_module_scss_module_0f47abb3.css.map*/

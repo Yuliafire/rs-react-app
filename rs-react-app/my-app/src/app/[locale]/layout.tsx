@@ -1,7 +1,7 @@
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
-// import { Messages } from '../../shared/types/types';
+import { Messages } from '../../types/types';
 import ClientProviders from '../ClientProviders';
 
 export default async function LocaleLayout({

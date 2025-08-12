@@ -19,7 +19,8 @@ interface ServiceResponse<T> {
   };
 }
 
-const baseUrl = import.meta.env.VITE_RM_API_URL;
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_PATH;
 
 const customBaseQuery = async (
   args: string,
