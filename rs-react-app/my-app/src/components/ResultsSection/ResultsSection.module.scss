@@ -1,0 +1,69 @@
+@use '../../assets/styles/globals' as *;
+
+.resultsSection {
+  padding: 2rem 0;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.resultsSectionError {
+  color: #ff4444;
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(255, 68, 68, 0.1);
+  border-radius: $border-radius-md;
+  margin: $spacing-sm;
+}
+
+.noResults {
+  @include responsive-typography($font-size-sm, $font-size-xs);
+}
+
+.noResults {
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  padding: 2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-top: $spacing-lg;
+  padding: 1rem;
+}
+
+.paginationButton {
+  padding: 0.5rem 1rem;
+  background-color: #42b4ca;
+  color: white;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: $transition-short;
+
+  &:hover:not(:disabled) {
+    background-color: #2a8ca8;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}
+
+.paginationInfo {
+  @include responsive-typography($font-size-xs, $font-size-xs);
+}
+
+.paginationInfo {
+  color: #666;
+}
