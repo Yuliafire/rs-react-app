@@ -6,5 +6,25 @@
   "Header": {
     "title": "Rick and Morty Portal",
     "about": "About"
+  },
+
+  "About": {
+    "title": "About",
+    "subtitle": "About the project",
+    "heading": "Author Information",
+    "courseInfo": "RS School React Course",
+    "back": "Back",
+    "author": "Created by Yulia Podgurskaia",
+    "description": "This project was developed as part of the",
+    "link": "RS School React course",
+    "courseName": "RS School React Course"
+  },
+
+   "NavBar": {
+    "AboutLink": "About",
+    "darkTheme": "Dark Theme",
+    "lightTheme": "Light Theme",
+    "switchLanguage": "Ru"
   }
+
 }

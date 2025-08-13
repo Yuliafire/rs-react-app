@@ -3,17 +3,19 @@
 import Link from 'next/link';
 import styles from './About.module.scss';
 import { useTheme } from '../../shared/hooks/useTheme';
+import { useTranslations } from 'next-intl';
 
 export const About = () => {
   const { theme } = useTheme();
+  const t = useTranslations('About');
 
   return (
     <div className={`${styles.about} ${styles[theme]}`}>
-      <h2>About This Project</h2>
+      <h2>{t('subtitle')}</h2>
 
       <section className={styles.authorInfo}>
-        <h3>Author Information</h3>
-        <p>Created by Yulia Podgurskaia</p>
+        <h3>{t('heading')}</h3>
+        <p>{t('author')}</p>
         <p>
           GitHub:{' '}
           <a
@@ -27,22 +29,54 @@ export const About = () => {
       </section>
 
       <section className={styles.courseInfo}>
-        <h3>RS School React Course</h3>
+        <h3>{t('courseInfo')}</h3>
         <p>
-          This project was developed as part of the{' '}
+         {t('description')} {' '}
           <Link
             href="https://rs.school/courses/reactjs"
             target="_blank"
             rel="noopener noreferrer"
           >
-            RS School React Course
+            {t('courseName')}
           </Link>
         </p>
       </section>
 
       <Link href="/" className={styles.backLink} role="link">
-        ← Back to Search{' '}
+        ← {t('back')}{' '}
       </Link>
     </div>
   );
 };
+
+
+
+// 'use client';
+// import Link from 'next/link';
+// import { useTranslations } from 'next-intl';
+// import { useTheme } from '../../shared/hooks/useTheme';
+// import styles from './About.module.scss';
+
+// const About = () => {
+//   const { theme } = useTheme();
+//   const t = useTranslations('About');
+
+//   return (
+//     <div className={`${styles.about} ${styles[theme]}`}>
+//       <h2>{t('title')}</h2>
+//       <section>
+//         <h3>{t('subtitle')}</h3>
+//         <p>{t('description')} <Link href="https://rs.school/react/" target="_blank">{t('link')} {t('courseName')}</Link>.</p>
+//       </section>
+//       <section>
+//         <h3>{t('heading')}</h3>
+//         <p>{t('author')}.</p>
+//       </section>
+//       <Link href="/" className={styles.backLink}>
+//         {t('back')}
+//       </Link>
+//     </div>
+//   );
+// };
+
+// export default About;

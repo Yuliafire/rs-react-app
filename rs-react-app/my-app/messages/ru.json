@@ -6,5 +6,23 @@
   "Header": {
     "title": "Рик и Морти",
     "about": "О проекте"
+  },
+
+  "About": {
+    "title": "О проекте",
+    "subtitle": "Описание проекта",
+    "heading":"Информация об авторе",
+    "courseInfo": "RS School Риэкт Курс",
+    "back": "Назад",
+    "author": "Создано Юлией Подгурской",
+    "description": "Этот проект был разработан в рамках",
+    "link": "RS School Риэкт курса",
+    "courseName": "RS School React Курс"
+  },
+  "NavBar": {
+    "AboutLink": "О проекте",
+    "darkTheme": "Темная тема",
+    "lightTheme": "Светлая тема",
+    "switchLanguage": "Англ"
   }
 }

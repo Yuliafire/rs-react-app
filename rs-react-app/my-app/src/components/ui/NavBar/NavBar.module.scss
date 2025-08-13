@@ -1,0 +1,103 @@
+@use '../../../assets/styles/globals' as *;
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  background: var(--background-light);
+  box-shadow: $shadow-normal;
+  width: 100%;
+  z-index: 1000;
+
+  &.light {
+    background: var(--background-light);
+    color: var(--text);
+  }
+
+  &.dark {
+    background: var(--background);
+    color: var(--text);
+  }
+}
+
+.list {
+  display: flex;
+  gap: $spacing-lg;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    flex-direction: column;
+    gap: $spacing-sm;
+    width: 100%;
+    padding: $spacing-sm;
+  }
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 100%;
+    justify-content: center;
+    padding: $spacing-sm 0;
+  }
+}
+
+.link {
+  color: var(--primary);
+  text-decoration: none;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  transition: all $transition-short;
+  font-size: $font-size-base;
+  font-family: $font-stack;
+  line-height: $line-height;
+
+  &:hover,
+  &:focus {
+    background: var(--btn-hover);
+    color: var(--btn-hover-color);
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: $font-size-sm;
+    padding: $spacing-sm $spacing-md;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+// Active link state for the About link
+.link[href="/about"] {
+  &[aria-current="page"] {
+    font-weight: 600;
+    background: rgba(var(--primary), 0.1);
+  }
+}
+
+@media (max-width: 900px) {
+  .nav {
+    padding: $spacing-sm $spacing-md;
+  }
+
+  .list {
+    gap: $spacing-md;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .nav {
+    padding: $spacing-sm;
+  }
+}

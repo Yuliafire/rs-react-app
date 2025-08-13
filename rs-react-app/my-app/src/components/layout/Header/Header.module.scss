@@ -1,79 +1,44 @@
 @use '../../../assets/styles/globals' as *;
 
 .header {
-  padding: 10px 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  padding: $spacing-md $spacing-lg;
   background: var(--background-layout);
-  color: var(--text);
-  border-bottom: 1px solid var(--border);
   box-shadow: $shadow-normal;
+  width: 100%;
+  z-index: 900;
 
-  [data-theme='dark'] & {
-    border-bottom-width: 2px;
+  &.light {
+    background: var(--background-layout);
+    color: var(--text);
+  }
+
+  &.dark {
+    background: var(--background-layout);
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
     box-shadow: $shadow-hover;
   }
 
   h1 {
-    @include responsive-typography($font-size-md, $font-size-base);
+    @include responsive-typography($font-size-xl, $font-size-lg);
+    margin: 0 0 $spacing-md;
+    color: var(--primary);
+    font-family: $font-stack;
+    text-align: center;
   }
 
-  h1 {
-    margin: 0;
-    color: var(--text);
-    @media screen and (max-width: 768px) {
-      font-size: 1.25rem;
-    }
-
-    @media screen and (max-width: 480px) {
-      font-size: 1rem;
-    }
-  }
-}
-
-.nav {
-  a {
-    @include responsive-typography($font-size-base, $font-size-xs);
+  @media (max-width: 900px) {
+    padding: $spacing-sm $spacing-md;
   }
 
-  a {
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: $border-radius-sm;
-    cursor: pointer;
-    background: var(--card-bg);
-    color: var(--text);
-    transition: $transition-short;
+  @media (max-width: $breakpoint-mobile) {
+    padding: $spacing-sm;
 
-    &:hover {
-      background: var(--btn-hover);
-      color: var(--btn-hover-color);
+    h1 {
+      margin-bottom: $spacing-sm;
     }
-
-    &.active {
-      font-weight: bold;
-      background: var(--btn-hover);
-      color: var(--btn-hover-color);
-    }
-  }
-}
-
-.themeToggle {
-  @include responsive-typography($font-size-base, $font-size-xs);
-}
-
-.themeToggle {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: $border-radius-sm;
-  cursor: pointer;
-  background: var(--card-bg);
-  color: var(--text);
-  transition: $transition-short;
-
-  &:hover {
-    background: var(--btn-hover);
-    color: var(--btn-hover-color);
   }
 }
