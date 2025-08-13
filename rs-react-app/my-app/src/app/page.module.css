@@ -1,4 +1,4 @@
-.page {
+/* .page {
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
   --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
@@ -108,13 +108,13 @@ a.secondary {
 }
 
 /* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
+/* @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
     background: var(--button-primary-hover);
     border-color: transparent;
-  }
+  } */
 
-  a.secondary:hover {
+  /* a.secondary:hover {
     background: var(--button-secondary-hover);
     border-color: transparent;
   }
@@ -141,8 +141,8 @@ a.secondary {
 
   .ctas {
     flex-direction: column;
-  }
-
+  } */
+/* 
   .ctas a {
     font-size: 14px;
     height: 40px;
@@ -164,4 +164,4 @@ a.secondary {
   .logo {
     filter: invert();
   }
-}
+} */ 

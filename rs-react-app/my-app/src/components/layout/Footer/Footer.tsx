@@ -39,14 +39,14 @@ const Footer = () => {
     <footer className={`${styles.footer} ${styles[theme]}`}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <p className={styles.copyright}>© 2025 Lingua Voice</p>
+          <p className={styles.copyright}>{t('copyright')}</p>
           <div className={styles.links}>
             <Link
               href="https://github.com/Yuliafire"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-            > {t('developer')}
+            > 
               <GitHubIcon />
             </Link>
             <Link

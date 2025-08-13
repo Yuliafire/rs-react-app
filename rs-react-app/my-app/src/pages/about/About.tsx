@@ -48,35 +48,3 @@ export const About = () => {
     </div>
   );
 };
-
-
-
-// 'use client';
-// import Link from 'next/link';
-// import { useTranslations } from 'next-intl';
-// import { useTheme } from '../../shared/hooks/useTheme';
-// import styles from './About.module.scss';
-
-// const About = () => {
-//   const { theme } = useTheme();
-//   const t = useTranslations('About');
-
-//   return (
-//     <div className={`${styles.about} ${styles[theme]}`}>
-//       <h2>{t('title')}</h2>
-//       <section>
-//         <h3>{t('subtitle')}</h3>
-//         <p>{t('description')} <Link href="https://rs.school/react/" target="_blank">{t('link')} {t('courseName')}</Link>.</p>
-//       </section>
-//       <section>
-//         <h3>{t('heading')}</h3>
-//         <p>{t('author')}.</p>
-//       </section>
-//       <Link href="/" className={styles.backLink}>
-//         {t('back')}
-//       </Link>
-//     </div>
-//   );
-// };
-
-// export default About;

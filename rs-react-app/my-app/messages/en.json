@@ -1,6 +1,6 @@
 {
   "Footer": {
-    "developer": "Iuliia Podgurskaia"
+    "copyright": "© 2025 Lingua Voice"
   },
 
   "Header": {
@@ -55,6 +55,15 @@
       "dead": "Dead",
       "unknown": "Unknown"
     }
+  },
+  "Search": {
+    "placeholder": "Search characters...",
+    "search": "Search",
+    "searching": "Searching...",
+    "forceRefresh": "Refresh",
+    "refreshing": "Refreshing...",
+    "error": "Error",
+    "unknownError": "An unknown error occurred"
   }
 
 }

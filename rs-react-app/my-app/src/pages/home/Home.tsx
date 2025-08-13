@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, useCallback, useEffect } from 'react';
 import {
   useSearchParams,
@@ -6,6 +8,8 @@ import {
   Outlet,
   useLocation,
 } from 'react-router-dom';
+
+// import { useSearchParams, useParams, usePathname, useRouter} from 'next/navigate';
 import SearchSection from '../../components/SearchSection/SearchSection';
 import ResultsSection from '../../components/ResultsSection/ResultsSection';
 import Pagination from '../../components/Pagination/Pagination';
@@ -152,3 +156,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

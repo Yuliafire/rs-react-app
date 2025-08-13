@@ -17,10 +17,10 @@ interface CardProps {
 
 const Card = ({ character, onCardClick }: CardProps) => {
   const t = useTranslations('Card');
-
   const { theme } = useTheme();
-  const params = useParams<{ page: string }>(); // Define params using useParams
-  const page = params?.page ?? '1'; // Safely handle null with fallback
+  
+  const params = useParams<{ page: string }>();
+  const page = params?.page ?? '1';
   const dispatch = useDispatch<AppDispatch>();
   const selectedCharacters = useSelector(
     (state: RootState) => state.characters.selectedCharacters
