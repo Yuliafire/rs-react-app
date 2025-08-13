@@ -1,10 +1,10 @@
 'use client';
-
 import type { CharacterDetails } from '../../types/types';
 import styles from './ResultsSection.module.scss';
 import Loader from '../ui/Loader/Loader';
 import CardList from '../ui/CardList/CardList';
 import { useTheme } from '../../shared/hooks/useTheme';
+import { useTranslations } from 'next-intl';
 
 interface ResultsSectionProps {
   results: CharacterDetails[];
@@ -13,13 +13,15 @@ interface ResultsSectionProps {
   onCardClick: (id: number) => void;
 }
 
-const ResultsSection = ({
+export default function ResultsSection({
   loading,
   error,
   results,
-  onCardClick,
-}: ResultsSectionProps) => {
+  onCardClick
+}: ResultsSectionProps) {
   const { theme } = useTheme();
+  const t = useTranslations('Results');
+
   if (error) {
     return (
       <section
@@ -27,7 +29,7 @@ const ResultsSection = ({
         aria-live="polite"
         data-testid="results-section"
       >
-        <p role="paragraph">{error}</p>
+        <p role="paragraph">{t('error', { message: error })}</p>
       </section>
     );
   }
@@ -39,7 +41,7 @@ const ResultsSection = ({
         aria-live="polite"
         data-testid="results-section"
       >
-        No characters found. Try another search!
+        {t('noResults')}
       </p>
     );
   }
@@ -51,10 +53,8 @@ const ResultsSection = ({
           <Loader minDisplayTime={2000} data-testid="loader" />
         </div>
       ) : (
-        <CardList characters={results} onCardClick={onCardClick} />
+        <CardList characters={results} onCardClick={onCardClick}  />
       )}
     </section>
   );
-};
-
-export default ResultsSection;
+}
