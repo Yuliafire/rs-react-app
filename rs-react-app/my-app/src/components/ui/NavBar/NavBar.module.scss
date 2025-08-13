@@ -78,7 +78,6 @@
   }
 }
 
-// Active link state for the About link
 .link[href="/about"] {
   &[aria-current="page"] {
     font-weight: 600;

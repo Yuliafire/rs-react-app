@@ -3,14 +3,14 @@
 .about {
   margin: 0 auto;
   padding: $spacing-lg $spacing-sm;
-  background: var(--background-dark);
+  background: var(--background-light);
   color: var(--text);
   font-family: $font-stack;
   line-height: $line-height;
   min-height: calc(100vh - 110px);
 
   &.light {
-    background: var(--background-dark);
+    background: var(--background-light);
   }
 
   &.dark {

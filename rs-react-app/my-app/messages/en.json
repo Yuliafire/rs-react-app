@@ -25,6 +25,36 @@
     "darkTheme": "Dark Theme",
     "lightTheme": "Light Theme",
     "switchLanguage": "Ru"
+  },
+
+  "CharacterDetails": {
+    "unknown": "Unknown",
+    "status": "Status",
+    "species": "Species",
+    "gender": "Gender",
+    "origin": "Origin",
+    "location": "Location",
+    "error": "Failed to load character",
+    "notFound": "Character not found or invalid ID",
+    "close": "Close"
+  },
+
+  "Card": {
+    "noImage": "No image available",
+    "species": "Species",
+    "gender": "Gender",
+    "origin": "Origin",
+    "location": "Location",
+    "episodes": "Episodes",
+    "unknown": "Unknown",
+    "viewDetailsAria": "View details for {name}",
+    "selectAria": "Select {name}",
+    "deselectAria": "Deselect {name}",
+    "status": {
+      "alive": "Alive",
+      "dead": "Dead",
+      "unknown": "Unknown"
+    }
   }
 
 }

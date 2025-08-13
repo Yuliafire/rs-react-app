@@ -1,6 +1,8 @@
 'use client';
 
-import { useParams } from 'react-router-dom';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import styles from './Card.module.scss';
 import type { CharacterDetails } from '../../../types/types';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,8 +16,11 @@ interface CardProps {
 }
 
 const Card = ({ character, onCardClick }: CardProps) => {
+  const t = useTranslations('Card');
+
   const { theme } = useTheme();
-  const { page = '1' } = useParams<{ page?: string }>();
+  const params = useParams<{ page: string }>(); // Define params using useParams
+  const page = params?.page ?? '1'; // Safely handle null with fallback
   const dispatch = useDispatch<AppDispatch>();
   const selectedCharacters = useSelector(
     (state: RootState) => state.characters.selectedCharacters
@@ -55,39 +60,49 @@ const Card = ({ character, onCardClick }: CardProps) => {
       data-testid="card"
       role="button"
       tabIndex={0}
-      aria-label={`View details for ${character.name}`}
+      aria-label={t('viewDetailsAria', { name: character.name || t('unknown') })}
     >
       <div className={styles.cardImage}>
         {character.image ? (
-          <img src={character.image} alt={character.name} />
+          <Image
+            src={character.image}
+            alt={character.name || t('unknown')}
+            width={200}
+            height={200}
+          />
         ) : (
-          <span>No image available</span>
+          <span>{t('noImage')}</span>
         )}
         <span
           className={`${styles.statusBadge} ${styles[character.status?.toLowerCase()]}`}
           data-testid="status-badge"
         >
-          {character.status || 'Unknown'}
+          {character.status
+            ? t(`status.${character.status.toLowerCase()}`)
+            : t('unknown')}
         </span>
       </div>
       <div className={styles.cardContent}>
-        <h3>{character.name || 'Unknown'}</h3>
+        <h3>{character.name || t('unknown')}</h3>
         <div className={styles.details}>
           <p>
-            <strong>Species:</strong> {character.species || 'Unknown'}
+            <strong>{t('species')}:</strong>{' '}
+            {character.species || t('unknown')}
           </p>
           <p>
-            <strong>Gender:</strong> {character.gender || 'Unknown'}
+            <strong>{t('gender')}:</strong> {character.gender || t('unknown')}
           </p>
           <p>
-            <strong>Origin:</strong> {character.origin?.name || 'Unknown'}
+            <strong>{t('origin')}:</strong>{' '}
+            {character.origin?.name || t('unknown')}
           </p>
           <p>
-            <strong>Location:</strong> {character.location?.name || 'Unknown'}
+            <strong>{t('location')}:</strong>{' '}
+            {character.location?.name || t('unknown')}
           </p>
         </div>
         <div className={styles.episodes}>
-          Episodes: {character.episode?.length || 'Unknown'}
+          {t('episodes')}: {character.episode?.length || t('unknown')}
         </div>
       </div>
       <input
@@ -96,7 +111,9 @@ const Card = ({ character, onCardClick }: CardProps) => {
         checked={isSelected}
         onChange={handleCheckboxChange}
         onClick={(e) => e.stopPropagation()}
-        aria-label={`${isSelected ? 'Deselect' : 'Select'} ${character.name}`}
+        aria-label={t(isSelected ? 'deselectAria' : 'selectAria', {
+          name: character.name || t('unknown'),
+        })}
       />
     </div>
   );

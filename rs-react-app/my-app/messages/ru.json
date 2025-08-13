@@ -24,5 +24,33 @@
     "darkTheme": "Темная тема",
     "lightTheme": "Светлая тема",
     "switchLanguage": "Англ"
+  },
+   "Card": {
+    "noImage": "Изображение отсутствует",
+    "species": "Вид",
+    "gender": "Пол",
+    "origin": "Происхождение",
+    "location": "Местоположение",
+    "episodes": "Эпизоды",
+    "unknown": "Неизвестно",
+    "viewDetailsAria": "Посмотреть детали для {name}",
+    "selectAria": "Выбрать {name}",
+    "deselectAria": "Отменить выбор {name}",
+    "status": {
+      "alive": "Жив",
+      "dead": "Мёртв",
+      "unknown": "Неизвестно"
+    }
+  },
+  "CharacterDetails": {
+    "unknown": "Неизвестно",
+    "status": "Статус",
+    "species": "Вид",
+    "gender": "Пол",
+    "origin": "Происхождение",
+    "location": "Местоположение",
+    "error": "Не удалось загрузить персонажа",
+    "notFound": "Персонаж не найден или неверный ID",
+    "close": "Закрыть"
   }
 }
