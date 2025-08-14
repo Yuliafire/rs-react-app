@@ -8,15 +8,15 @@
   align-items: center;
 }
 
-.pageItem {
+.pagination .pageItem {
   display: inline-flex;
 }
 
-button {
+.pagination button {
   @include responsive-typography($font-size-base, $font-size-xs);
 }
 
-button {
+.pagination button {
   background: none;
   border: 1px solid #41ead4;
   color: #41ead4;

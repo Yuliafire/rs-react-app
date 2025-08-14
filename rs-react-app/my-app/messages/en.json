@@ -64,6 +64,9 @@
     "refreshing": "Refreshing...",
     "error": "Error",
     "unknownError": "An unknown error occurred"
+  },
+  "Results": {
+    "error": "Error: {message}",
+    "noResults": "No characters found"
   }
-
 }

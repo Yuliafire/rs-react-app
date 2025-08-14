@@ -27,8 +27,16 @@
     animation: gradientBorder 8s ease infinite;
   }
 
-  [data-theme='dark'] & {
-    box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.3);
+   &.light {
+    background: var(--background-layout);
+    color: var(--text);
+  }
+
+    &.dark {
+    background: var(--background-layout);
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+    box-shadow: $shadow-hover;
   }
 
   @media (max-width: 768px) {
@@ -73,6 +81,14 @@
   align-items: center;
   box-sizing: border-box;
 
+  .light & {
+    background-color: var(--background-light);
+  }
+
+  .dark & {
+    background-color: var(--background);
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: $spacing-xs;
@@ -82,20 +98,25 @@
 .searchInputContainer {
   position: relative;
   flex: 1;
+
+  .light & {
+    background-color: var(--background-light);
+  }
+
+  .dark & {
+    background-color: var(--background);
+  }
 }
 
 .searchInput {
   @include responsive-typography($font-size-base, $font-size-xs);
-}
-
-.searchInput {
   width: 100%;
   padding: 1.1rem 1.5rem 1.1rem 3rem;
   border: none;
   border-radius: 12px;
   font-size: 1rem;
   transition: $transition-long;
-  background-color: var(--background-dark);
+  background-color: var(--background-light);
   box-shadow: inset 0 1px 3px var(--shadow);
   color: var(--text);
   background-repeat: no-repeat;
@@ -113,6 +134,14 @@
   &::placeholder {
     color: var(--text);
     opacity: 0.7;
+  }
+
+  .light & {
+    background-color: var(--background-light);
+  }
+
+  .dark & {
+    background-color: var(--background);
   }
 
   @media (max-width: 768px) {
@@ -139,15 +168,16 @@
 
 .error {
   @include responsive-typography($font-size-xs, $font-size-xs);
-}
-
-.error {
   margin-top: 1rem;
   color: #dc3545;
   font-size: 0.9rem;
   text-align: center;
 
-  [data-theme='dark'] & {
+  .light & {
+    color: #dc3545;
+  }
+
+  .dark & {
     color: #ff6b6b;
   }
 }

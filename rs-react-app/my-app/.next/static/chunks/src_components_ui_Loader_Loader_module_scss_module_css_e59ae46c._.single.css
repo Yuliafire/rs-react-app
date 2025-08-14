@@ -1,0 +1,113 @@
+/* [project]/src/components/ui/Loader/Loader.module.scss.module.css [app-client] (css) */
+.Loader-module-scss-module__De3Giq__light {
+  --background-light: #fff;
+  --text: #333;
+  --primary: skyblue;
+  --primary-hover: #0056b3;
+  --border: #ccc;
+  --card-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, .1);
+  --btn-hover: #41ead4;
+  --btn-hover-color: grey;
+  --background-layout: #38c;
+}
+
+.Loader-module-scss-module__De3Giq__dark {
+  --background: #1a1a1a;
+  --text: #e0e0e0;
+  --primary: white;
+  --primary-hover: #38c;
+  --border: #444;
+  --card-bg: #2c2c2c;
+  --shadow: rgba(0, 0, 0, .3);
+  --btn-hover: #41ead4;
+  --btn-hover-color: #333;
+  --background-layout: #333;
+}
+
+.Loader-module-scss-module__De3Giq__loaderContainer {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 120px;
+  margin: 0;
+  padding: 1rem;
+  transition: all .3s;
+  display: flex;
+}
+
+.Loader-module-scss-module__De3Giq__loaderContainer.Loader-module-scss-module__De3Giq__visible {
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .Loader-module-scss-module__De3Giq__loaderContainer {
+    min-height: 100px;
+    padding: .75rem;
+  }
+}
+
+.Loader-module-scss-module__De3Giq__loaderSpinner {
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  place-self: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  animation: 1s linear infinite Loader-module-scss-module__De3Giq__spin;
+}
+
+@media (max-width: 600px) {
+  .Loader-module-scss-module__De3Giq__loaderSpinner {
+    border-width: 3px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.Loader-module-scss-module__De3Giq__loaderText {
+  color: #2c3e50;
+  text-align: center;
+  margin-top: .75rem;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  animation: .5s ease-in Loader-module-scss-module__De3Giq__fadeIn;
+}
+
+@media (max-width: 600px) {
+  .Loader-module-scss-module__De3Giq__loaderText {
+    margin-top: .5rem;
+  }
+}
+
+.Loader-module-scss-module__De3Giq__loaderText {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .Loader-module-scss-module__De3Giq__loaderText {
+    font-size: .9rem;
+  }
+}
+
+@keyframes Loader-module-scss-module__De3Giq__spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes Loader-module-scss-module__De3Giq__fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=src_components_ui_Loader_Loader_module_scss_module_css_e59ae46c._.single.css.map*/

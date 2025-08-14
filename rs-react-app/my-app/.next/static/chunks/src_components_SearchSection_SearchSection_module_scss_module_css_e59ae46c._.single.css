@@ -1,0 +1,234 @@
+/* [project]/src/components/SearchSection/SearchSection.module.scss.module.css [app-client] (css) */
+.SearchSection-module-scss-module__1Dck_G__light {
+  --background-light: #fff;
+  --text: #333;
+  --primary: skyblue;
+  --primary-hover: #0056b3;
+  --border: #ccc;
+  --card-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, .1);
+  --btn-hover: #41ead4;
+  --btn-hover-color: grey;
+  --background-layout: #38c;
+}
+
+.SearchSection-module-scss-module__1Dck_G__dark {
+  --background: #1a1a1a;
+  --text: #e0e0e0;
+  --primary: white;
+  --primary-hover: #38c;
+  --border: #444;
+  --card-bg: #2c2c2c;
+  --shadow: rgba(0, 0, 0, .3);
+  --btn-hover: #41ead4;
+  --btn-hover-color: #333;
+  --background-layout: #333;
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchSection {
+  box-sizing: border-box;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 1440px;
+  min-height: 150px;
+  box-shadow: 0 5px 30px -10px var(--shadow);
+  border-radius: 16px;
+  margin: 0 auto 3rem;
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchSection:before {
+  content: "";
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  z-index: -1;
+  border-radius: 16px;
+  animation: 8s infinite SearchSection-module-scss-module__1Dck_G__gradientBorder;
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: -2px;
+  right: -2px;
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchSection.SearchSection-module-scss-module__1Dck_G__light {
+  background: var(--background-layout);
+  color: var(--text);
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchSection.SearchSection-module-scss-module__1Dck_G__dark {
+  background: var(--background-layout);
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+@media (max-width: 768px) {
+  .SearchSection-module-scss-module__1Dck_G__searchSection {
+    border-radius: 12px;
+    min-height: 120px;
+    margin-bottom: 2rem;
+    padding: 1.5rem .75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .SearchSection-module-scss-module__1Dck_G__searchSection {
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    padding: 1rem .5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .SearchSection-module-scss-module__1Dck_G__searchSection {
+    min-height: 100px;
+    margin-bottom: 1rem;
+    padding: .75rem .25rem;
+  }
+}
+
+@keyframes SearchSection-module-scss-module__1Dck_G__gradientBorder {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 100% 100%;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchForm {
+  box-sizing: border-box;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 75rem;
+  margin: 0 auto;
+  display: flex;
+  position: relative;
+}
+
+.SearchSection-module-scss-module__1Dck_G__light .SearchSection-module-scss-module__1Dck_G__searchForm {
+  background-color: var(--background-light);
+}
+
+.SearchSection-module-scss-module__1Dck_G__dark .SearchSection-module-scss-module__1Dck_G__searchForm {
+  background-color: var(--background);
+}
+
+@media (max-width: 768px) {
+  .SearchSection-module-scss-module__1Dck_G__searchForm {
+    flex-direction: column;
+    gap: .5rem;
+  }
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchInputContainer {
+  flex: 1;
+  position: relative;
+}
+
+.SearchSection-module-scss-module__1Dck_G__light .SearchSection-module-scss-module__1Dck_G__searchInputContainer {
+  background-color: var(--background-light);
+}
+
+.SearchSection-module-scss-module__1Dck_G__dark .SearchSection-module-scss-module__1Dck_G__searchInputContainer {
+  background-color: var(--background);
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchInput {
+  background-color: var(--background-light);
+  width: 100%;
+  box-shadow: inset 0 1px 3px var(--shadow);
+  color: var(--text);
+  background-position: 1rem;
+  background-repeat: no-repeat;
+  background-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  padding: 1.1rem 1.5rem 1.1rem 3rem;
+  font-size: 1rem;
+  transition: all .3s;
+}
+
+@media (max-width: 600px) {
+  .SearchSection-module-scss-module__1Dck_G__searchInput {
+    font-size: .9rem;
+  }
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchInput:focus {
+  background-color: var(--card-bg);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), .2), inset 0 1px 3px var(--shadow);
+  outline: none;
+}
+
+.SearchSection-module-scss-module__1Dck_G__searchInput::placeholder {
+  color: var(--text);
+  opacity: .7;
+}
+
+.SearchSection-module-scss-module__1Dck_G__light .SearchSection-module-scss-module__1Dck_G__searchInput {
+  background-color: var(--background-light);
+}
+
+.SearchSection-module-scss-module__1Dck_G__dark .SearchSection-module-scss-module__1Dck_G__searchInput {
+  background-color: var(--background);
+}
+
+@media (max-width: 768px) {
+  .SearchSection-module-scss-module__1Dck_G__searchInput {
+    background-position: .75rem;
+    background-size: 1rem;
+    padding: .9rem 1.25rem .9rem 2.5rem;
+    font-size: .95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .SearchSection-module-scss-module__1Dck_G__searchInput {
+    background-position: .75rem;
+    background-size: 1rem;
+    padding: .9rem 1.25rem .9rem 2.5rem;
+    font-size: .95rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .SearchSection-module-scss-module__1Dck_G__searchInput {
+    background-position: .6rem;
+    background-size: .9rem;
+    padding: .8rem 1rem .8rem 2rem;
+    font-size: .9rem;
+  }
+}
+
+.SearchSection-module-scss-module__1Dck_G__error {
+  color: #dc3545;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: .9rem;
+}
+
+@media (max-width: 600px) {
+  .SearchSection-module-scss-module__1Dck_G__error {
+    font-size: .9rem;
+  }
+}
+
+.SearchSection-module-scss-module__1Dck_G__light .SearchSection-module-scss-module__1Dck_G__error {
+  color: #dc3545;
+}
+
+.SearchSection-module-scss-module__1Dck_G__dark .SearchSection-module-scss-module__1Dck_G__error {
+  color: #ff6b6b;
+}
+
+/*# sourceMappingURL=src_components_SearchSection_SearchSection_module_scss_module_css_e59ae46c._.single.css.map*/

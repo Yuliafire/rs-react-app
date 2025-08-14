@@ -61,5 +61,9 @@
     "refreshing": "Обновление...",
     "error": "Ошибка",
     "unknownError": "Произошла неизвестная ошибка"
+  },
+  "Results": {
+    "error": "Ошибка: {message}",
+    "noResults": "Персонажи не найдены"
   }
 }

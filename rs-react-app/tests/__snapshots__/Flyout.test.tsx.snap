@@ -1,7 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`handleDownloadCSV > generates CSV content correctly 1`] = `
-"ID,Name,Species,Status,Details URL
-1,"Rick",Human,Alive,https://example.com
-2,"Morty",Human,Alive,https://example.com"
-`;

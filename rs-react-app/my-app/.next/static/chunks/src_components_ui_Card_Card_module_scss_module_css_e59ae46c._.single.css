@@ -1,0 +1,190 @@
+/* [project]/src/components/ui/Card/Card.module.scss.module.css [app-client] (css) */
+.Card-module-scss-module__DHQCkG__light {
+  --background-light: #fff;
+  --text: #333;
+  --primary: skyblue;
+  --primary-hover: #0056b3;
+  --border: #ccc;
+  --card-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, .1);
+  --btn-hover: #41ead4;
+  --btn-hover-color: grey;
+  --background-layout: #38c;
+}
+
+.Card-module-scss-module__DHQCkG__dark {
+  --background: #1a1a1a;
+  --text: #e0e0e0;
+  --primary: white;
+  --primary-hover: #38c;
+  --border: #444;
+  --card-bg: #2c2c2c;
+  --shadow: rgba(0, 0, 0, .3);
+  --btn-hover: #41ead4;
+  --btn-hover-color: #333;
+  --background-layout: #333;
+}
+
+.Card-module-scss-module__DHQCkG__card {
+  background: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow);
+  color: var(--text);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  line-height: 1.6;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.Card-module-scss-module__DHQCkG__card:hover {
+  box-shadow: 0 4px 12px var(--shadow);
+  transform: translateY(-5px);
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardImage {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardImage img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: transform .5s;
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardImage:hover img {
+  transform: scale(1.05);
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__card {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__card {
+    font-size: .9rem;
+  }
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__statusBadge {
+  font-size: .9rem;
+}
+
+@media (max-width: 600px) {
+  .Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__statusBadge {
+    font-size: .9rem;
+  }
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__statusBadge {
+  color: var(--text);
+  border-radius: 10px;
+  padding: 3px 10px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  font-weight: bold;
+  line-height: 1.6;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__statusBadge.Card-module-scss-module__DHQCkG__alive {
+  background-color: var(--status-alive);
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__statusBadge.Card-module-scss-module__DHQCkG__dead {
+  background-color: var(--status-dead);
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__statusBadge.Card-module-scss-module__DHQCkG__unknown {
+  background-color: var(--status-unknown);
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent {
+  padding: 15px;
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent h3 {
+  color: var(--text);
+  margin: 0 0 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent h3 {
+    font-size: 1.25rem;
+  }
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent .Card-module-scss-module__DHQCkG__details p {
+  margin: .5rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent .Card-module-scss-module__DHQCkG__details p strong {
+  color: var(--secondary-text);
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent .Card-module-scss-module__DHQCkG__details p {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent .Card-module-scss-module__DHQCkG__details p {
+    font-size: .9rem;
+  }
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent .Card-module-scss-module__DHQCkG__episodes {
+  color: var(--primary);
+  text-align: right;
+  margin-top: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__cardContent .Card-module-scss-module__DHQCkG__episodes {
+    font-size: .9rem;
+  }
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__flag {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  accent-color: var(--primary);
+  background: none;
+  border-radius: 4px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  line-height: 1.6;
+  transition: all .2s;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__flag:hover {
+  background-color: var(--btn-hover);
+}
+
+.Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__flag {
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .Card-module-scss-module__DHQCkG__card .Card-module-scss-module__DHQCkG__flag {
+    font-size: .9rem;
+  }
+}
+
+/*# sourceMappingURL=src_components_ui_Card_Card_module_scss_module_css_e59ae46c._.single.css.map*/

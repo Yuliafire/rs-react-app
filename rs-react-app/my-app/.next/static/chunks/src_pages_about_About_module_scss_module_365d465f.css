@@ -1,0 +1,149 @@
+/* [project]/src/pages/about/About.module.scss.module.css [app-client] (css) */
+.About-module-scss-module__vDsVia__light {
+  --background-light: #fff;
+  --text: #333;
+  --primary: skyblue;
+  --primary-hover: #0056b3;
+  --border: #ccc;
+  --card-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, .1);
+  --btn-hover: #41ead4;
+  --btn-hover-color: grey;
+  --background-layout: #38c;
+}
+
+.About-module-scss-module__vDsVia__dark {
+  --background: #1a1a1a;
+  --text: #e0e0e0;
+  --primary: white;
+  --primary-hover: #38c;
+  --border: #444;
+  --card-bg: #2c2c2c;
+  --shadow: rgba(0, 0, 0, .3);
+  --btn-hover: #41ead4;
+  --btn-hover-color: #333;
+  --background-layout: #333;
+}
+
+.About-module-scss-module__vDsVia__about {
+  background: var(--background-light);
+  color: var(--text);
+  min-height: calc(100vh - 110px);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+.About-module-scss-module__vDsVia__about.About-module-scss-module__vDsVia__light {
+  background: var(--background-light);
+}
+
+.About-module-scss-module__vDsVia__about.About-module-scss-module__vDsVia__dark {
+  background: var(--background);
+}
+
+@media (max-width: 600px) {
+  .About-module-scss-module__vDsVia__about {
+    padding: 1rem;
+  }
+}
+
+.About-module-scss-module__vDsVia__about h2 {
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+@media (max-width: 600px) {
+  .About-module-scss-module__vDsVia__about h2 {
+    font-size: 1.5rem;
+  }
+}
+
+.About-module-scss-module__vDsVia__about section {
+  background: var(--card-bg);
+  box-shadow: 0 2px 4px var(--shadow);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.About-module-scss-module__vDsVia__about section:hover {
+  box-shadow: 0 4px 8px var(--shadow);
+  transform: translateY(-2px);
+}
+
+.About-module-scss-module__vDsVia__about h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .About-module-scss-module__vDsVia__about h3 {
+    font-size: 1.25rem;
+  }
+}
+
+.About-module-scss-module__vDsVia__about p {
+  color: var(--text);
+  margin: 0 0 1rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .About-module-scss-module__vDsVia__about p {
+    font-size: .9rem;
+  }
+}
+
+.About-module-scss-module__vDsVia__about a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all .3s;
+}
+
+.About-module-scss-module__vDsVia__about a:hover, .About-module-scss-module__vDsVia__about a:focus {
+  color: var(--primary-hover);
+  font-weight: 600;
+}
+
+.About-module-scss-module__vDsVia__about a:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.About-module-scss-module__vDsVia__about .About-module-scss-module__vDsVia__backLink {
+  color: var(--primary);
+  border-radius: 4px;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 2rem;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color .2s, color .2s;
+  display: inline-flex;
+}
+
+@media (max-width: 600px) {
+  .About-module-scss-module__vDsVia__about .About-module-scss-module__vDsVia__backLink {
+    font-size: .9rem;
+  }
+}
+
+.About-module-scss-module__vDsVia__about .About-module-scss-module__vDsVia__backLink:hover, .About-module-scss-module__vDsVia__about .About-module-scss-module__vDsVia__backLink:focus {
+  background-color: rgba(var(--primary), .1);
+  color: var(--primary-hover);
+}
+
+.About-module-scss-module__vDsVia__about .About-module-scss-module__vDsVia__backLink:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/*# sourceMappingURL=src_pages_about_About_module_scss_module_365d465f.css.map*/

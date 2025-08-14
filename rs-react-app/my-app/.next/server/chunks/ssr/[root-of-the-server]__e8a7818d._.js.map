@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 23, "column": 0}, "map": {"version":3,"sources":["file:///Users/yuliapodgurskaia/rs-react-app/rs-react-app/my-app/src/app/%5Blocale%5D/page.tsx"],"sourcesContent":["// 'use server';\n\n// import { About } from \"@/pages/about/About\";\n\n// export default async function AboutPage() {\n//     return <About/>;\n// }"],"names":[],"mappings":"AAAA,gBAAgB;AAEhB,+CAA+C;AAE/C,8CAA8C;AAC9C,uBAAuB;AACvB,IAAI","debugId":null}}]
+}

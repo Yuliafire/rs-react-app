@@ -1,7 +1,9 @@
 'use server';
 
-import { About } from "@/pages/about/About";
+import Home from "@/pages/home/Home";
 
-export default async function AboutPage() {
-    return <About/>;
+
+export default  async function Page() {
+    return  <Home />
+    
 }

@@ -1,3 +1,5 @@
+ 'use theme';
+
 import { useContext } from 'react';
 import {
   ThemeContext,

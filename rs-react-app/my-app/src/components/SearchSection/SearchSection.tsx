@@ -10,72 +10,92 @@ import { useTranslations } from 'next-intl';
 import styles from './SearchSection.module.scss';
 import Button from '../ui/Button/Button';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { useStorage } from '../../shared/services/storageService';
 
 interface SearchSectionProps {
   onSearchResults: (
-    results: CharacterDetails[],
+    results: CharacterDetails[] | null,
     searchTerm: string,
     totalPages: number
   ) => void;
+  onLoadingChange: (loading: boolean) => void;
+  onErrorChange: (error: string | null) => void;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
-export default function SearchSection({ onSearchResults }: SearchSectionProps) {
+export default function SearchSection({
+  onSearchResults,
+  onLoadingChange,
+  onErrorChange,
+  currentPage,
+  setCurrentPage,
+}: SearchSectionProps) {
   const { theme } = useTheme();
   const t = useTranslations('Search');
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const { getSearchTerm, saveSearchTerm } = useStorage();
 
-  // Initialize search term from URL or localStorage
-  const initialQuery =
-    searchParams?.get('query') ||
-    (typeof window !== 'undefined' ? localStorage.getItem('searchTerm') || '' : '');
+  const initialQuery = getSearchTerm() || '';
   const [inputValue, setInputValue] = useState(initialQuery);
 
-  // RTK Query hook for searching characters
   const { data, isLoading, error, refetch } = useSearchCharactersQuery({
     query: inputValue.trim(),
-    page: 1,
+    page: currentPage,
   });
 
-  // Debounced search handler to update URL and localStorage
   const handleSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams || '');
-    params.set('page', '1');
+    console.log('handleSearch triggered with term:', term, 'page:', currentPage);
+    const params = new URLSearchParams(searchParams || undefined);
+    params.set('page', currentPage.toString());
     if (term) {
       params.set('query', term);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('searchTerm', term);
-      }
+      saveSearchTerm(term);
     } else {
       params.delete('query');
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('searchTerm');
-      }
+      saveSearchTerm('');
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 
-  // Update parent component with search results
+  // Trigger re-fetch when currentPage changes
   useEffect(() => {
-    if (data) {
-      onSearchResults(data.data || [], inputValue.trim(), data.info?.pages || 1);
+    handleSearch(inputValue.trim());
+  }, [currentPage, handleSearch, inputValue]);
+
+  useEffect(() => {
+    onLoadingChange(isLoading);
+  }, [isLoading, onLoadingChange]);
+
+  useEffect(() => {
+    if (error) {
+      const errorMessage = isFetchBaseQueryError(error) && error.data
+        ? typeof error.data === 'object' && 'message' in error.data
+          ? String(error.data.message)
+          : t('unknownError')
+        : t('unknownError');
+      onErrorChange(errorMessage);
+    } else {
+      onErrorChange(null);
     }
+  }, [error, onErrorChange, t]);
+
+  useEffect(() => {
+    onSearchResults(data ? data.data || null : null, inputValue.trim(), data?.info?.pages || 1);
   }, [data, inputValue, onSearchResults]);
 
-  // Handle input changes with debounced search
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     handleSearch(e.target.value.trim());
   };
 
-  // Handle form submission to refetch data
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     refetch();
   };
 
-  // Handle manual refresh
   const handleForceRefresh = () => {
     refetch();
   };
