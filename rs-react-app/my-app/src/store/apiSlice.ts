@@ -16,13 +16,25 @@ interface ServiceResponse<T> {
 export const rickAndMortyApi = createApi({
   reducerPath: 'rickAndMortyApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_PATH || 'https://rickandmortyapi.com/api',
+    baseUrl:
+      process.env.NEXT_PUBLIC_BASE_PATH || 'https://rickandmortyapi.com/api',
   }),
   tagTypes: ['Character', 'CharacterList'],
   endpoints: (builder) => ({
-    fetchInitialCharacters: builder.query<ServiceResponse<CharacterDetails[]>, number>({
+    fetchInitialCharacters: builder.query<
+      ServiceResponse<CharacterDetails[]>,
+      number
+    >({
       query: (page: number) => `/character?page=${page}`,
-      transformResponse: (response: { results: CharacterDetails[]; info: { count: number; pages: number; next: string | null; prev: string | null } }) => ({
+      transformResponse: (response: {
+        results: CharacterDetails[];
+        info: {
+          count: number;
+          pages: number;
+          next: string | null;
+          prev: string | null;
+        };
+      }) => ({
         status: 'success',
         data: response.results,
         info: response.info,
@@ -32,14 +44,27 @@ export const rickAndMortyApi = createApi({
         data: [] as CharacterDetails[],
         message: getErrorMessage(error.status as number),
       }),
-      providesTags: (_result, _error, page) => [{ type: 'CharacterList', id: `PAGE_${page}` }],
+      providesTags: (_result, _error, page) => [
+        { type: 'CharacterList', id: `PAGE_${page}` },
+      ],
     }),
-    searchCharacters: builder.query<ServiceResponse<CharacterDetails[]>, { query: string; page: number }>({
+    searchCharacters: builder.query<
+      ServiceResponse<CharacterDetails[]>,
+      { query: string; page: number }
+    >({
       query: ({ query, page }) =>
         query.trim()
           ? `/character/?name=${encodeURIComponent(query.trim())}&page=${page}`
           : `/character?page=${page}`,
-      transformResponse: (response: { results: CharacterDetails[]; info: { count: number; pages: number; next: string | null; prev: string | null } }) => ({
+      transformResponse: (response: {
+        results: CharacterDetails[];
+        info: {
+          count: number;
+          pages: number;
+          next: string | null;
+          prev: string | null;
+        };
+      }) => ({
         status: 'success',
         data: response.results,
         info: response.info,
@@ -64,7 +89,9 @@ export const rickAndMortyApi = createApi({
         data: {} as CharacterDetails,
         message: getErrorMessage(error.status as number),
       }),
-      providesTags: (_result, _error, id) => [{ type: 'Character', id: `CHAR_${id}` }],
+      providesTags: (_result, _error, id) => [
+        { type: 'Character', id: `CHAR_${id}` },
+      ],
     }),
   }),
 });

@@ -1467,7 +1467,7 @@ function createModuleHot(moduleId, hotData) {
     }
 }
 globalThis.TURBOPACK_CHUNK_UPDATE_LISTENERS ??= [];
-/* eslint-disable @typescript-eslint/no-unused-vars */ /// <reference path="../shared/runtime-utils.ts" />
+  /// <reference path="../shared/runtime-utils.ts" />
 /// A 'base' utilities to support runtime can have externals.
 /// Currently this is for node.js / edge runtime both.
 /// If a fn requires node.js specific behavior, it should be placed in `node-external-utils` instead.

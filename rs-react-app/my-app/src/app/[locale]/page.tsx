@@ -1,9 +1,7 @@
 'use server';
 
-import Home from "@/pages/home/Home";
+import Home from '@/pages/home/Home';
 
-
-export default  async function Page() {
-    return  <Home />
-    
+export default async function Page() {
+  return <Home />;
 }

@@ -46,7 +46,12 @@ export default function SearchSection({
   });
 
   const handleSearch = useDebouncedCallback((term: string) => {
-    console.log('handleSearch triggered with term:', term, 'page:', currentPage);
+    console.log(
+      'handleSearch triggered with term:',
+      term,
+      'page:',
+      currentPage
+    );
     const params = new URLSearchParams(searchParams || undefined);
     params.set('page', currentPage.toString());
     if (term) {
@@ -69,11 +74,12 @@ export default function SearchSection({
 
   useEffect(() => {
     if (error) {
-      const errorMessage = isFetchBaseQueryError(error) && error.data
-        ? typeof error.data === 'object' && 'message' in error.data
-          ? String(error.data.message)
-          : t('unknownError')
-        : t('unknownError');
+      const errorMessage =
+        isFetchBaseQueryError(error) && error.data
+          ? typeof error.data === 'object' && 'message' in error.data
+            ? String(error.data.message)
+            : t('unknownError')
+          : t('unknownError');
       onErrorChange(errorMessage);
     } else {
       onErrorChange(null);
@@ -81,7 +87,11 @@ export default function SearchSection({
   }, [error, onErrorChange, t]);
 
   useEffect(() => {
-    onSearchResults(data ? data.data || null : null, inputValue.trim(), data?.info?.pages || 1);
+    onSearchResults(
+      data ? data.data || null : null,
+      inputValue.trim(),
+      data?.info?.pages || 1
+    );
   }, [data, inputValue, onSearchResults]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +133,13 @@ export default function SearchSection({
       </form>
       {error && (
         <div className={styles.error}>
-          {t('error')}: {isFetchBaseQueryError(error) && error.data && typeof error.data === 'object' && 'message' in error.data ? String(error.data.message) : t('unknownError')}
+          {t('error')}:{' '}
+          {isFetchBaseQueryError(error) &&
+          error.data &&
+          typeof error.data === 'object' &&
+          'message' in error.data
+            ? String(error.data.message)
+            : t('unknownError')}
         </div>
       )}
       {data && (

@@ -31,7 +31,7 @@ export const About = () => {
       <section className={styles.courseInfo}>
         <h3>{t('courseInfo')}</h3>
         <p>
-         {t('description')} {' '}
+          {t('description')}{' '}
           <Link
             href="https://rs.school/courses/reactjs"
             target="_blank"

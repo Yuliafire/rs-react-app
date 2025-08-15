@@ -36,9 +36,13 @@ const CharacterDetailsComponent = ({ id, onClose }: CharacterDetailsProps) => {
   }
 
   if (error || !character || isNaN(characterId || 0)) {
-    const errorMessage = isFetchBaseQueryError(error) && error.data && typeof error.data === 'object' && 'message' in error.data
-      ? String(error.data.message)
-      : t('notFound');
+    const errorMessage =
+      isFetchBaseQueryError(error) &&
+      error.data &&
+      typeof error.data === 'object' &&
+      'message' in error.data
+        ? String(error.data.message)
+        : t('notFound');
     return (
       <div className={styles.details}>
         <p>{errorMessage}</p>
@@ -73,7 +77,8 @@ const CharacterDetailsComponent = ({ id, onClose }: CharacterDetailsProps) => {
         <strong>{t('origin')}:</strong> {character.origin?.name || t('unknown')}
       </p>
       <p>
-        <strong>{t('location')}:</strong> {character.location?.name || t('unknown')}
+        <strong>{t('location')}:</strong>{' '}
+        {character.location?.name || t('unknown')}
       </p>
       <button onClick={onClose} aria-label={t('close')}>
         {t('close')}
@@ -92,5 +97,3 @@ function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
 }
 
 export default CharacterDetailsComponent;
-
-

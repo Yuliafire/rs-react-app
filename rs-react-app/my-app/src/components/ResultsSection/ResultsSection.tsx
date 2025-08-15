@@ -17,7 +17,7 @@ export default function ResultsSection({
   loading,
   error,
   results,
-  onCardClick
+  onCardClick,
 }: ResultsSectionProps) {
   const { theme } = useTheme();
   const t = useTranslations('Results');
@@ -53,7 +53,7 @@ export default function ResultsSection({
           <Loader minDisplayTime={2000} data-testid="loader" />
         </div>
       ) : (
-        <CardList characters={results} onCardClick={onCardClick}  />
+        <CardList characters={results} onCardClick={onCardClick} />
       )}
     </section>
   );

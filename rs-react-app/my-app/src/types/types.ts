@@ -59,8 +59,6 @@ export interface ApiResponse {
   results: CharacterDetails[];
 }
 
-
-
 export interface Messages {
   Header: {
     logo: string;
@@ -80,39 +78,38 @@ export interface Messages {
   //   errorText: string;
   // };
 
-
-  ResultItem :{
-  id: number;
-  name: string;
-  description: string;
-  url: string;
-  gender: string;
-  image?: string;
-  status?: string;
-  species?: string;
-  origin?: string;
-  episodeCount?: number;
-}
+  ResultItem: {
+    id: number;
+    name: string;
+    description: string;
+    url: string;
+    gender: string;
+    image?: string;
+    status?: string;
+    species?: string;
+    origin?: string;
+    episodeCount?: number;
+  };
 
   CharacterDetails: {
     id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: {
     name: string;
+    status: string;
+    species: string;
+    type: string;
+    gender: string;
+    origin: {
+      name: string;
+      url: string;
+    };
+    location: {
+      name: string;
+      url: string;
+    };
+    image: string;
+    episode: string[];
     url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
+    created: string;
   };
   PopupChoseElements: {
     title: string;

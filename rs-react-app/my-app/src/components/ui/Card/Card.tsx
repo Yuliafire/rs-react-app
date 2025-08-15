@@ -59,7 +59,9 @@ const Card = ({ character, onCardClick }: CardProps) => {
       data-testid="card"
       role="button"
       tabIndex={0}
-      aria-label={t('viewDetailsAria', { name: character.name || t('unknown') })}
+      aria-label={t('viewDetailsAria', {
+        name: character.name || t('unknown'),
+      })}
     >
       <div className={styles.cardImage}>
         {character.image ? (
@@ -85,8 +87,7 @@ const Card = ({ character, onCardClick }: CardProps) => {
         <h3>{character.name || t('unknown')}</h3>
         <div className={styles.details}>
           <p>
-            <strong>{t('species')}:</strong>{' '}
-            {character.species || t('unknown')}
+            <strong>{t('species')}:</strong> {character.species || t('unknown')}
           </p>
           <p>
             <strong>{t('gender')}:</strong> {character.gender || t('unknown')}

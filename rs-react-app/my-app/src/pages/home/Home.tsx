@@ -23,10 +23,16 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastSearchTerm, setLastSearchTerm] = useState<string>('');
-  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(null);
+  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(
+    null
+  );
 
   const handleSearchResults = useCallback(
-    (searchResults: CharacterDetails[] | null, searchTerm: string, pages: number) => {
+    (
+      searchResults: CharacterDetails[] | null,
+      searchTerm: string,
+      pages: number
+    ) => {
       setResults(searchResults || []);
       setTotalPages(pages);
       if (searchTerm && pages > 0 && searchTerm !== lastSearchTerm) {
@@ -37,11 +43,14 @@ const Home = () => {
     [lastSearchTerm]
   );
 
-  const handlePageChange = useCallback((newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  }, [totalPages]);
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      if (newPage >= 1 && newPage <= totalPages) {
+        setCurrentPage(newPage);
+      }
+    },
+    [totalPages]
+  );
 
   const handleCardClick = useCallback((cardId: number) => {
     console.log('Card clicked:', cardId);
@@ -85,7 +94,11 @@ const Home = () => {
       {selectedCharacterId && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
-            <CharacterDetailsComponent id={selectedCharacterId} page={currentPage.toString()} onClose={handleCloseDetails} />
+            <CharacterDetailsComponent
+              id={selectedCharacterId}
+              page={currentPage.toString()}
+              onClose={handleCloseDetails}
+            />
           </div>
         </div>
       )}
@@ -94,4 +107,3 @@ const Home = () => {
 };
 
 export default Home;
-

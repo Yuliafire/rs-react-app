@@ -46,7 +46,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-            > 
+            >
               <GitHubIcon />
             </Link>
             <Link

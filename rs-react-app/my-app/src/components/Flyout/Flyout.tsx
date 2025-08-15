@@ -41,8 +41,8 @@ const Flyout = () => {
   return (
     <div className={`${styles.flyout} ${styles[theme]}`}>
       <div className={styles.title}>
-         {t('selected')} {selectedCharacters.length} 
-       </div>
+        {t('selected')} {selectedCharacters.length}
+      </div>
       <div className={styles.buttonContainer}>
         <button
           className={styles.button}

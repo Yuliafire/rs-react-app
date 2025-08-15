@@ -10,7 +10,7 @@
     "format:fix": "prettier --write .",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "prepare": "cd .. && husky rs-react-app/.husky",
+    "prepare": "cd .. && husky my-app/.husky",
     "postinstall": "node -e \"fs.writeFileSync('.husky/pre-commit', '#!/bin/sh\\ncd $(dirname $0)/../ && npm run lint && npm run format:fix\\n', { mode: 0o755 })\""
   },
   "dependencies": {

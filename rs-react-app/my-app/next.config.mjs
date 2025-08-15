@@ -8,9 +8,6 @@ const nextConfig = {
   images: {
     domains: ['rickandmortyapi.com'],
   },
-
-
-
 };
 
 const withNextIntl = createNextIntlPlugin();

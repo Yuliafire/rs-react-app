@@ -1,765 +1,1237 @@
-(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push([typeof document === "object" ? document.currentScript : undefined, {
+(globalThis.TURBOPACK = globalThis.TURBOPACK || []).push([
+  typeof document === 'object' ? document.currentScript : undefined,
+  {
+    '[project]/src/context/themeContext.ts [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
 
-"[project]/src/context/themeContext.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "ThemeContext": ()=>ThemeContext
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-'use theme';
-;
-const ThemeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(undefined);
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/context/ThemeProvider.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "ThemeProvider": ()=>ThemeProvider
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/context/themeContext.ts [app-client] (ecmascript)");
-;
-var _s = __turbopack_context__.k.signature();
-'use client';
-;
-;
-const ThemeProvider = (param)=>{
-    let { children } = param;
-    _s();
-    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('dark');
-    const toggleTheme = ()=>{
-        setTheme((prev)=>prev === 'light' ? 'dark' : 'light');
-    };
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "ThemeProvider.useEffect": ()=>{
-            document.documentElement.setAttribute('data-theme', theme);
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          ThemeContext: () => ThemeContext,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)'
+          );
+        ('use theme');
+        const ThemeContext = /*#__PURE__*/ (0,
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+          'createContext'
+        ])(undefined);
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
         }
-    }["ThemeProvider.useEffect"], [
-        theme
-    ]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeContext"].Provider, {
-        value: {
-            theme,
-            toggleTheme
-        },
-        "data-testid": "theme-provider",
-        children: children
-    }, void 0, false, {
-        fileName: "[project]/src/context/ThemeProvider.tsx",
-        lineNumber: 18,
-        columnNumber: 5
-    }, ("TURBOPACK compile-time value", void 0));
-};
-_s(ThemeProvider, "D0ekClnfIGVExrH5c3Ka+aWcxxE=");
-_c = ThemeProvider;
-var _c;
-__turbopack_context__.k.register(_c, "ThemeProvider");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/store/charactersSlice.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
+      }
+    },
+    '[project]/src/context/ThemeProvider.tsx [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
 
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "addCharacter": ()=>addCharacter,
-    "default": ()=>__TURBOPACK__default__export__,
-    "removeAllCharacters": ()=>removeAllCharacters,
-    "removeCharacter": ()=>removeCharacter
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [app-client] (ecmascript) <locals>");
-;
-const initialState = {
-    selectedCharacters: []
-};
-const charactersSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createSlice"])({
-    name: 'characters',
-    initialState,
-    reducers: {
-        addCharacter (state, action) {
-            const itemExists = state.selectedCharacters.some((item)=>item.id === action.payload.id);
-            if (!itemExists) {
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          ThemeProvider: () => ThemeProvider,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/context/themeContext.ts [app-client] (ecmascript)'
+          );
+        var _s = __turbopack_context__.k.signature();
+        ('use client');
+        const ThemeProvider = (param) => {
+          let { children } = param;
+          _s();
+          const [theme, setTheme] = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'useState'
+          ])('dark');
+          const toggleTheme = () => {
+            setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+          };
+          (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'useEffect'
+          ])(
+            {
+              'ThemeProvider.useEffect': () => {
+                document.documentElement.setAttribute('data-theme', theme);
+              },
+            }['ThemeProvider.useEffect'],
+            [theme]
+          );
+          return /*#__PURE__*/ (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'jsxDEV'
+          ])(
+            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'ThemeContext'
+            ].Provider,
+            {
+              value: {
+                theme,
+                toggleTheme,
+              },
+              'data-testid': 'theme-provider',
+              children: children,
+            },
+            void 0,
+            false,
+            {
+              fileName: '[project]/src/context/ThemeProvider.tsx',
+              lineNumber: 18,
+              columnNumber: 5,
+            },
+            ('TURBOPACK compile-time value', void 0)
+          );
+        };
+        _s(ThemeProvider, 'D0ekClnfIGVExrH5c3Ka+aWcxxE=');
+        _c = ThemeProvider;
+        var _c;
+        __turbopack_context__.k.register(_c, 'ThemeProvider');
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+    '[project]/src/store/charactersSlice.ts [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
+
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          addCharacter: () => addCharacter,
+          default: () => __TURBOPACK__default__export__,
+          removeAllCharacters: () => removeAllCharacters,
+          removeCharacter: () => removeCharacter,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [app-client] (ecmascript) <locals>'
+          );
+        const initialState = {
+          selectedCharacters: [],
+        };
+        const charactersSlice = (0,
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__[
+          'createSlice'
+        ])({
+          name: 'characters',
+          initialState,
+          reducers: {
+            addCharacter(state, action) {
+              const itemExists = state.selectedCharacters.some(
+                (item) => item.id === action.payload.id
+              );
+              if (!itemExists) {
                 state.selectedCharacters.push(action.payload);
-            }
-        },
-        removeCharacter (state, action) {
-            state.selectedCharacters = state.selectedCharacters.filter((item)=>item.id !== action.payload);
-        },
-        removeAllCharacters (state) {
-            state.selectedCharacters = [];
+              }
+            },
+            removeCharacter(state, action) {
+              state.selectedCharacters = state.selectedCharacters.filter(
+                (item) => item.id !== action.payload
+              );
+            },
+            removeAllCharacters(state) {
+              state.selectedCharacters = [];
+            },
+          },
+        });
+        const { addCharacter, removeCharacter, removeAllCharacters } =
+          charactersSlice.actions;
+        const __TURBOPACK__default__export__ = charactersSlice.reducer;
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
         }
-    }
-});
-const { addCharacter, removeCharacter, removeAllCharacters } = charactersSlice.actions;
-const __TURBOPACK__default__export__ = charactersSlice.reducer;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/store/apiSlice.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
+      }
+    },
+    '[project]/src/store/apiSlice.ts [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
 
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-// import {
-//   createApi,
-//   fetchBaseQuery,
-//   type BaseQueryApi,
-//   type BaseQueryExtraOptions,
-//   type FetchBaseQueryError,
-// } from '@reduxjs/toolkit/query/react';
-// import type { CharacterDetails } from '../../src/types/types';
-// import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-// interface ServiceResponse<T> {
-//   name: string;
-//   image: string | StaticImport;
-//   species: string;
-//   gender: string;
-//   origin: unknown;
-//   location: unknown;
-//   status: 'success' | 'error';
-//   data: T;
-//   message?: string;
-//   info?: {
-//     count: number;
-//     pages: number;
-//     next: string | null;
-//     prev: string | null;
-//   };
-// }
-// const baseUrl = process.env.NEXT_PUBLIC_BASE_PATH;
-// const customBaseQuery = async (
-//   args: string,
-//   api: BaseQueryApi,
-//   extraOptions: BaseQueryExtraOptions<ReturnType<typeof fetchBaseQuery>>
-// ) => {
-//   const maxRetries = 1;
-//   const retryDelay = 500;
-//   let retryCount = 0;
-//   while (retryCount <= maxRetries) {
-//     try {
-//       await new Promise((resolve) =>
-//         setTimeout(resolve, retryDelay * retryCount)
-//       );
-//       const response = await fetchBaseQuery({ baseUrl })(
-//         args,
-//         api,
-//         extraOptions
-//       );
-//       if (
-//         response.error &&
-//         'status' in response.error &&
-//         typeof response.error.status === 'number' &&
-//         response.error.status === 429 &&
-//         retryCount < maxRetries
-//       ) {
-//         console.log(
-//           `Attempt ${retryCount + 1}/${maxRetries + 1} for ${args}, retrying due to 429`
-//         );
-//         retryCount++;
-//         continue;
-//       }
-//       return response;
-//     } catch (error: unknown) {
-//       if (retryCount < maxRetries) {
-//         console.log(
-//           `Attempt ${retryCount + 1}/${maxRetries + 1} for ${args}, retrying due to error`
-//         );
-//         retryCount++;
-//         continue;
-//       }
-//       let message: string;
-//       if (error instanceof Error) {
-//         message = error.message;
-//       } else {
-//         message = 'Network error';
-//       }
-//       return { error: { status: 'FETCH_ERROR', data: { message } } };
-//     }
-//   }
-//   return { error: { status: 500, data: { message: 'Max retries exceeded' } } };
-// };
-// export const rickAndMortyApi = createApi({
-//   reducerPath: 'rickAndMortyApi',
-//   baseQuery: customBaseQuery,
-//   tagTypes: ['Character', 'CharacterList'],
-//   endpoints: (builder) => ({
-//     fetchInitialCharacters: builder.query<
-//       ServiceResponse<CharacterDetails[]>,
-//       number
-//     >({
-//       query: (page: number) => `/character?page=${page}`,
-//       transformResponse: (response: unknown) => {
-//         if (typeof response !== 'object' || response === null)
-//           throw new Error('Invalid response format');
-//         const resp = response as {
-//           results: CharacterDetails[];
-//           info?: {
-//             count: number;
-//             pages: number;
-//             next: string | null;
-//             prev: string | null;
-//           };
-//         };
-//         return {
-//           status: 'success',
-//           data: resp.results,
-//           ...(resp.info && { info: resp.info }),
-//         };
-//       },
-//       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
-//         const status =
-//           typeof baseQueryReturnValue.status === 'number'
-//             ? baseQueryReturnValue.status
-//             : 500;
-//         return {
-//           status: 'error',
-//           data: [] as CharacterDetails[],
-//           message: getErrorMessage(status),
-//         };
-//       },
-//       providesTags: (_result, _error, page) => [
-//         { type: 'CharacterList', id: `PAGE_${page}` },
-//       ],
-//     }),
-//     searchCharacters: builder.query<
-//       ServiceResponse<CharacterDetails[]>,
-//       { query: string; page: number }
-//     >({
-//       query: ({ query, page }: { query: string; page: number }) =>
-//         query.trim()
-//           ? `/character/?name=${encodeURIComponent(query.trim())}&page=${page}`
-//           : `/character?page=${page}`,
-//       transformResponse: (response: unknown) => {
-//         if (typeof response !== 'object' || response === null)
-//           throw new Error('Invalid response format');
-//         const resp = response as {
-//           results: CharacterDetails[];
-//           info?: {
-//             count: number;
-//             pages: number;
-//             next: string | null;
-//             prev: string | null;
-//           };
-//         };
-//         return {
-//           status: 'success',
-//           data: resp.results,
-//           ...(resp.info && { info: resp.info }),
-//         };
-//       },
-//       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
-//         const status =
-//           typeof baseQueryReturnValue.status === 'number'
-//             ? baseQueryReturnValue.status
-//             : 500;
-//         return {
-//           status: 'error',
-//           data: [] as CharacterDetails[],
-//           message: getErrorMessage(status),
-//         };
-//       },
-//       providesTags: (_result, _error, { query, page }) => [
-//         { type: 'CharacterList', id: `SEARCH_${query}_PAGE_${page}` },
-//       ],
-//     }),
-//     getCharacter: builder.query<ServiceResponse<CharacterDetails>, number>({
-//       query: (id: number) => `/character/${id}`,
-//       transformResponse: (response: unknown) => {
-//         if (typeof response !== 'object' || response === null)
-//           throw new Error('Invalid response format');
-//         const resp = response as CharacterDetails;
-//         return {
-//           status: 'success',
-//           data: resp,
-//         };
-//       },
-//       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
-//         const status =
-//           typeof baseQueryReturnValue.status === 'number'
-//             ? baseQueryReturnValue.status
-//             : 500;
-//         return {
-//           status: 'error',
-//           data: {} as CharacterDetails,
-//           message: getErrorMessage(status),
-//         };
-//       },
-//       providesTags: (_result, _error, id) => [
-//         { type: 'Character', id: `CHAR_${id}` },
-//       ],
-//     }),
-//   }),
-// });
-// const getErrorMessage = (status: number): string => {
-//   const messages: Record<number, string> = {
-//     400: 'Invalid search parameters',
-//     404: 'No characters found',
-//     429: 'Too many requests, retrying once...',
-//     500: 'Server error',
-//   };
-//   return messages[status] || `API error (${status})`;
-// };
-// export const {
-//   useFetchInitialCharactersQuery,
-//   useSearchCharactersQuery,
-//   useGetCharacterQuery,
-// } = rickAndMortyApi;
-// export default rickAndMortyApi;
-__turbopack_context__.s({
-    "default": ()=>__TURBOPACK__default__export__,
-    "rickAndMortyApi": ()=>rickAndMortyApi,
-    "useFetchInitialCharactersQuery": ()=>useFetchInitialCharactersQuery,
-    "useGetCharacterQuery": ()=>useGetCharacterQuery,
-    "useSearchCharactersQuery": ()=>useSearchCharactersQuery
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$react$2f$rtk$2d$query$2d$react$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@reduxjs/toolkit/dist/query/react/rtk-query-react.modern.mjs [app-client] (ecmascript) <locals>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$rtk$2d$query$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@reduxjs/toolkit/dist/query/rtk-query.modern.mjs [app-client] (ecmascript)");
-;
-const rickAndMortyApi = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$react$2f$rtk$2d$query$2d$react$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createApi"])({
-    reducerPath: 'rickAndMortyApi',
-    baseQuery: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$rtk$2d$query$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fetchBaseQuery"])({
-        baseUrl: ("TURBOPACK compile-time value", "https://rickandmortyapi.com/api") || 'https://rickandmortyapi.com/api'
-    }),
-    tagTypes: [
-        'Character',
-        'CharacterList'
-    ],
-    endpoints: (builder)=>({
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        // import {
+        //   createApi,
+        //   fetchBaseQuery,
+        //   type BaseQueryApi,
+        //   type BaseQueryExtraOptions,
+        //   type FetchBaseQueryError,
+        // } from '@reduxjs/toolkit/query/react';
+        // import type { CharacterDetails } from '../../src/types/types';
+        // import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+        // interface ServiceResponse<T> {
+        //   name: string;
+        //   image: string | StaticImport;
+        //   species: string;
+        //   gender: string;
+        //   origin: unknown;
+        //   location: unknown;
+        //   status: 'success' | 'error';
+        //   data: T;
+        //   message?: string;
+        //   info?: {
+        //     count: number;
+        //     pages: number;
+        //     next: string | null;
+        //     prev: string | null;
+        //   };
+        // }
+        // const baseUrl = process.env.NEXT_PUBLIC_BASE_PATH;
+        // const customBaseQuery = async (
+        //   args: string,
+        //   api: BaseQueryApi,
+        //   extraOptions: BaseQueryExtraOptions<ReturnType<typeof fetchBaseQuery>>
+        // ) => {
+        //   const maxRetries = 1;
+        //   const retryDelay = 500;
+        //   let retryCount = 0;
+        //   while (retryCount <= maxRetries) {
+        //     try {
+        //       await new Promise((resolve) =>
+        //         setTimeout(resolve, retryDelay * retryCount)
+        //       );
+        //       const response = await fetchBaseQuery({ baseUrl })(
+        //         args,
+        //         api,
+        //         extraOptions
+        //       );
+        //       if (
+        //         response.error &&
+        //         'status' in response.error &&
+        //         typeof response.error.status === 'number' &&
+        //         response.error.status === 429 &&
+        //         retryCount < maxRetries
+        //       ) {
+        //         console.log(
+        //           `Attempt ${retryCount + 1}/${maxRetries + 1} for ${args}, retrying due to 429`
+        //         );
+        //         retryCount++;
+        //         continue;
+        //       }
+        //       return response;
+        //     } catch (error: unknown) {
+        //       if (retryCount < maxRetries) {
+        //         console.log(
+        //           `Attempt ${retryCount + 1}/${maxRetries + 1} for ${args}, retrying due to error`
+        //         );
+        //         retryCount++;
+        //         continue;
+        //       }
+        //       let message: string;
+        //       if (error instanceof Error) {
+        //         message = error.message;
+        //       } else {
+        //         message = 'Network error';
+        //       }
+        //       return { error: { status: 'FETCH_ERROR', data: { message } } };
+        //     }
+        //   }
+        //   return { error: { status: 500, data: { message: 'Max retries exceeded' } } };
+        // };
+        // export const rickAndMortyApi = createApi({
+        //   reducerPath: 'rickAndMortyApi',
+        //   baseQuery: customBaseQuery,
+        //   tagTypes: ['Character', 'CharacterList'],
+        //   endpoints: (builder) => ({
+        //     fetchInitialCharacters: builder.query<
+        //       ServiceResponse<CharacterDetails[]>,
+        //       number
+        //     >({
+        //       query: (page: number) => `/character?page=${page}`,
+        //       transformResponse: (response: unknown) => {
+        //         if (typeof response !== 'object' || response === null)
+        //           throw new Error('Invalid response format');
+        //         const resp = response as {
+        //           results: CharacterDetails[];
+        //           info?: {
+        //             count: number;
+        //             pages: number;
+        //             next: string | null;
+        //             prev: string | null;
+        //           };
+        //         };
+        //         return {
+        //           status: 'success',
+        //           data: resp.results,
+        //           ...(resp.info && { info: resp.info }),
+        //         };
+        //       },
+        //       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
+        //         const status =
+        //           typeof baseQueryReturnValue.status === 'number'
+        //             ? baseQueryReturnValue.status
+        //             : 500;
+        //         return {
+        //           status: 'error',
+        //           data: [] as CharacterDetails[],
+        //           message: getErrorMessage(status),
+        //         };
+        //       },
+        //       providesTags: (_result, _error, page) => [
+        //         { type: 'CharacterList', id: `PAGE_${page}` },
+        //       ],
+        //     }),
+        //     searchCharacters: builder.query<
+        //       ServiceResponse<CharacterDetails[]>,
+        //       { query: string; page: number }
+        //     >({
+        //       query: ({ query, page }: { query: string; page: number }) =>
+        //         query.trim()
+        //           ? `/character/?name=${encodeURIComponent(query.trim())}&page=${page}`
+        //           : `/character?page=${page}`,
+        //       transformResponse: (response: unknown) => {
+        //         if (typeof response !== 'object' || response === null)
+        //           throw new Error('Invalid response format');
+        //         const resp = response as {
+        //           results: CharacterDetails[];
+        //           info?: {
+        //             count: number;
+        //             pages: number;
+        //             next: string | null;
+        //             prev: string | null;
+        //           };
+        //         };
+        //         return {
+        //           status: 'success',
+        //           data: resp.results,
+        //           ...(resp.info && { info: resp.info }),
+        //         };
+        //       },
+        //       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
+        //         const status =
+        //           typeof baseQueryReturnValue.status === 'number'
+        //             ? baseQueryReturnValue.status
+        //             : 500;
+        //         return {
+        //           status: 'error',
+        //           data: [] as CharacterDetails[],
+        //           message: getErrorMessage(status),
+        //         };
+        //       },
+        //       providesTags: (_result, _error, { query, page }) => [
+        //         { type: 'CharacterList', id: `SEARCH_${query}_PAGE_${page}` },
+        //       ],
+        //     }),
+        //     getCharacter: builder.query<ServiceResponse<CharacterDetails>, number>({
+        //       query: (id: number) => `/character/${id}`,
+        //       transformResponse: (response: unknown) => {
+        //         if (typeof response !== 'object' || response === null)
+        //           throw new Error('Invalid response format');
+        //         const resp = response as CharacterDetails;
+        //         return {
+        //           status: 'success',
+        //           data: resp,
+        //         };
+        //       },
+        //       transformErrorResponse: (baseQueryReturnValue: FetchBaseQueryError) => {
+        //         const status =
+        //           typeof baseQueryReturnValue.status === 'number'
+        //             ? baseQueryReturnValue.status
+        //             : 500;
+        //         return {
+        //           status: 'error',
+        //           data: {} as CharacterDetails,
+        //           message: getErrorMessage(status),
+        //         };
+        //       },
+        //       providesTags: (_result, _error, id) => [
+        //         { type: 'Character', id: `CHAR_${id}` },
+        //       ],
+        //     }),
+        //   }),
+        // });
+        // const getErrorMessage = (status: number): string => {
+        //   const messages: Record<number, string> = {
+        //     400: 'Invalid search parameters',
+        //     404: 'No characters found',
+        //     429: 'Too many requests, retrying once...',
+        //     500: 'Server error',
+        //   };
+        //   return messages[status] || `API error (${status})`;
+        // };
+        // export const {
+        //   useFetchInitialCharactersQuery,
+        //   useSearchCharactersQuery,
+        //   useGetCharacterQuery,
+        // } = rickAndMortyApi;
+        // export default rickAndMortyApi;
+        __turbopack_context__.s({
+          default: () => __TURBOPACK__default__export__,
+          rickAndMortyApi: () => rickAndMortyApi,
+          useFetchInitialCharactersQuery: () => useFetchInitialCharactersQuery,
+          useGetCharacterQuery: () => useGetCharacterQuery,
+          useSearchCharactersQuery: () => useSearchCharactersQuery,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          /*#__PURE__*/ __turbopack_context__.i(
+            '[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$react$2f$rtk$2d$query$2d$react$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/@reduxjs/toolkit/dist/query/react/rtk-query-react.modern.mjs [app-client] (ecmascript) <locals>'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$rtk$2d$query$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/@reduxjs/toolkit/dist/query/rtk-query.modern.mjs [app-client] (ecmascript)'
+          );
+        const rickAndMortyApi = (0,
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$react$2f$rtk$2d$query$2d$react$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__[
+          'createApi'
+        ])({
+          reducerPath: 'rickAndMortyApi',
+          baseQuery: (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$query$2f$rtk$2d$query$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'fetchBaseQuery'
+          ])({
+            baseUrl:
+              ('TURBOPACK compile-time value',
+              'https://rickandmortyapi.com/api') ||
+              'https://rickandmortyapi.com/api',
+          }),
+          tagTypes: ['Character', 'CharacterList'],
+          endpoints: (builder) => ({
             fetchInitialCharacters: builder.query({
-                query: (page)=>"/character?page=".concat(page),
-                transformResponse: (response)=>({
-                        status: 'success',
-                        data: response.results,
-                        info: response.info
-                    }),
-                transformErrorResponse: (error)=>({
-                        status: 'error',
-                        data: [],
-                        message: getErrorMessage(error.status)
-                    }),
-                providesTags: (_result, _error, page)=>[
-                        {
-                            type: 'CharacterList',
-                            id: "PAGE_".concat(page)
-                        }
-                    ]
+              query: (page) => '/character?page='.concat(page),
+              transformResponse: (response) => ({
+                status: 'success',
+                data: response.results,
+                info: response.info,
+              }),
+              transformErrorResponse: (error) => ({
+                status: 'error',
+                data: [],
+                message: getErrorMessage(error.status),
+              }),
+              providesTags: (_result, _error, page) => [
+                {
+                  type: 'CharacterList',
+                  id: 'PAGE_'.concat(page),
+                },
+              ],
             }),
             searchCharacters: builder.query({
-                query: (param)=>{
-                    let { query, page } = param;
-                    return query.trim() ? "/character/?name=".concat(encodeURIComponent(query.trim()), "&page=").concat(page) : "/character?page=".concat(page);
-                },
-                transformResponse: (response)=>({
-                        status: 'success',
-                        data: response.results,
-                        info: response.info
-                    }),
-                transformErrorResponse: (error)=>({
-                        status: 'error',
-                        data: [],
-                        message: getErrorMessage(error.status)
-                    }),
-                providesTags: (_result, _error, param)=>{
-                    let { query, page } = param;
-                    return [
-                        {
-                            type: 'CharacterList',
-                            id: "SEARCH_".concat(query, "_PAGE_").concat(page)
-                        }
-                    ];
-                }
+              query: (param) => {
+                let { query, page } = param;
+                return query.trim()
+                  ? '/character/?name='
+                      .concat(encodeURIComponent(query.trim()), '&page=')
+                      .concat(page)
+                  : '/character?page='.concat(page);
+              },
+              transformResponse: (response) => ({
+                status: 'success',
+                data: response.results,
+                info: response.info,
+              }),
+              transformErrorResponse: (error) => ({
+                status: 'error',
+                data: [],
+                message: getErrorMessage(error.status),
+              }),
+              providesTags: (_result, _error, param) => {
+                let { query, page } = param;
+                return [
+                  {
+                    type: 'CharacterList',
+                    id: 'SEARCH_'.concat(query, '_PAGE_').concat(page),
+                  },
+                ];
+              },
             }),
             getCharacter: builder.query({
-                query: (id)=>"/character/".concat(id),
-                transformResponse: (response)=>({
-                        status: 'success',
-                        data: response
-                    }),
-                transformErrorResponse: (error)=>({
-                        status: 'error',
-                        data: {},
-                        message: getErrorMessage(error.status)
-                    }),
-                providesTags: (_result, _error, id)=>[
-                        {
-                            type: 'Character',
-                            id: "CHAR_".concat(id)
-                        }
-                    ]
-            })
-        })
-});
-const getErrorMessage = (status)=>{
-    const messages = {
-        400: 'Invalid search parameters',
-        404: 'No characters found',
-        429: 'Too many requests, please try again later',
-        500: 'Server error'
-    };
-    return messages[status] || "API error (".concat(status, ")");
-};
-const { useFetchInitialCharactersQuery, useSearchCharactersQuery, useGetCharacterQuery } = rickAndMortyApi;
-const __TURBOPACK__default__export__ = rickAndMortyApi;
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/store/store.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "store": ()=>store
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [app-client] (ecmascript) <locals>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$charactersSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/charactersSlice.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/apiSlice.ts [app-client] (ecmascript)");
-;
-;
-;
-const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["configureStore"])({
-    reducer: {
-        characters: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$charactersSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"],
-        [__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].reducerPath]: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].reducer
-    },
-    middleware: (getDefaultMiddleware)=>getDefaultMiddleware().concat(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].middleware)
-});
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/shared/hooks/useTheme.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "useTheme": ()=>useTheme
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/context/themeContext.ts [app-client] (ecmascript)");
-var _s = __turbopack_context__.k.signature();
-;
-;
-const useTheme = ()=>{
-    _s();
-    const context = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeContext"]);
-    if (!context) {
-        throw new Error('useTheme must be used within a ThemeProvider');
-    }
-    return context;
-};
-_s(useTheme, "b9L3QQ+jgeyIrH0NfHrJ8nn7VMU=");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/components/ui/NavBar/NavBar.module.scss.module.css [app-client] (css module)": ((__turbopack_context__) => {
-
-__turbopack_context__.v({
-  "dark": "NavBar-module-scss-module__r2fG6a__dark",
-  "light": "NavBar-module-scss-module__r2fG6a__light",
-  "link": "NavBar-module-scss-module__r2fG6a__link",
-  "list": "NavBar-module-scss-module__r2fG6a__list",
-  "listItem": "NavBar-module-scss-module__r2fG6a__listItem",
-  "nav": "NavBar-module-scss-module__r2fG6a__nav",
-});
-}),
-"[project]/src/i18n/routing.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "routing": ()=>routing
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$routing$2f$defineRouting$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__defineRouting$3e$__ = __turbopack_context__.i("[project]/node_modules/next-intl/dist/esm/development/routing/defineRouting.js [app-client] (ecmascript) <export default as defineRouting>");
-;
-const routing = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$routing$2f$defineRouting$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__defineRouting$3e$__["defineRouting"])({
-    locales: [
-        'en',
-        'ru'
-    ],
-    defaultLocale: 'en'
-});
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/i18n/navigation.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "Link": ()=>Link,
-    "getPathname": ()=>getPathname,
-    "redirect": ()=>redirect,
-    "usePathname": ()=>usePathname,
-    "useRouter": ()=>useRouter
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$navigation$2f$react$2d$client$2f$createNavigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__createNavigation$3e$__ = __turbopack_context__.i("[project]/node_modules/next-intl/dist/esm/development/navigation/react-client/createNavigation.js [app-client] (ecmascript) <export default as createNavigation>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$routing$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/i18n/routing.ts [app-client] (ecmascript)");
-;
-;
-const { Link, redirect, usePathname, useRouter, getPathname } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$navigation$2f$react$2d$client$2f$createNavigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__createNavigation$3e$__["createNavigation"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$routing$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["routing"]);
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/components/ui/NavBar/NavBar.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "NavBar": ()=>NavBar
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ = __turbopack_context__.i("[project]/src/components/ui/NavBar/NavBar.module.scss.module.css [app-client] (css module)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/shared/hooks/useTheme.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/next-intl/dist/esm/development/react-client/index.js [app-client] (ecmascript) <locals>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/use-intl/dist/esm/development/react.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/i18n/navigation.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
-;
-var _s = __turbopack_context__.k.signature();
-'use client';
-;
-;
-;
-;
-;
-const NavBar = ()=>{
-    _s();
-    const { theme, toggleTheme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"])();
-    const t = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["useTranslations"])('NavBar');
-    const locale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
-    const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
-    const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"])();
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    const changeTheme = ()=>{
-        toggleTheme();
-    };
-    const switchLanguage = ()=>{
-        const queryParams = searchParams ? Object.fromEntries(searchParams.entries()) : {};
-        router.replace({
-            pathname,
-            query: queryParams
-        }, {
-            locale: locale === 'en' ? 'ru' : 'en'
+              query: (id) => '/character/'.concat(id),
+              transformResponse: (response) => ({
+                status: 'success',
+                data: response,
+              }),
+              transformErrorResponse: (error) => ({
+                status: 'error',
+                data: {},
+                message: getErrorMessage(error.status),
+              }),
+              providesTags: (_result, _error, id) => [
+                {
+                  type: 'Character',
+                  id: 'CHAR_'.concat(id),
+                },
+              ],
+            }),
+          }),
         });
-    };
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-        className: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].nav, " ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"][theme]),
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-            className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].list,
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].listItem,
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Link"], {
-                        className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].link,
-                        href: "/about",
-                        children: [
-                            ' ',
-                            ' ',
-                            t('AboutLink')
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/ui/NavBar/NavBar.tsx",
-                        lineNumber: 35,
-                        columnNumber: 17
-                    }, ("TURBOPACK compile-time value", void 0))
-                }, void 0, false, {
-                    fileName: "[project]/src/components/ui/NavBar/NavBar.tsx",
-                    lineNumber: 34,
-                    columnNumber: 13
-                }, ("TURBOPACK compile-time value", void 0)),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].listItem,
-                    onClick: changeTheme,
-                    children: theme === 'light' ? t('darkTheme') : t('lightTheme')
-                }, void 0, false, {
-                    fileName: "[project]/src/components/ui/NavBar/NavBar.tsx",
-                    lineNumber: 42,
-                    columnNumber: 13
-                }, ("TURBOPACK compile-time value", void 0)),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                    className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].listItem,
-                    onClick: switchLanguage,
-                    children: t('switchLanguage')
-                }, void 0, false, {
-                    fileName: "[project]/src/components/ui/NavBar/NavBar.tsx",
-                    lineNumber: 45,
-                    columnNumber: 13
-                }, ("TURBOPACK compile-time value", void 0))
+        const getErrorMessage = (status) => {
+          const messages = {
+            400: 'Invalid search parameters',
+            404: 'No characters found',
+            429: 'Too many requests, please try again later',
+            500: 'Server error',
+          };
+          return messages[status] || 'API error ('.concat(status, ')');
+        };
+        const {
+          useFetchInitialCharactersQuery,
+          useSearchCharactersQuery,
+          useGetCharacterQuery,
+        } = rickAndMortyApi;
+        const __TURBOPACK__default__export__ = rickAndMortyApi;
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+    '[project]/src/store/store.ts [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
+
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          store: () => store,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [app-client] (ecmascript) <locals>'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$charactersSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/store/charactersSlice.ts [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/store/apiSlice.ts [app-client] (ecmascript)'
+          );
+        const store = (0,
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__[
+          'configureStore'
+        ])({
+          reducer: {
+            characters:
+              __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$charactersSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                'default'
+              ],
+            [__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'default'
+            ].reducerPath]:
+              __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                'default'
+              ].reducer,
+          },
+          middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware().concat(
+              __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$apiSlice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                'default'
+              ].middleware
+            ),
+        });
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+    '[project]/src/shared/hooks/useTheme.ts [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
+
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          useTheme: () => useTheme,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/context/themeContext.ts [app-client] (ecmascript)'
+          );
+        var _s = __turbopack_context__.k.signature();
+        const useTheme = () => {
+          _s();
+          const context = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'useContext'
+          ])(
+            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$themeContext$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'ThemeContext'
             ]
-        }, void 0, true, {
-            fileName: "[project]/src/components/ui/NavBar/NavBar.tsx",
-            lineNumber: 33,
-            columnNumber: 9
-        }, ("TURBOPACK compile-time value", void 0))
-    }, void 0, false, {
-        fileName: "[project]/src/components/ui/NavBar/NavBar.tsx",
-        lineNumber: 32,
-        columnNumber: 5
-    }, ("TURBOPACK compile-time value", void 0));
-};
-_s(NavBar, "Nqioq4Y8QqxY6rP7Yzmlpz/PH0Y=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["useTranslations"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
-    ];
-});
-_c = NavBar;
-var _c;
-__turbopack_context__.k.register(_c, "NavBar");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/components/layout/Header/Header.module.scss.module.css [app-client] (css module)": ((__turbopack_context__) => {
+          );
+          if (!context) {
+            throw new Error('useTheme must be used within a ThemeProvider');
+          }
+          return context;
+        };
+        _s(useTheme, 'b9L3QQ+jgeyIrH0NfHrJ8nn7VMU=');
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+    '[project]/src/components/ui/NavBar/NavBar.module.scss.module.css [app-client] (css module)':
+      (__turbopack_context__) => {
+        __turbopack_context__.v({
+          dark: 'NavBar-module-scss-module__r2fG6a__dark',
+          light: 'NavBar-module-scss-module__r2fG6a__light',
+          link: 'NavBar-module-scss-module__r2fG6a__link',
+          list: 'NavBar-module-scss-module__r2fG6a__list',
+          listItem: 'NavBar-module-scss-module__r2fG6a__listItem',
+          nav: 'NavBar-module-scss-module__r2fG6a__nav',
+        });
+      },
+    '[project]/src/i18n/routing.ts [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
 
-__turbopack_context__.v({
-  "dark": "Header-module-scss-module__klcqGG__dark",
-  "header": "Header-module-scss-module__klcqGG__header",
-  "light": "Header-module-scss-module__klcqGG__light",
-});
-}),
-"[project]/src/components/layout/Header/Header.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          routing: () => routing,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$routing$2f$defineRouting$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__defineRouting$3e$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next-intl/dist/esm/development/routing/defineRouting.js [app-client] (ecmascript) <export default as defineRouting>'
+          );
+        const routing = (0,
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$routing$2f$defineRouting$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__defineRouting$3e$__[
+          'defineRouting'
+        ])({
+          locales: ['en', 'ru'],
+          defaultLocale: 'en',
+        });
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+    '[project]/src/i18n/navigation.ts [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
 
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "default": ()=>__TURBOPACK__default__export__
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/shared/hooks/useTheme.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/next-intl/dist/esm/development/react-client/index.js [app-client] (ecmascript) <locals>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/NavBar/NavBar.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ = __turbopack_context__.i("[project]/src/components/layout/Header/Header.module.scss.module.css [app-client] (css module)");
-;
-var _s = __turbopack_context__.k.signature();
-'use client';
-;
-;
-;
-;
-const Header = ()=>{
-    _s();
-    const { theme } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"])();
-    const t = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["useTranslations"])('Header');
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-        className: "".concat(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].header, " ").concat(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"][theme]),
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                children: t('title')
-            }, void 0, false, {
-                fileName: "[project]/src/components/layout/Header/Header.tsx",
-                lineNumber: 13,
-                columnNumber: 7
-            }, ("TURBOPACK compile-time value", void 0)),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NavBar"], {}, void 0, false, {
-                fileName: "[project]/src/components/layout/Header/Header.tsx",
-                lineNumber: 14,
-                columnNumber: 7
-            }, ("TURBOPACK compile-time value", void 0))
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/layout/Header/Header.tsx",
-        lineNumber: 12,
-        columnNumber: 5
-    }, ("TURBOPACK compile-time value", void 0));
-};
-_s(Header, "kMKfwyYxvoVytIH729G6pij+eH8=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTheme"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["useTranslations"]
-    ];
-});
-_c = Header;
-const __TURBOPACK__default__export__ = Header;
-var _c;
-__turbopack_context__.k.register(_c, "Header");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-"[project]/src/app/ClientProviders.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          Link: () => Link,
+          getPathname: () => getPathname,
+          redirect: () => redirect,
+          usePathname: () => usePathname,
+          useRouter: () => useRouter,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$navigation$2f$react$2d$client$2f$createNavigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__createNavigation$3e$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next-intl/dist/esm/development/navigation/react-client/createNavigation.js [app-client] (ecmascript) <export default as createNavigation>'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$routing$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/i18n/routing.ts [app-client] (ecmascript)'
+          );
+        const { Link, redirect, usePathname, useRouter, getPathname } = (0,
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$navigation$2f$react$2d$client$2f$createNavigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__createNavigation$3e$__[
+          'createNavigation'
+        ])(
+          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$routing$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'routing'
+          ]
+        );
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+    '[project]/src/components/ui/NavBar/NavBar.tsx [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
 
-var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "default": ()=>ClientProviders
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/context/ThemeProvider.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-redux/dist/react-redux.mjs [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/store.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/layout/Header/Header.tsx [app-client] (ecmascript)");
-'use client';
-;
-;
-;
-;
-;
-;
-function ClientProviders(param) {
-    let { children } = param;
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Provider"], {
-        store: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["store"],
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeProvider"], {
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                    fileName: "[project]/src/app/ClientProviders.tsx",
-                    lineNumber: 19,
-                    columnNumber: 17
-                }, this),
-                children,
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                    fileName: "[project]/src/app/ClientProviders.tsx",
-                    lineNumber: 21,
-                    columnNumber: 17
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/app/ClientProviders.tsx",
-            lineNumber: 18,
-            columnNumber: 13
-        }, this)
-    }, void 0, false, {
-        fileName: "[project]/src/app/ClientProviders.tsx",
-        lineNumber: 17,
-        columnNumber: 9
-    }, this);
-}
-_c = ClientProviders;
-var _c;
-__turbopack_context__.k.register(_c, "ClientProviders");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
-}
-}}),
-}]);
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          NavBar: () => NavBar,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/components/ui/NavBar/NavBar.module.scss.module.css [app-client] (css module)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/shared/hooks/useTheme.ts [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next-intl/dist/esm/development/react-client/index.js [app-client] (ecmascript) <locals>'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/use-intl/dist/esm/development/react.js [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/i18n/navigation.ts [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next/navigation.js [app-client] (ecmascript)'
+          );
+        var _s = __turbopack_context__.k.signature();
+        ('use client');
+        const NavBar = () => {
+          _s();
+          const { theme, toggleTheme } = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'useTheme'
+          ])();
+          const t = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__[
+            'useTranslations'
+          ])('NavBar');
+          const locale = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'useLocale'
+          ])();
+          const pathname = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'usePathname'
+          ])();
+          const searchParams = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'useSearchParams'
+          ])();
+          const router = (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'useRouter'
+          ])();
+          const changeTheme = () => {
+            toggleTheme();
+          };
+          const switchLanguage = () => {
+            const queryParams = searchParams
+              ? Object.fromEntries(searchParams.entries())
+              : {};
+            router.replace(
+              {
+                pathname,
+                query: queryParams,
+              },
+              {
+                locale: locale === 'en' ? 'ru' : 'en',
+              }
+            );
+          };
+          return /*#__PURE__*/ (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'jsxDEV'
+          ])(
+            'nav',
+            {
+              className: ''
+                .concat(
+                  __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                    'default'
+                  ].nav,
+                  ' '
+                )
+                .concat(
+                  __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                    'default'
+                  ][theme]
+                ),
+              children: /*#__PURE__*/ (0,
+              __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                'jsxDEV'
+              ])(
+                'ul',
+                {
+                  className:
+                    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                      'default'
+                    ].list,
+                  children: [
+                    /*#__PURE__*/ (0,
+                    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                      'jsxDEV'
+                    ])(
+                      'li',
+                      {
+                        className:
+                          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                            'default'
+                          ].listItem,
+                        children: /*#__PURE__*/ (0,
+                        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                          'jsxDEV'
+                        ])(
+                          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                            'Link'
+                          ],
+                          {
+                            className:
+                              __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                                'default'
+                              ].link,
+                            href: '/about',
+                            children: [' ', ' ', t('AboutLink')],
+                          },
+                          void 0,
+                          true,
+                          {
+                            fileName:
+                              '[project]/src/components/ui/NavBar/NavBar.tsx',
+                            lineNumber: 35,
+                            columnNumber: 17,
+                          },
+                          ('TURBOPACK compile-time value', void 0)
+                        ),
+                      },
+                      void 0,
+                      false,
+                      {
+                        fileName:
+                          '[project]/src/components/ui/NavBar/NavBar.tsx',
+                        lineNumber: 34,
+                        columnNumber: 13,
+                      },
+                      ('TURBOPACK compile-time value', void 0)
+                    ),
+                    /*#__PURE__*/ (0,
+                    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                      'jsxDEV'
+                    ])(
+                      'li',
+                      {
+                        className:
+                          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                            'default'
+                          ].listItem,
+                        onClick: changeTheme,
+                        children:
+                          theme === 'light' ? t('darkTheme') : t('lightTheme'),
+                      },
+                      void 0,
+                      false,
+                      {
+                        fileName:
+                          '[project]/src/components/ui/NavBar/NavBar.tsx',
+                        lineNumber: 42,
+                        columnNumber: 13,
+                      },
+                      ('TURBOPACK compile-time value', void 0)
+                    ),
+                    /*#__PURE__*/ (0,
+                    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                      'jsxDEV'
+                    ])(
+                      'li',
+                      {
+                        className:
+                          __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                            'default'
+                          ].listItem,
+                        onClick: switchLanguage,
+                        children: t('switchLanguage'),
+                      },
+                      void 0,
+                      false,
+                      {
+                        fileName:
+                          '[project]/src/components/ui/NavBar/NavBar.tsx',
+                        lineNumber: 45,
+                        columnNumber: 13,
+                      },
+                      ('TURBOPACK compile-time value', void 0)
+                    ),
+                  ],
+                },
+                void 0,
+                true,
+                {
+                  fileName: '[project]/src/components/ui/NavBar/NavBar.tsx',
+                  lineNumber: 33,
+                  columnNumber: 9,
+                },
+                ('TURBOPACK compile-time value', void 0)
+              ),
+            },
+            void 0,
+            false,
+            {
+              fileName: '[project]/src/components/ui/NavBar/NavBar.tsx',
+              lineNumber: 32,
+              columnNumber: 5,
+            },
+            ('TURBOPACK compile-time value', void 0)
+          );
+        };
+        _s(NavBar, 'Nqioq4Y8QqxY6rP7Yzmlpz/PH0Y=', false, function () {
+          return [
+            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'useTheme'
+            ],
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__[
+              'useTranslations'
+            ],
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$use$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'useLocale'
+            ],
+            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'usePathname'
+            ],
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'useSearchParams'
+            ],
+            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$i18n$2f$navigation$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'useRouter'
+            ],
+          ];
+        });
+        _c = NavBar;
+        var _c;
+        __turbopack_context__.k.register(_c, 'NavBar');
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+    '[project]/src/components/layout/Header/Header.module.scss.module.css [app-client] (css module)':
+      (__turbopack_context__) => {
+        __turbopack_context__.v({
+          dark: 'Header-module-scss-module__klcqGG__dark',
+          header: 'Header-module-scss-module__klcqGG__header',
+          light: 'Header-module-scss-module__klcqGG__light',
+        });
+      },
+    '[project]/src/components/layout/Header/Header.tsx [app-client] (ecmascript)':
+      (__turbopack_context__) => {
+        'use strict';
+
+        var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+        {
+          __turbopack_context__.s({
+            default: () => __TURBOPACK__default__export__,
+          });
+          var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+            __turbopack_context__.i(
+              '[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)'
+            );
+          var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+            __turbopack_context__.i(
+              '[project]/src/shared/hooks/useTheme.ts [app-client] (ecmascript)'
+            );
+          var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ =
+            __turbopack_context__.i(
+              '[project]/node_modules/next-intl/dist/esm/development/react-client/index.js [app-client] (ecmascript) <locals>'
+            );
+          var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+            __turbopack_context__.i(
+              '[project]/src/components/ui/NavBar/NavBar.tsx [app-client] (ecmascript)'
+            );
+          var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__ =
+            __turbopack_context__.i(
+              '[project]/src/components/layout/Header/Header.module.scss.module.css [app-client] (css module)'
+            );
+          var _s = __turbopack_context__.k.signature();
+          ('use client');
+          const Header = () => {
+            _s();
+            const { theme } = (0,
+            __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'useTheme'
+            ])();
+            const t = (0,
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__[
+              'useTranslations'
+            ])('Header');
+            return /*#__PURE__*/ (0,
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'jsxDEV'
+            ])(
+              'header',
+              {
+                className: ''
+                  .concat(
+                    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                      'default'
+                    ].header,
+                    ' '
+                  )
+                  .concat(
+                    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__[
+                      'default'
+                    ][theme]
+                  ),
+                children: [
+                  /*#__PURE__*/ (0,
+                  __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                    'jsxDEV'
+                  ])(
+                    'h1',
+                    {
+                      children: t('title'),
+                    },
+                    void 0,
+                    false,
+                    {
+                      fileName:
+                        '[project]/src/components/layout/Header/Header.tsx',
+                      lineNumber: 13,
+                      columnNumber: 7,
+                    },
+                    ('TURBOPACK compile-time value', void 0)
+                  ),
+                  /*#__PURE__*/ (0,
+                  __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                    'jsxDEV'
+                  ])(
+                    __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$NavBar$2f$NavBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                      'NavBar'
+                    ],
+                    {},
+                    void 0,
+                    false,
+                    {
+                      fileName:
+                        '[project]/src/components/layout/Header/Header.tsx',
+                      lineNumber: 14,
+                      columnNumber: 7,
+                    },
+                    ('TURBOPACK compile-time value', void 0)
+                  ),
+                ],
+              },
+              void 0,
+              true,
+              {
+                fileName: '[project]/src/components/layout/Header/Header.tsx',
+                lineNumber: 12,
+                columnNumber: 5,
+              },
+              ('TURBOPACK compile-time value', void 0)
+            );
+          };
+          _s(Header, 'kMKfwyYxvoVytIH729G6pij+eH8=', false, function () {
+            return [
+              __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$hooks$2f$useTheme$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                'useTheme'
+              ],
+              __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$intl$2f$dist$2f$esm$2f$development$2f$react$2d$client$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__[
+                'useTranslations'
+              ],
+            ];
+          });
+          _c = Header;
+          const __TURBOPACK__default__export__ = Header;
+          var _c;
+          __turbopack_context__.k.register(_c, 'Header');
+          if (
+            typeof globalThis.$RefreshHelpers$ === 'object' &&
+            globalThis.$RefreshHelpers !== null
+          ) {
+            __turbopack_context__.k.registerExports(
+              module,
+              globalThis.$RefreshHelpers$
+            );
+          }
+        }
+      },
+    '[project]/src/app/ClientProviders.tsx [app-client] (ecmascript)': (
+      __turbopack_context__
+    ) => {
+      'use strict';
+
+      var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
+      {
+        __turbopack_context__.s({
+          default: () => ClientProviders,
+        });
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/context/ThemeProvider.tsx [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/node_modules/react-redux/dist/react-redux.mjs [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/store/store.ts [app-client] (ecmascript)'
+          );
+        var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ =
+          __turbopack_context__.i(
+            '[project]/src/components/layout/Header/Header.tsx [app-client] (ecmascript)'
+          );
+        ('use client');
+        function ClientProviders(param) {
+          let { children } = param;
+          return /*#__PURE__*/ (0,
+          __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+            'jsxDEV'
+          ])(
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$redux$2f$dist$2f$react$2d$redux$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+              'Provider'
+            ],
+            {
+              store:
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                  'store'
+                ],
+              children: /*#__PURE__*/ (0,
+              __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                'jsxDEV'
+              ])(
+                __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$ThemeProvider$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                  'ThemeProvider'
+                ],
+                {
+                  children: [
+                    /*#__PURE__*/ (0,
+                    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                      'jsxDEV'
+                    ])(
+                      __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                        'default'
+                      ],
+                      {},
+                      void 0,
+                      false,
+                      {
+                        fileName: '[project]/src/app/ClientProviders.tsx',
+                        lineNumber: 19,
+                        columnNumber: 17,
+                      },
+                      this
+                    ),
+                    children,
+                    /*#__PURE__*/ (0,
+                    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                      'jsxDEV'
+                    ])(
+                      __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$Header$2f$Header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__[
+                        'default'
+                      ],
+                      {},
+                      void 0,
+                      false,
+                      {
+                        fileName: '[project]/src/app/ClientProviders.tsx',
+                        lineNumber: 21,
+                        columnNumber: 17,
+                      },
+                      this
+                    ),
+                  ],
+                },
+                void 0,
+                true,
+                {
+                  fileName: '[project]/src/app/ClientProviders.tsx',
+                  lineNumber: 18,
+                  columnNumber: 13,
+                },
+                this
+              ),
+            },
+            void 0,
+            false,
+            {
+              fileName: '[project]/src/app/ClientProviders.tsx',
+              lineNumber: 17,
+              columnNumber: 9,
+            },
+            this
+          );
+        }
+        _c = ClientProviders;
+        var _c;
+        __turbopack_context__.k.register(_c, 'ClientProviders');
+        if (
+          typeof globalThis.$RefreshHelpers$ === 'object' &&
+          globalThis.$RefreshHelpers !== null
+        ) {
+          __turbopack_context__.k.registerExports(
+            module,
+            globalThis.$RefreshHelpers$
+          );
+        }
+      }
+    },
+  },
+]);
 
 //# sourceMappingURL=src_c278a66f._.js.map

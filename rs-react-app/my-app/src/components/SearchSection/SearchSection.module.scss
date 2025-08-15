@@ -27,12 +27,12 @@
     animation: gradientBorder 8s ease infinite;
   }
 
-   &.light {
+  &.light {
     background: var(--background-layout);
     color: var(--text);
   }
 
-    &.dark {
+  &.dark {
     background: var(--background-layout);
     color: var(--text);
     border-bottom: 2px solid var(--border);

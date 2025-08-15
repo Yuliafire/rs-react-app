@@ -2472,7 +2472,7 @@ function responseCookiesToRequestCookies(responseCookies) {
  * Currently, next/server/tracer is internal implementation only for tracking
  * next.js's implementation only with known span names defined here.
  **/ // eslint typescript has a bug with TS enums
-/* eslint-disable no-shadow */ __turbopack_context__.s({
+  __turbopack_context__.s({
     "AppRenderSpan": ()=>AppRenderSpan,
     "AppRouteRouteHandlersSpan": ()=>AppRouteRouteHandlersSpan,
     "BaseServerSpan": ()=>BaseServerSpan,
