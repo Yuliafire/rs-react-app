@@ -1,0 +1,75 @@
+@use '../../../assets/styles/globals' as *;
+
+.footer {
+  padding: 1.5rem 0;
+  background: var(--background-layout);
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+
+  [data-theme='dark'] & {
+    border-top-color: var(--border);
+    background: var(--card-bg);
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.copyright {
+  @include responsive-typography($font-size-xs, $font-size-xs);
+}
+
+.copyright {
+  margin: 0;
+  color: var(--text);
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.links a {
+  @include responsive-typography($font-size-xs, $font-size-xs);
+}
+
+.links a {
+  color: var(--text);
+  transition: color 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--primary-hover);
+  }
+}
+
+.links svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}

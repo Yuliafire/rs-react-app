@@ -1,0 +1,57 @@
+.light {
+  --background-light: #ffffff;
+  --text: #333;
+  --primary: skyblue;
+  --primary-hover: #0056b3;
+  --border: #cccccc;
+  --card-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --btn-hover: #41ead4;
+  --btn-hover-color: grey;
+  --background-layout: #3388cc;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --text: #e0e0e0;
+  --primary: white;
+  --primary-hover: #3388cc;
+  --border: #444444;
+  --card-bg: #2c2c2c;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --btn-hover: #41ead4;
+  --btn-hover-color: #333;
+  --background-layout: #333;
+}
+
+$font-size-xl: 2.5rem;
+$font-size-lg: 2rem;
+$font-size-md: 1.5rem;
+$font-size-sm: 1.25rem;
+$font-size-base: 1rem;
+$font-size-xs: 0.9rem;
+$breakpoint-mobile: 600px;
+
+@mixin responsive-typography($size-large, $size-small) {
+  font-size: $size-large;
+  @media (max-width: $breakpoint-mobile) {
+    font-size: $size-small;
+  }
+}
+
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+
+$transition-short: 0.2s ease;
+$transition-long: 0.3s ease;
+
+$shadow-normal: 0 2px 4px var(--shadow);
+$shadow-hover: 0 4px 8px var(--shadow);
+
+$font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$line-height: 1.6;

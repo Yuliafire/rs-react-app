@@ -1,0 +1,40 @@
+.button {
+  padding: 1rem 2rem;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  min-width: 7rem;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #0a0e17;
+
+  &[type='submit'],
+  &[type='button'] {
+    border-color: #0a0e17;
+
+    &:hover:not(:disabled) {
+      background: #42f5ef;
+
+      box-shadow: 0 0 15px #42f5ef;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    color: #0a0e17;
+  }
+}

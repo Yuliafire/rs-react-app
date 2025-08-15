@@ -1,0 +1,2 @@
+#!/bin/sh
+cd ./../ && npm run lint && npm run format:fix

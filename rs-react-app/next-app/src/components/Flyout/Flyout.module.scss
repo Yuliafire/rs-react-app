@@ -1,0 +1,102 @@
+@use '../../assets/styles/globals' as *;
+
+.flyout {
+  position: fixed;
+  bottom: $spacing-lg;
+  right: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background: var(--background-layout);
+  opacity: 80%;
+  color: var(--primary-hover);
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-normal;
+  border: 1px solid var(--border);
+  z-index: 100;
+  transition: all $transition-long;
+  width: 40%;
+  margin: 0 auto;
+  max-width: 80%;
+  font-family: $font-stack;
+  line-height: $line-height;
+
+  &.light {
+    background: var(--background-layout);
+    color: var(--primary-hover);
+    border: 1px solid var(--border);
+  }
+
+  &.dark {
+    background: var(--background-layout);
+    color: var(--primary-hover);
+    border: 1px solid var(--border);
+    box-shadow: $shadow-hover;
+  }
+
+  @media (max-width: 768px) {
+    bottom: $spacing-sm;
+    right: $spacing-sm;
+    padding: $spacing-sm;
+    max-width: 250px;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $spacing-xs;
+  }
+}
+
+.title {
+  text-align: center;
+  @include responsive-typography($font-size-sm, $font-size-xs);
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: $spacing-xs;
+  font-family: $font-stack;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: $spacing-sm;
+  width: 100%;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+}
+
+.button {
+  flex: 1;
+  padding: $spacing-xs $spacing-sm;
+  border: 1px solid var(--border);
+  border-radius: $border-radius-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-short;
+  background: var(--primary);
+  color: var(--background-dark);
+  font-family: $font-stack;
+  @include responsive-typography($font-size-base, $font-size-xs);
+
+  &:hover {
+    background: var(--btn-hover);
+    transform: translateY(-1px);
+    box-shadow: $shadow-hover;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  @media (max-width: 480px) {
+    padding: $spacing-xs;
+  }
+}
