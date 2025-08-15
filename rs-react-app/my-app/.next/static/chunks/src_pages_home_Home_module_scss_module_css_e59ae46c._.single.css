@@ -48,6 +48,13 @@
   box-shadow: 0 4px 8px var(--shadow);
 }
 
+@media (max-width: 1000px) {
+  .Home-module-scss-module__h_BGcG__home {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 600px) {
   .Home-module-scss-module__h_BGcG__home {
     flex-direction: column;

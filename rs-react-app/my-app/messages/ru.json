@@ -65,5 +65,14 @@
   "Results": {
     "error": "Ошибка: {message}",
     "noResults": "Персонажи не найдены"
+  },
+
+  "Flyout": {
+    "unselectAll": "Снять все",
+    "download": "Скачать",
+    "selected": "Выбранные элементы"
+  },
+  "Loader": {
+    "loading": "Загрузка..."
   }
 }

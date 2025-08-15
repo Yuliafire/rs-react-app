@@ -68,5 +68,15 @@
   "Results": {
     "error": "Error: {message}",
     "noResults": "No characters found"
+  },
+
+   "Flyout": {
+    "unselectAll": "Unselect all",
+    "download": "Download",
+    "selected": "Selected items"
+  },
+
+   "Loader": {
+    "loading": "Loading..."
   }
 }

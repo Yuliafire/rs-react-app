@@ -18,7 +18,6 @@ interface CardProps {
 const Card = ({ character, onCardClick }: CardProps) => {
   const t = useTranslations('Card');
   const { theme } = useTheme();
-  
   const params = useParams<{ page: string }>();
   const page = params?.page ?? '1';
   const dispatch = useDispatch<AppDispatch>();
@@ -43,7 +42,7 @@ const Card = ({ character, onCardClick }: CardProps) => {
         name: character.name,
         species: character.species,
         status: character.status,
-        detailsUrl: `/character/${page}/${character.id}`,
+        detailsUrl: `/characters/${character.id}/${page}`,
       };
       dispatch(addCharacter(payload));
     }

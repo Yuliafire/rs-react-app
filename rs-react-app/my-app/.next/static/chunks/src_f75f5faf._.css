@@ -703,6 +703,7 @@
   height: auto;
   color: var(--text);
   box-shadow: 0 2px 4px var(--shadow);
+  flex-direction: column;
   gap: 2rem;
   padding: 1rem;
   display: flex;

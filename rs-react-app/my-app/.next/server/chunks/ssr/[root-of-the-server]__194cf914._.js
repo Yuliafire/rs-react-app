@@ -13,6 +13,7 @@ var { m: module, e: exports } = __turbopack_context__;
 // import styles from './Home.module.scss';
 // import type { CharacterDetails } from '../../types/types';
 // import { useTheme } from '../../shared/hooks/useTheme';
+// import Flyout from "@/components/Flyout/Flyout";
 // const Home = () => {
 //   const { theme } = useTheme();
 //   const params = useParams() as { page: string };
@@ -23,15 +24,17 @@ var { m: module, e: exports } = __turbopack_context__;
 //   const [totalPages, setTotalPages] = useState(1);
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState<string | null>(null);
-//   const handleSearchResults = useCallback(
+//   const [lastSearchTerm, setLastSearchTerm] = useState<string>('');
+//    const handleSearchResults = useCallback(
 //     (searchResults: CharacterDetails[] | null, searchTerm: string, pages: number) => {
 //       setResults(searchResults || []);
 //       setTotalPages(pages);
-//       if (searchTerm && pages > 0) {
-//         setCurrentPage(1); // Reset to first page on new search
+//       if (searchTerm && pages > 0 && searchTerm !== lastSearchTerm) {
+//         setCurrentPage(1);
+//         setLastSearchTerm(searchTerm); 
 //       }
 //     },
-//     []
+//     [lastSearchTerm]
 //   );
 //   const handlePageChange = useCallback((newPage: number) => {
 //     if (newPage >= 1 && newPage <= totalPages) {
@@ -39,7 +42,6 @@ var { m: module, e: exports } = __turbopack_context__;
 //     }
 //   }, [totalPages]);
 //   const handleCardClick = useCallback((cardId: number) => {
-//     // Placeholder for card click navigation
 //     console.log('Card clicked:', cardId);
 //   }, []);
 //   return (
@@ -71,16 +73,18 @@ var { m: module, e: exports } = __turbopack_context__;
 //           )}
 //         </div>
 //       </div>
+//         <Flyout />
 //     </div>
 //   );
 // };
 // export default Home;
 // 'use client';
-// import { useState, useCallback, useEffect } from 'react';
-// import { useParams, useRouter } from 'next/navigation';
+// import { useState, useCallback } from 'react';
+// import { useParams, useRouter, useSearchParams } from 'next/navigation';
 // import SearchSection from '../../components/SearchSection/SearchSection';
 // import ResultsSection from '../../components/ResultsSection/ResultsSection';
 // import Pagination from '../../components/Pagination/Pagination';
+// import Flyout from '../../components/Flyout/Flyout';
 // import styles from './Home.module.scss';
 // import type { CharacterDetails } from '../../types/types';
 // import { useTheme } from '../../shared/hooks/useTheme';
@@ -89,41 +93,43 @@ var { m: module, e: exports } = __turbopack_context__;
 //   const params = useParams() as { page: string };
 //   const { page: pageParam } = params;
 //   const router = useRouter();
+//   const searchParams = useSearchParams();
 //   const initialPage = parseInt(pageParam, 10) || 1;
 //   const [currentPage, setCurrentPage] = useState(initialPage);
 //   const [results, setResults] = useState<CharacterDetails[]>([]);
 //   const [totalPages, setTotalPages] = useState(1);
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState<string | null>(null);
-//   const [lastSearchTerm, setLastSearchTerm] = useState<string>(''); // Track the last search term
+//   const [lastSearchTerm, setLastSearchTerm] = useState<string>('');
 //   const handleSearchResults = useCallback(
 //     (searchResults: CharacterDetails[] | null, searchTerm: string, pages: number) => {
 //       setResults(searchResults || []);
 //       setTotalPages(pages);
-//       // Only reset to page 1 if the search term is new
 //       if (searchTerm && pages > 0 && searchTerm !== lastSearchTerm) {
 //         setCurrentPage(1);
-//         setLastSearchTerm(searchTerm); // Update the last search term
+//         setLastSearchTerm(searchTerm);
 //       }
 //     },
 //     [lastSearchTerm]
 //   );
-//   const handlePageChange = useCallback((newPage: number) => {
-//     if (newPage >= 1 && newPage <= totalPages) {
-//       setCurrentPage(newPage);
-//       router.push(`/en/characters/${newPage}`); // Sync URL with page change
-//     }
-//   }, [totalPages, router]);
-//   const handleCardClick = useCallback((cardId: number) => {
-//     console.log('Card clicked:', cardId);
-//   }, []);
-//   // Sync currentPage with URL params
-//   useEffect(() => {
-//     const newPage = parseInt(pageParam, 10) || 1;
-//     if (newPage !== currentPage) {
-//       setCurrentPage(newPage);
-//     }
-//   }, [pageParam, currentPage]);
+//   const handlePageChange = useCallback(
+//     (newPage: number) => {
+//       if (newPage >= 1 && newPage <= totalPages) {
+//         setCurrentPage(newPage);
+//         const params = new URLSearchParams(searchParams || undefined);
+//         router.push(`/page/${newPage}${params.toString() ? `?${params.toString()}` : ''}`);
+//       }
+//     },
+//     [totalPages, router, searchParams]
+//   );
+//   const handleCardClick = useCallback(
+//     (cardId: number) => {
+//       console.log('Card clicked:', cardId);
+//       const params = new URLSearchParams(searchParams || undefined);
+//       router.push(`/characters/${cardId}/${currentPage}${params.toString() ? `?${params.toString()}` : ''}`);
+//     },
+//     [router, currentPage, searchParams]
+//   );
 //   return (
 //     <div className={`${styles.home} ${styles[theme]}`}>
 //       <div className={styles.container}>
@@ -153,6 +159,7 @@ var { m: module, e: exports } = __turbopack_context__;
 //           )}
 //         </div>
 //       </div>
+//       <Flyout />
 //     </div>
 //   );
 // };

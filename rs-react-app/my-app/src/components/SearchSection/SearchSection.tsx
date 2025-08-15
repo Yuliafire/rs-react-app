@@ -29,7 +29,6 @@ export default function SearchSection({
   onLoadingChange,
   onErrorChange,
   currentPage,
-  setCurrentPage,
 }: SearchSectionProps) {
   const { theme } = useTheme();
   const t = useTranslations('Search');
@@ -60,7 +59,6 @@ export default function SearchSection({
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 
-  // Trigger re-fetch when currentPage changes
   useEffect(() => {
     handleSearch(inputValue.trim());
   }, [currentPage, handleSearch, inputValue]);

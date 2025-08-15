@@ -1,23 +1,24 @@
 'use client';
+
 import Image from 'next/image';
-import { useParams, useSearchParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useGetCharacterQuery } from '../../store/apiSlice';
 import type { CharacterDetails } from '../../types/types';
 import Loader from '../ui/Loader/Loader';
 import styles from './CharacterDetails.module.scss';
 import { useTheme } from '../../shared/hooks/useTheme';
-import { useTranslations } from 'next-intl';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
-const CharacterDetailsComponent = () => {
+interface CharacterDetailsProps {
+  id: number;
+  page: string;
+  onClose: () => void;
+}
+
+const CharacterDetailsComponent = ({ id, onClose }: CharacterDetailsProps) => {
   const { theme } = useTheme();
   const t = useTranslations('CharacterDetails');
-  const params = useParams() as { id: string; page: string };
-  const { id, page } = params;
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const characterId = id ? parseInt(id, 10) : undefined;
+  const characterId = id ? parseInt(id.toString(), 10) : undefined;
   const {
     data: characterResponse,
     isLoading,
@@ -25,12 +26,6 @@ const CharacterDetailsComponent = () => {
   } = useGetCharacterQuery(characterId || 0);
 
   const character = characterResponse?.data as CharacterDetails | undefined;
-
-  const handleClose = () => {
-    const params = new URLSearchParams(searchParams || undefined);
-    const queryString = params.toString() ? `?${params.toString()}` : '';
-    router.push(`/characters/${page || '1'}${queryString}`, { scroll: false });
-  };
 
   if (isLoading) {
     return (
@@ -47,7 +42,7 @@ const CharacterDetailsComponent = () => {
     return (
       <div className={styles.details}>
         <p>{errorMessage}</p>
-        <button onClick={handleClose} aria-label={t('close')}>
+        <button onClick={onClose} aria-label={t('close')}>
           {t('close')}
         </button>
       </div>
@@ -80,7 +75,7 @@ const CharacterDetailsComponent = () => {
       <p>
         <strong>{t('location')}:</strong> {character.location?.name || t('unknown')}
       </p>
-      <button onClick={handleClose} aria-label={t('close')}>
+      <button onClick={onClose} aria-label={t('close')}>
         {t('close')}
       </button>
     </div>
@@ -97,6 +92,5 @@ function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
 }
 
 export default CharacterDetailsComponent;
-
 
 

@@ -1,117 +1,3 @@
-// @use '../../assets/styles/globals' as *;
-
-// .home {
-//   display: flex;
-//   gap: 2rem;
-//   padding: 1rem;
-//   height: auto;
-//   background: var(--background-dark);
-//   min-height: calc(100vh - 110px);
-
-//   [data-theme='dark'] & {
-//     background: var(--background);
-//   }
-
-//   @media (max-width: $breakpoint-mobile) {
-//     flex-direction: column;
-//     gap: $spacing-sm;
-//   }
-// }
-
-// .container {
-//   display: flex;
-//   flex-direction: column;
-//   flex: 1;
-// }
-
-// .searchSection {
-//   display: flex;
-//   flex-wrap: wrap;
-//   gap: $spacing-sm;
-//   margin-bottom: $spacing-sm;
-
-//   @media (max-width: $breakpoint-mobile) {
-//     order: 1;
-//   }
-// }
-
-// .searchResults {
-//   display: flex;
-//   flex-direction: column;
-//   gap: $spacing-sm;
-
-//   @media (max-width: $breakpoint-mobile) {
-//     order: 2;
-//   }
-// }
-
-// .resultsBox {
-//   display: grid;
-//   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-//   gap: 1rem;
-
-//   @media (max-width: $breakpoint-mobile) {
-//     order: 2;
-//     grid-template-columns: 1fr;
-//   }
-// }
-
-// .wrapper {
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .pagination {
-//   margin-top: $spacing-sm;
-//   display: flex;
-//   gap: $spacing-sm;
-//   justify-content: center;
-//   align-items: center;
-
-//   button {
-//     @include responsive-typography($font-size-base, $font-size-xs);
-//   }
-
-//   button {
-//     padding: $spacing-xs $spacing-sm;
-//     cursor: pointer;
-//     background: var(--primary);
-//     color: var(--background-dark);
-//     border: 1px solid var(--border);
-//     border-radius: $border-radius-sm;
-//     transition: $transition-short;
-//     font-weight: 500;
-
-//     &:hover:not(:disabled) {
-//       background: var(--primary-hover);
-//       transform: translateY(-1px);
-//     }
-
-//     &:active:not(:disabled) {
-//       transform: translateY(0);
-//     }
-
-//     &:disabled {
-//       cursor: not-allowed;
-//       opacity: 0.5;
-//     }
-//   }
-
-//   span {
-//     @include responsive-typography($font-size-base, $font-size-xs);
-//   }
-// }
-
-// .home:has(> [data-testid='details']) .container {
-//   flex-basis: 60%;
-// }
-
-// .home:not(:has(> [data-testid='details'])) .container {
-//   flex-basis: 100%;
-// }
-
-
-
 @use '../../assets/styles/globals' as *;
 
 .home {
@@ -134,6 +20,11 @@
     color: var(--text);
     border-bottom: 2px solid var(--border);
     box-shadow: $shadow-hover;
+  }
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    gap: $spacing-sm;
   }
 
   @media (max-width: $breakpoint-mobile) {

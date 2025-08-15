@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import SearchSection from '../../components/SearchSection/SearchSection';
 import ResultsSection from '../../components/ResultsSection/ResultsSection';
 import Pagination from '../../components/Pagination/Pagination';
+import Flyout from '../../components/Flyout/Flyout';
+import CharacterDetailsComponent from '../../components/CharacterDetails/CharacterDetails';
 import styles from './Home.module.scss';
 import type { CharacterDetails } from '../../types/types';
 import { useTheme } from '../../shared/hooks/useTheme';
@@ -21,15 +23,15 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastSearchTerm, setLastSearchTerm] = useState<string>('');
+  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(null);
 
-
-   const handleSearchResults = useCallback(
+  const handleSearchResults = useCallback(
     (searchResults: CharacterDetails[] | null, searchTerm: string, pages: number) => {
       setResults(searchResults || []);
       setTotalPages(pages);
       if (searchTerm && pages > 0 && searchTerm !== lastSearchTerm) {
         setCurrentPage(1);
-        setLastSearchTerm(searchTerm); 
+        setLastSearchTerm(searchTerm);
       }
     },
     [lastSearchTerm]
@@ -43,7 +45,12 @@ const Home = () => {
 
   const handleCardClick = useCallback((cardId: number) => {
     console.log('Card clicked:', cardId);
+    setSelectedCharacterId(cardId);
   }, []);
+
+  const handleCloseDetails = () => {
+    setSelectedCharacterId(null);
+  };
 
   return (
     <div className={`${styles.home} ${styles[theme]}`}>
@@ -74,6 +81,14 @@ const Home = () => {
           )}
         </div>
       </div>
+      <Flyout />
+      {selectedCharacterId && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <CharacterDetailsComponent id={selectedCharacterId} page={currentPage.toString()} onClose={handleCloseDetails} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

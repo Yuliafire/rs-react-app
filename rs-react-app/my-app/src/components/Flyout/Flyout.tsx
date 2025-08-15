@@ -6,8 +6,10 @@ import type { RootState, AppDispatch } from '../../store/store';
 import { saveAs } from 'file-saver';
 import { useTheme } from '../../shared/hooks/useTheme';
 import styles from './Flyout.module.scss';
+import { useTranslations } from 'next-intl';
 
 const Flyout = () => {
+  const t = useTranslations('Flyout');
   const { theme } = useTheme();
   const selectedCharacters = useSelector(
     (state: RootState) => state.characters.selectedCharacters
@@ -39,23 +41,22 @@ const Flyout = () => {
   return (
     <div className={`${styles.flyout} ${styles[theme]}`}>
       <div className={styles.title}>
-        Selected {selectedCharacters.length} item
-        {selectedCharacters.length > 1 ? 's' : ''}
-      </div>
+         {t('selected')} {selectedCharacters.length} 
+       </div>
       <div className={styles.buttonContainer}>
         <button
           className={styles.button}
           onClick={() => dispatch(removeAllCharacters())}
-          aria-label="Unselect all characters"
+          aria-label={t('unselectAll')}
         >
-          Unselect all
+          {t('unselectAll')}
         </button>
         <button
           className={styles.button}
           onClick={handleDownloadCSV}
-          aria-label="Download selected characters"
+          aria-label={t('download')}
         >
-          Download
+          {t('download')}
         </button>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './Loader.module.scss';
 import timerService from '../../../utils/timerService';
 import { useTheme } from '../../../shared/hooks/useTheme';
+import { useTranslations } from 'next-intl';
 
 interface LoaderProps {
   minDisplayTime?: number;
@@ -13,6 +14,7 @@ const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const { theme } = useTheme();
+  const t = useTranslations('Loader');
 
   useEffect(() => {
     let mounted = true;
@@ -51,7 +53,7 @@ const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
         data-testid="loader"
       >
         <div className={styles.loaderSpinner} role="status"></div>
-        <p className={styles.loaderText}>Loading...</p>
+        <p className={styles.loaderText}>{t('loading')}</p>
       </div>
     </div>
   );
