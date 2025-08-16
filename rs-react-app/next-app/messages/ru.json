@@ -1,5 +1,5 @@
 {
-   "Footer": {
+  "Footer": {
     "copyright": "© 2025 Лингва Войс"
   },
 
@@ -11,7 +11,7 @@
   "About": {
     "title": "О проекте",
     "subtitle": "Описание проекта",
-    "heading":"Информация об авторе",
+    "heading": "Информация об авторе",
     "courseInfo": "RS School Риэкт Курс",
     "back": "Назад",
     "author": "Создано Юлией Подгурской",
@@ -25,7 +25,7 @@
     "lightTheme": "Светлая тема",
     "switchLanguage": "Англ"
   },
-   "Card": {
+  "Card": {
     "noImage": "Изображение отсутствует",
     "species": "Вид",
     "gender": "Пол",

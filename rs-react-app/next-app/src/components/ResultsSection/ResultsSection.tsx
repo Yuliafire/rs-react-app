@@ -1,10 +1,10 @@
-'use client';
-import type { CharacterDetails } from '../../types/types';
-import styles from './ResultsSection.module.scss';
-import Loader from '../ui/Loader/Loader';
-import CardList from '../ui/CardList/CardList';
-import { useTheme } from '../../shared/hooks/useTheme';
-import { useTranslations } from 'next-intl';
+"use client";
+import type { CharacterDetails } from "../../types/types";
+import styles from "./ResultsSection.module.scss";
+import Loader from "../ui/Loader/Loader";
+import CardList from "../ui/CardList/CardList";
+import { useTheme } from "../../shared/hooks/useTheme";
+import { useTranslations } from "next-intl";
 
 interface ResultsSectionProps {
   results: CharacterDetails[];
@@ -20,7 +20,7 @@ export default function ResultsSection({
   onCardClick,
 }: ResultsSectionProps) {
   const { theme } = useTheme();
-  const t = useTranslations('Results');
+  const t = useTranslations("Results");
 
   if (error) {
     return (
@@ -29,7 +29,7 @@ export default function ResultsSection({
         aria-live="polite"
         data-testid="results-section"
       >
-        <p role="paragraph">{t('error', { message: error })}</p>
+        <p role="paragraph">{t("error", { message: error })}</p>
       </section>
     );
   }
@@ -41,7 +41,7 @@ export default function ResultsSection({
         aria-live="polite"
         data-testid="results-section"
       >
-        {t('noResults')}
+        {t("noResults")}
       </p>
     );
   }

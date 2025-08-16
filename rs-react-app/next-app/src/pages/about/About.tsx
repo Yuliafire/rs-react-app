@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import styles from './About.module.scss';
-import { useTheme } from '../../shared/hooks/useTheme';
-import { useTranslations } from 'next-intl';
+import Link from "next/link";
+import styles from "./About.module.scss";
+import { useTheme } from "../../shared/hooks/useTheme";
+import { useTranslations } from "next-intl";
 
 export const About = () => {
   const { theme } = useTheme();
-  const t = useTranslations('About');
+  const t = useTranslations("About");
 
   return (
     <div className={`${styles.about} ${styles[theme]}`}>
-      <h2>{t('subtitle')}</h2>
+      <h2>{t("subtitle")}</h2>
 
       <section className={styles.authorInfo}>
-        <h3>{t('heading')}</h3>
-        <p>{t('author')}</p>
+        <h3>{t("heading")}</h3>
+        <p>{t("author")}</p>
         <p>
-          GitHub:{' '}
+          GitHub:{" "}
           <a
             href="https://github.com/Yuliafire"
             target="_blank"
@@ -29,21 +29,21 @@ export const About = () => {
       </section>
 
       <section className={styles.courseInfo}>
-        <h3>{t('courseInfo')}</h3>
+        <h3>{t("courseInfo")}</h3>
         <p>
-          {t('description')}{' '}
+          {t("description")}{" "}
           <Link
             href="https://rs.school/courses/reactjs"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {t('courseName')}
+            {t("courseName")}
           </Link>
         </p>
       </section>
 
       <Link href="/" className={styles.backLink} role="link">
-        ← {t('back')}{' '}
+        ← {t("back")}{" "}
       </Link>
     </div>
   );

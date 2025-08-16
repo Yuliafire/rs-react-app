@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { createContext } from 'react';
+import { createContext } from "react";
 
-export type Theme = 'light' | 'dark';
+export type Theme = "light" | "dark";
 
 export type ThemeContextType = {
   theme: Theme;
@@ -10,5 +10,5 @@ export type ThemeContextType = {
 };
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
-  undefined
+  undefined,
 );

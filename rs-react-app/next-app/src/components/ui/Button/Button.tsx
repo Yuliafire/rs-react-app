@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import React from 'react';
-import styles from './Button.module.scss';
+import React from "react";
+import styles from "./Button.module.scss";
 
 interface ButtonProps {
   children?: React.ReactNode;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   disabled?: boolean;
 }
 
 const Button = ({
   children = null,
   onClick,
-  type = 'button',
+  type = "button",
   disabled = false,
 }: ButtonProps) => {
   return (

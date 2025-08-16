@@ -1,11 +1,14 @@
-import styles from "./Footer.module.scss";
-import { useTheme } from "../../../shared/hooks/useTheme";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
+"use server";
 
-const Footer = () => {
-  const { theme } = useTheme();
-  const t = useTranslations("Footer");
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { cookies } from "next/headers";
+import styles from "@/styles/Footer.module.scss";
+
+const Footer = async () => {
+  const t = await getTranslations("Footer");
+  const theme =
+    ((await cookies()).get("theme")?.value as "light" | "dark") || "light";
 
   const GitHubIcon = () => (
     <svg
@@ -36,7 +39,7 @@ const Footer = () => {
   );
 
   return (
-    <footer className={`${styles.footer} ${styles[theme]}`}>
+    <footer className={`${styles.footer} ${styles[theme]}`} data-theme={theme}>
       <div className={styles.container}>
         <div className={styles.content}>
           <p className={styles.copyright}>{t("copyright")}</p>

@@ -1,8 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { CharacterDetails } from '../../src/types/types';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { CharacterDetails } from "../../src/types/types";
 
 interface ServiceResponse<T> {
-  status: 'success' | 'error';
+  status: "success" | "error";
   data: T;
   message?: string;
   info?: {
@@ -14,12 +14,12 @@ interface ServiceResponse<T> {
 }
 
 export const rickAndMortyApi = createApi({
-  reducerPath: 'rickAndMortyApi',
+  reducerPath: "rickAndMortyApi",
   baseQuery: fetchBaseQuery({
     baseUrl:
-      process.env.NEXT_PUBLIC_BASE_PATH || 'https://rickandmortyapi.com/api',
+      process.env.NEXT_PUBLIC_BASE_PATH || "https://rickandmortyapi.com/api",
   }),
-  tagTypes: ['Character', 'CharacterList'],
+  tagTypes: ["Character", "CharacterList"],
   endpoints: (builder) => ({
     fetchInitialCharacters: builder.query<
       ServiceResponse<CharacterDetails[]>,
@@ -35,17 +35,17 @@ export const rickAndMortyApi = createApi({
           prev: string | null;
         };
       }) => ({
-        status: 'success',
+        status: "success",
         data: response.results,
         info: response.info,
       }),
       transformErrorResponse: (error) => ({
-        status: 'error',
+        status: "error",
         data: [] as CharacterDetails[],
         message: getErrorMessage(error.status as number),
       }),
       providesTags: (_result, _error, page) => [
-        { type: 'CharacterList', id: `PAGE_${page}` },
+        { type: "CharacterList", id: `PAGE_${page}` },
       ],
     }),
     searchCharacters: builder.query<
@@ -65,32 +65,32 @@ export const rickAndMortyApi = createApi({
           prev: string | null;
         };
       }) => ({
-        status: 'success',
+        status: "success",
         data: response.results,
         info: response.info,
       }),
       transformErrorResponse: (error) => ({
-        status: 'error',
+        status: "error",
         data: [] as CharacterDetails[],
         message: getErrorMessage(error.status as number),
       }),
       providesTags: (_result, _error, { query, page }) => [
-        { type: 'CharacterList', id: `SEARCH_${query}_PAGE_${page}` },
+        { type: "CharacterList", id: `SEARCH_${query}_PAGE_${page}` },
       ],
     }),
     getCharacter: builder.query<ServiceResponse<CharacterDetails>, number>({
       query: (id: number) => `/character/${id}`,
       transformResponse: (response: CharacterDetails) => ({
-        status: 'success',
+        status: "success",
         data: response,
       }),
       transformErrorResponse: (error) => ({
-        status: 'error',
+        status: "error",
         data: {} as CharacterDetails,
         message: getErrorMessage(error.status as number),
       }),
       providesTags: (_result, _error, id) => [
-        { type: 'Character', id: `CHAR_${id}` },
+        { type: "Character", id: `CHAR_${id}` },
       ],
     }),
   }),
@@ -98,10 +98,10 @@ export const rickAndMortyApi = createApi({
 
 const getErrorMessage = (status: number | string): string => {
   const messages: Record<number, string> = {
-    400: 'Invalid search parameters',
-    404: 'No characters found',
-    429: 'Too many requests, please try again later',
-    500: 'Server error',
+    400: "Invalid search parameters",
+    404: "No characters found",
+    429: "Too many requests, please try again later",
+    500: "Server error",
   };
   return messages[status as number] || `API error (${status})`;
 };

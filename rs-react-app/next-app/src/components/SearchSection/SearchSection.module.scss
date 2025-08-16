@@ -1,4 +1,4 @@
-@use '../../assets/styles/globals' as *;
+@use "../../assets/styles/globals" as *;
 
 .searchSection {
   width: 100%;
@@ -15,7 +15,7 @@
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -2px;
     left: -2px;

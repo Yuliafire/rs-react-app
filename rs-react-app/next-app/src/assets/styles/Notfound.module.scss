@@ -1,4 +1,4 @@
-@use '../../assets/styles/globals' as *;
+@use "../../assets/styles/globals" as *;
 
 .notFound {
   display: flex;
@@ -31,7 +31,7 @@
     color: var(--text);
   }
 
-  [data-theme='dark'] & {
+  [data-theme="dark"] & {
     background: var(--background);
   }
 }

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useTranslations } from 'next-intl';
-import { useGetCharacterQuery } from '../../store/apiSlice';
-import type { CharacterDetails } from '../../types/types';
-import Loader from '../ui/Loader/Loader';
-import styles from './CharacterDetails.module.scss';
-import { useTheme } from '../../shared/hooks/useTheme';
-import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useGetCharacterQuery } from "../../store/apiSlice";
+import type { CharacterDetails } from "../../types/types";
+import Loader from "../ui/Loader/Loader";
+import styles from "./CharacterDetails.module.scss";
+import { useTheme } from "../../shared/hooks/useTheme";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 interface CharacterDetailsProps {
   id: number;
@@ -17,7 +17,7 @@ interface CharacterDetailsProps {
 
 const CharacterDetailsComponent = ({ id, onClose }: CharacterDetailsProps) => {
   const { theme } = useTheme();
-  const t = useTranslations('CharacterDetails');
+  const t = useTranslations("CharacterDetails");
   const characterId = id ? parseInt(id.toString(), 10) : undefined;
   const {
     data: characterResponse,
@@ -39,15 +39,15 @@ const CharacterDetailsComponent = ({ id, onClose }: CharacterDetailsProps) => {
     const errorMessage =
       isFetchBaseQueryError(error) &&
       error.data &&
-      typeof error.data === 'object' &&
-      'message' in error.data
+      typeof error.data === "object" &&
+      "message" in error.data
         ? String(error.data.message)
-        : t('notFound');
+        : t("notFound");
     return (
       <div className={styles.details}>
         <p>{errorMessage}</p>
-        <button onClick={onClose} aria-label={t('close')}>
-          {t('close')}
+        <button onClick={onClose} aria-label={t("close")}>
+          {t("close")}
         </button>
       </div>
     );
@@ -55,33 +55,33 @@ const CharacterDetailsComponent = ({ id, onClose }: CharacterDetailsProps) => {
 
   return (
     <div className={`${styles.details} ${styles[theme]}`}>
-      <h3>{character.name || t('unknown')}</h3>
+      <h3>{character.name || t("unknown")}</h3>
       <Image
         src={character.image}
-        alt={character.name || t('unknown')}
+        alt={character.name || t("unknown")}
         width={300}
         height={300}
         priority={false}
         className={styles.image}
       />
       <p>
-        <strong>{t('status')}:</strong> {character.status || t('unknown')}
+        <strong>{t("status")}:</strong> {character.status || t("unknown")}
       </p>
       <p>
-        <strong>{t('species')}:</strong> {character.species || t('unknown')}
+        <strong>{t("species")}:</strong> {character.species || t("unknown")}
       </p>
       <p>
-        <strong>{t('gender')}:</strong> {character.gender || t('unknown')}
+        <strong>{t("gender")}:</strong> {character.gender || t("unknown")}
       </p>
       <p>
-        <strong>{t('origin')}:</strong> {character.origin?.name || t('unknown')}
+        <strong>{t("origin")}:</strong> {character.origin?.name || t("unknown")}
       </p>
       <p>
-        <strong>{t('location')}:</strong>{' '}
-        {character.location?.name || t('unknown')}
+        <strong>{t("location")}:</strong>{" "}
+        {character.location?.name || t("unknown")}
       </p>
-      <button onClick={onClose} aria-label={t('close')}>
-        {t('close')}
+      <button onClick={onClose} aria-label={t("close")}>
+        {t("close")}
       </button>
     </div>
   );
@@ -89,10 +89,10 @@ const CharacterDetailsComponent = ({ id, onClose }: CharacterDetailsProps) => {
 
 function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
   return (
-    typeof error === 'object' &&
+    typeof error === "object" &&
     error != null &&
-    'status' in error &&
-    ('data' in error || 'error' in error)
+    "status" in error &&
+    ("data" in error || "error" in error)
   );
 }
 

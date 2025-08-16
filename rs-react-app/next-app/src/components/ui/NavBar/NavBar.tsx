@@ -1,13 +1,13 @@
-'use client';
-import styles from './NavBar.module.scss';
-import { useTheme } from '../../../shared/hooks/useTheme';
-import { useTranslations, useLocale } from 'next-intl';
-import { Link, usePathname, useRouter } from '../../../i18n/navigation';
-import { useSearchParams } from 'next/navigation';
+"use client";
+import styles from "./NavBar.module.scss";
+import { useTheme } from "../../../shared/hooks/useTheme";
+import { useTranslations, useLocale } from "next-intl";
+import { Link, usePathname, useRouter } from "../../../i18n/navigation";
+import { useSearchParams } from "next/navigation";
 
 export const NavBar = () => {
   const { theme, toggleTheme } = useTheme();
-  const t = useTranslations('NavBar');
+  const t = useTranslations("NavBar");
   const locale = useLocale();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,7 +24,7 @@ export const NavBar = () => {
 
     router.replace(
       { pathname, query: queryParams },
-      { locale: locale === 'en' ? 'ru' : 'en' }
+      { locale: locale === "en" ? "ru" : "en" },
     );
   };
 
@@ -33,15 +33,15 @@ export const NavBar = () => {
       <ul className={styles.list}>
         <li className={styles.listItem}>
           <Link className={styles.link} href="/about">
-            {' '}
-            {t('AboutLink')}
+            {" "}
+            {t("AboutLink")}
           </Link>
         </li>
         <li className={styles.listItem} onClick={changeTheme}>
-          {theme === 'light' ? t('darkTheme') : t('lightTheme')}
+          {theme === "light" ? t("darkTheme") : t("lightTheme")}
         </li>
         <li className={styles.listItem} onClick={switchLanguage}>
-          {t('switchLanguage')}
+          {t("switchLanguage")}
         </li>
       </ul>
     </nav>

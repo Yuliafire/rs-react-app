@@ -20,7 +20,7 @@
     "courseName": "RS School React Course"
   },
 
-   "NavBar": {
+  "NavBar": {
     "AboutLink": "About",
     "darkTheme": "Dark Theme",
     "lightTheme": "Light Theme",
@@ -70,13 +70,13 @@
     "noResults": "No characters found"
   },
 
-   "Flyout": {
+  "Flyout": {
     "unselectAll": "Unselect all",
     "download": "Download",
     "selected": "Selected items"
   },
 
-   "Loader": {
+  "Loader": {
     "loading": "Loading..."
   }
 }

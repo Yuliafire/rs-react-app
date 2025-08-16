@@ -1,4 +1,4 @@
-@use '../../assets/styles/globals' as *;
+@use "../../assets/styles/globals" as *;
 
 .home {
   display: flex;
@@ -135,10 +135,10 @@
   }
 }
 
-.home:has(> [data-testid='details']) .container {
+.home:has(> [data-testid="details"]) .container {
   flex-basis: 60%;
 }
 
-.home:not(:has(> [data-testid='details'])) .container {
+.home:not(:has(> [data-testid="details"])) .container {
   flex-basis: 100%;
 }

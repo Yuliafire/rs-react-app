@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './ErrorBoundary.module.scss';
-import Button from '../ui/Button/Button';
+import React from "react";
+import styles from "./ErrorBoundary.module.scss";
+import Button from "../ui/Button/Button";
 
 interface Props {
   children: React.ReactNode;
@@ -20,9 +20,9 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error(
-      'Reality destabilization detected:',
+      "Reality destabilization detected:",
       error,
-      info.componentStack
+      info.componentStack,
     );
   }
 

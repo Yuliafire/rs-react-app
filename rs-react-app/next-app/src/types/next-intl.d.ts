@@ -1,3 +1,3 @@
-declare module 'next-intl' {
-  type Locale = 'en' | 'ru';
+declare module "next-intl" {
+  type Locale = "en" | "ru";
 }

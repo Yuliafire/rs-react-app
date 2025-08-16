@@ -1,14 +1,14 @@
-const RICKMORTY_SEARCH_KEY = 'rickmorty-search-term';
-const RICKMORTY_HISTORY_KEY = 'rickmorty-search-history';
+const RICKMORTY_SEARCH_KEY = "rickmorty-search-term";
+const RICKMORTY_HISTORY_KEY = "rickmorty-search-history";
 
 export const useStorage = () => {
   const getSearchTerm = (): string => {
     try {
       const term = localStorage.getItem(RICKMORTY_SEARCH_KEY);
-      return term ? JSON.parse(term) : '';
+      return term ? JSON.parse(term) : "";
     } catch (error) {
-      console.error('Error reading from the multiverse database:', error);
-      return '';
+      console.error("Error reading from the multiverse database:", error);
+      return "";
     }
   };
 
@@ -22,7 +22,7 @@ export const useStorage = () => {
         localStorage.setItem(RICKMORTY_HISTORY_KEY, JSON.stringify(newHistory));
       }
     } catch (error) {
-      console.error('Error saving to portal gun memory:', error);
+      console.error("Error saving to portal gun memory:", error);
     }
   };
 
@@ -30,7 +30,7 @@ export const useStorage = () => {
     try {
       localStorage.removeItem(RICKMORTY_SEARCH_KEY);
     } catch (error) {
-      console.error('Error clearing dimension cache:', error);
+      console.error("Error clearing dimension cache:", error);
     }
   };
 
@@ -39,7 +39,7 @@ export const useStorage = () => {
       const history = localStorage.getItem(RICKMORTY_HISTORY_KEY);
       return history ? JSON.parse(history) : [];
     } catch (error) {
-      console.error('Error accessing interdimensional records:', error);
+      console.error("Error accessing interdimensional records:", error);
       return [];
     }
   };
@@ -48,7 +48,7 @@ export const useStorage = () => {
     try {
       localStorage.removeItem(RICKMORTY_HISTORY_KEY);
     } catch (error) {
-      console.error('Error purging multiverse logs:', error);
+      console.error("Error purging multiverse logs:", error);
     }
   };
 

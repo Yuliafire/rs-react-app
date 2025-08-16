@@ -1,0 +1,227 @@
+@use "../../assets/styles/globals" as *;
+
+.about {
+  margin: 0 auto;
+  padding: $spacing-lg $spacing-sm;
+  background: var(--background-light);
+  color: var(--text);
+  font-family: $font-stack;
+  line-height: $line-height;
+  min-height: calc(100vh - 110px);
+
+  &.light {
+    background: var(--background-light);
+  }
+
+  &.dark {
+    background: var(--background);
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: 1rem;
+  }
+}
+
+.about h2 {
+  @include responsive-typography($font-size-lg, $font-size-md);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--text);
+}
+
+.about section {
+  margin-bottom: $spacing-lg;
+  padding: $spacing-md;
+  background: var(--card-bg);
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-normal;
+  border: 1px solid var(--border);
+  transition:
+    transform $transition-short,
+    box-shadow $transition-short;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow);
+  }
+}
+
+.about h3 {
+  @include responsive-typography($font-size-md, $font-size-sm);
+  color: var(--primary);
+  margin-bottom: $spacing-sm;
+}
+
+.about p {
+  @include responsive-typography($font-size-base, $font-size-xs);
+  margin-bottom: $spacing-sm;
+  margin: 0 0 1rem;
+  color: var(--text);
+}
+
+.about a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: var(--primary-hover);
+    font-weight: 600;
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+.about .backLink {
+  @include responsive-typography($font-size-base, $font-size-xs);
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  margin-top: $spacing-lg;
+  color: var(--primary);
+  text-decoration: none;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  transition:
+    background-color $transition-short,
+    color $transition-short;
+
+  &:hover,
+  &:focus {
+    background-color: rgba(var(--primary), 0.1);
+    color: var(--primary-hover);
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+// .about {
+//   margin: 0 auto;
+//   padding: 2rem 1rem; /* Replaces $spacing-lg $spacing-sm */
+//   font-family:
+//     system-ui,
+//     -apple-system,
+//     sans-serif; /* Replaces $font-stack */
+//   line-height: 1.5; /* Replaces $line-height */
+//   min-height: calc(100vh - 110px);
+
+//   /* Light theme */
+//   &[data-theme="light"] {
+//     background: #ffffff; /* Replaces --background-light */
+//     color: #333333; /* Replaces --text-dark */
+
+//     section {
+//       background: #f8f9fa; /* Replaces --card-bg-light */
+//       border: 1px solid #e0e0e0; /* Replaces --border-light */
+//     }
+//   }
+
+//   /* Dark theme */
+//   &[data-theme="dark"] {
+//     background: #121212; /* Replaces --background-dark */
+//     color: #f5f5f5; /* Replaces --text-light */
+
+//     section {
+//       background: #1e1e1e; /* Replaces --card-bg-dark */
+//       border: 1px solid #333333; /* Replaces --border-dark */
+//     }
+//   }
+
+//   h2 {
+//     font-size: 2rem; /* Desktop size, replaces $font-size-lg */
+//     margin-bottom: 1.5rem;
+//     text-align: center;
+
+//     @media (max-width: 768px) {
+//       font-size: 1.5rem; /* Mobile size, replaces $font-size-md */
+//     }
+//   }
+
+//   section {
+//     margin-bottom: 2rem; /* Replaces $spacing-lg */
+//     padding: 1rem; /* Replaces $spacing-md */
+//     border-radius: 8px; /* Replaces $border-radius-md */
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Replaces $shadow-normal */
+//     transition:
+//       transform 0.2s ease,
+//       box-shadow 0.2s ease; /* Replaces $transition-short */
+
+//     &:hover {
+//       transform: translateY(-2px);
+//       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Replaces var(--shadow) */
+//     }
+//   }
+
+//   h3 {
+//     font-size: 1.5rem; /* Desktop size */
+//     margin-bottom: 0.5rem; /* Replaces $spacing-sm */
+//     color: #4a6bff; /* Primary color */
+
+//     @media (max-width: 768px) {
+//       font-size: 1.25rem; /* Mobile size */
+//     }
+//   }
+
+//   p {
+//     font-size: 1rem; /* Base size */
+//     margin: 0 0 1rem;
+
+//     @media (max-width: 768px) {
+//       font-size: 0.875rem; /* Mobile size */
+//     }
+//   }
+
+//   a {
+//     color: #4a6bff; /* Primary color */
+//     text-decoration: none;
+//     transition: all 0.3s ease;
+
+//     &:hover,
+//     &:focus {
+//       color: #3a5bef; /* Primary hover */
+//       font-weight: 600;
+//     }
+
+//     &:focus {
+//       outline: 2px solid #4a6bff;
+//       outline-offset: 2px;
+//     }
+//   }
+
+//   .backLink {
+//     font-size: 1rem;
+//     display: inline-flex;
+//     align-items: center;
+//     gap: 0.5rem; /* Replaces $spacing-xs */
+//     margin-top: 2rem; /* Replaces $spacing-lg */
+//     color: #4a6bff;
+//     text-decoration: none;
+//     padding: 0.5rem 1rem; /* Replaces $spacing-xs $spacing-sm */
+//     border-radius: 4px; /* Replaces $border-radius-sm */
+//     transition:
+//       background-color 0.2s ease,
+//       color 0.2s ease;
+
+//     &:hover,
+//     &:focus {
+//       background-color: rgba(74, 107, 255, 0.1); /* Primary with opacity */
+//       color: #3a5bef;
+//     }
+
+//     &:focus {
+//       outline: 2px solid #4a6bff;
+//       outline-offset: 2px;
+//     }
+//   }
+
+//   @media (max-width: 768px) {
+//     padding: 1rem;
+//   }
+// }

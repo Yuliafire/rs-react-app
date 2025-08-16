@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import charactersReducer from './charactersSlice';
-import rickAndMortyApi from './apiSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import charactersReducer from "./charactersSlice";
+import rickAndMortyApi from "./apiSlice";
 
 export interface RootState {
   selectedCharacters: unknown;

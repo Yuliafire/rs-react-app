@@ -6,7 +6,7 @@
   transition: all 0.3s;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -18,8 +18,8 @@
   border-radius: 10px;
   border: 1px solid #0a0e17;
 
-  &[type='submit'],
-  &[type='button'] {
+  &[type="submit"],
+  &[type="button"] {
     border-color: #0a0e17;
 
     &:hover:not(:disabled) {

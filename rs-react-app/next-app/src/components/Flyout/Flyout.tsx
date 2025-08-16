@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { removeAllCharacters } from '../../store/charactersSlice';
-import type { RootState, AppDispatch } from '../../store/store';
-import { saveAs } from 'file-saver';
-import { useTheme } from '../../shared/hooks/useTheme';
-import styles from './Flyout.module.scss';
-import { useTranslations } from 'next-intl';
+import { useSelector, useDispatch } from "react-redux";
+import { removeAllCharacters } from "../../store/charactersSlice";
+import type { RootState, AppDispatch } from "../../store/store";
+import { saveAs } from "file-saver";
+import { useTheme } from "../../shared/hooks/useTheme";
+import styles from "./Flyout.module.scss";
+import { useTranslations } from "next-intl";
 
 const Flyout = () => {
-  const t = useTranslations('Flyout');
+  const t = useTranslations("Flyout");
   const { theme } = useTheme();
   const selectedCharacters = useSelector(
-    (state: RootState) => state.characters.selectedCharacters
+    (state: RootState) => state.characters.selectedCharacters,
   );
   const dispatch = useDispatch<AppDispatch>();
 
@@ -20,7 +20,7 @@ const Flyout = () => {
 
   const handleDownloadCSV = () => {
     const csvContent = [
-      ['ID', 'Name', 'Species', 'Status', 'Details URL'],
+      ["ID", "Name", "Species", "Status", "Details URL"],
       ...selectedCharacters.map((item) => [
         item.id,
         `"${item.name.replace(/"/g, '""')}"`,
@@ -29,11 +29,11 @@ const Flyout = () => {
         item.detailsUrl,
       ]),
     ]
-      .map((row) => row.join(','))
-      .join('\n');
+      .map((row) => row.join(","))
+      .join("\n");
 
-    const blob = new Blob(['\uFEFF', csvContent], {
-      type: 'text/csv;charset=utf-8',
+    const blob = new Blob(["\uFEFF", csvContent], {
+      type: "text/csv;charset=utf-8",
     });
     saveAs(blob, `${selectedCharacters.length}_items.csv`);
   };
@@ -41,22 +41,22 @@ const Flyout = () => {
   return (
     <div className={`${styles.flyout} ${styles[theme]}`}>
       <div className={styles.title}>
-        {t('selected')} {selectedCharacters.length}
+        {t("selected")} {selectedCharacters.length}
       </div>
       <div className={styles.buttonContainer}>
         <button
           className={styles.button}
           onClick={() => dispatch(removeAllCharacters())}
-          aria-label={t('unselectAll')}
+          aria-label={t("unselectAll")}
         >
-          {t('unselectAll')}
+          {t("unselectAll")}
         </button>
         <button
           className={styles.button}
           onClick={handleDownloadCSV}
-          aria-label={t('download')}
+          aria-label={t("download")}
         >
-          {t('download')}
+          {t("download")}
         </button>
       </div>
     </div>

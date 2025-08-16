@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useCallback } from 'react';
-import styles from './Pagination.module.scss';
-import { useTheme } from '../../shared/hooks/useTheme';
+import { useCallback } from "react";
+import styles from "./Pagination.module.scss";
+import { useTheme } from "../../shared/hooks/useTheme";
 
 interface PaginationProps {
   currentPage: number;
@@ -23,7 +23,7 @@ const Pagination = ({
         onPageChange(page);
       }
     },
-    [onPageChange, totalPages, loading]
+    [onPageChange, totalPages, loading],
   );
 
   const { theme } = useTheme();
@@ -35,9 +35,9 @@ const Pagination = ({
     const right = Math.min(totalPages, currentPage + delta);
 
     if (left > 2) range.push(1);
-    if (left > 3) range.push('...');
+    if (left > 3) range.push("...");
     for (let i = left; i <= right; i++) range.push(i);
-    if (right < totalPages - 2) range.push('...');
+    if (right < totalPages - 2) range.push("...");
     if (right < totalPages - 1) range.push(totalPages);
 
     return range;
@@ -56,14 +56,14 @@ const Pagination = ({
       </button>
       {getPageNumbers().map((page, index) => (
         <span key={index} className={styles.pageItem}>
-          {page === '...' ? (
+          {page === "..." ? (
             <span className={styles.ellipsis}>...</span>
           ) : (
             <button
               onClick={() => handlePageClick(page as number)}
-              className={currentPage === page ? styles.active : ''}
+              className={currentPage === page ? styles.active : ""}
               disabled={loading}
-              aria-current={currentPage === page ? 'page' : undefined}
+              aria-current={currentPage === page ? "page" : undefined}
               aria-label={`Page ${page}`}
             >
               {page}

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import styles from './Loader.module.scss';
-import timerService from '../../../utils/timerService';
-import { useTheme } from '../../../shared/hooks/useTheme';
-import { useTranslations } from 'next-intl';
+import { useState, useEffect } from "react";
+import styles from "./Loader.module.scss";
+import timerService from "../../../utils/timerService";
+import { useTheme } from "../../../shared/hooks/useTheme";
+import { useTranslations } from "next-intl";
 
 interface LoaderProps {
   minDisplayTime?: number;
@@ -14,7 +14,7 @@ const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const { theme } = useTheme();
-  const t = useTranslations('Loader');
+  const t = useTranslations("Loader");
 
   useEffect(() => {
     let mounted = true;
@@ -28,10 +28,10 @@ const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
           timers.push(
             timerService.setTimeout(() => {
               setIsVisible(true);
-            }, minDisplayTime)
+            }, minDisplayTime),
           );
         }
-      }, 100)
+      }, 100),
     );
 
     return () => {
@@ -47,13 +47,13 @@ const Loader = ({ minDisplayTime = 2000 }: LoaderProps) => {
   return (
     <div className={`${styles.loaderWrapper} ${styles[theme]}`}>
       <div
-        className={`${styles.loaderContainer} ${isVisible ? styles.visible : ''}`}
+        className={`${styles.loaderContainer} ${isVisible ? styles.visible : ""}`}
         aria-busy="true"
         aria-live="polite"
         data-testid="loader"
       >
         <div className={styles.loaderSpinner} role="status"></div>
-        <p className={styles.loaderText}>{t('loading')}</p>
+        <p className={styles.loaderText}>{t("loading")}</p>
       </div>
     </div>
   );

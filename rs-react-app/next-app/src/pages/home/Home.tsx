@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { useParams } from 'next/navigation';
-import SearchSection from '../../components/SearchSection/SearchSection';
-import ResultsSection from '../../components/ResultsSection/ResultsSection';
-import Pagination from '../../components/Pagination/Pagination';
-import Flyout from '../../components/Flyout/Flyout';
-import CharacterDetailsComponent from '../../components/CharacterDetails/CharacterDetails';
-import styles from './Home.module.scss';
-import type { CharacterDetails } from '../../types/types';
-import { useTheme } from '../../shared/hooks/useTheme';
+import { useState, useCallback } from "react";
+import { useParams } from "next/navigation";
+import SearchSection from "../../components/SearchSection/SearchSection";
+import ResultsSection from "../../components/ResultsSection/ResultsSection";
+import Pagination from "../../components/Pagination/Pagination";
+import Flyout from "../../components/Flyout/Flyout";
+import CharacterDetailsComponent from "../../components/CharacterDetails/CharacterDetails";
+import styles from "./Home.module.scss";
+import type { CharacterDetails } from "../../types/types";
+import { useTheme } from "../../shared/hooks/useTheme";
 
 const Home = () => {
   const { theme } = useTheme();
@@ -22,16 +22,16 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [lastSearchTerm, setLastSearchTerm] = useState<string>('');
+  const [lastSearchTerm, setLastSearchTerm] = useState<string>("");
   const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(
-    null
+    null,
   );
 
   const handleSearchResults = useCallback(
     (
       searchResults: CharacterDetails[] | null,
       searchTerm: string,
-      pages: number
+      pages: number,
     ) => {
       setResults(searchResults || []);
       setTotalPages(pages);
@@ -40,7 +40,7 @@ const Home = () => {
         setLastSearchTerm(searchTerm);
       }
     },
-    [lastSearchTerm]
+    [lastSearchTerm],
   );
 
   const handlePageChange = useCallback(
@@ -49,11 +49,11 @@ const Home = () => {
         setCurrentPage(newPage);
       }
     },
-    [totalPages]
+    [totalPages],
   );
 
   const handleCardClick = useCallback((cardId: number) => {
-    console.log('Card clicked:', cardId);
+    console.log("Card clicked:", cardId);
     setSelectedCharacterId(cardId);
   }, []);
 

@@ -1,6 +1,6 @@
-'use server';
-import Link from 'next/link';
-import styles from '@styles/Notfound.module.scss';
+"use server";
+import Link from "next/link";
+import styles from "@styles/Notfound.module.scss";
 
 export const NotFound = () => {
   return (

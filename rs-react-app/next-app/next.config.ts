@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
-import createNextIntlPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from "next-intl/plugin";
 const nextConfig = {
   reactStrictMode: true,
   sassOptions: {
-    includePaths: ['./styles'],
+    includePaths: ["./styles"],
   },
   images: {
-    domains: ['rickandmortyapi.com'],
+    domains: ["rickandmortyapi.com"],
   },
 };
 
