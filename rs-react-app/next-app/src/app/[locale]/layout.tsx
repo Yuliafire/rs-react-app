@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import { Messages } from "../../types/types";
 import ClientProviders from "../ClientProviders";
+import Footer from "./footer/page";
 
 export default async function LocaleLayout({
   children,
@@ -21,7 +22,10 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <ClientProviders>{children}</ClientProviders>
+      <ClientProviders>
+        {children}
+        <Footer />
+      </ClientProviders>
     </NextIntlClientProvider>
   );
 }

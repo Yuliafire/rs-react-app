@@ -3,12 +3,11 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import styles from "@/styles/Footer.module.scss";
-
+import styles from "../../../assets/styles/Footer.module.scss";
 const Footer = async () => {
   const t = await getTranslations("Footer");
   const theme =
-    ((await cookies()).get("theme")?.value as "light" | "dark") || "light";
+    ((await cookies()).get("theme")?.value as "light" | "dark") || "dark";
 
   const GitHubIcon = () => (
     <svg

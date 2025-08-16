@@ -9,7 +9,7 @@ export default async function AboutPage() {
   const t = await getTranslations("About");
   const cookieStore = cookies();
   const theme =
-    ((await cookieStore).get("theme")?.value as "light" | "dark") || "light";
+    ((await cookieStore).get("theme")?.value as "light" | "dark") || "dark";
 
   return (
     <div className={`${styles.about} ${styles[theme]}`}>
