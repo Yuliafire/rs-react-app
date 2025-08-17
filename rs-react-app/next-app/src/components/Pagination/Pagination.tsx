@@ -51,9 +51,22 @@ const Pagination = ({
         onClick={() => handlePageClick(currentPage - 1)}
         disabled={currentPage === 1 || loading}
         aria-label="Previous page"
+        className={styles.arrowButton}
       >
-        Previous
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
       </button>
+
       {getPageNumbers().map((page, index) => (
         <span key={index} className={styles.pageItem}>
           {page === "..." ? (
@@ -71,13 +84,25 @@ const Pagination = ({
           )}
         </span>
       ))}
+
       <button
         onClick={() => handlePageClick(currentPage + 1)}
         disabled={currentPage === totalPages || loading}
         aria-label="Next page"
-        role="button"
+        className={styles.arrowButton}
       >
-        Next
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
       </button>
     </div>
   );

@@ -93,11 +93,6 @@
       "origin": "Происхождение",
       "location": "Местоположение",
       "episodes": "Эпизоды"
-    },
-    "pagination": {
-      "previous": "Назад",
-      "next": "Вперед",
-      "page": "Страница {page} из {totalPages}"
     }
   }
 }
