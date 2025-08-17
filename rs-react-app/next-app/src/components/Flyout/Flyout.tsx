@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeAllCharacters } from "../../store/charactersSlice";
 import type { RootState, AppDispatch } from "../../store/store";
 import { useTheme } from "../../shared/hooks/useTheme";
 import styles from "./Flyout.module.scss";
 import { useTranslations } from "next-intl";
+import { generateCSV } from "../../app/lib/actions";
 
 const Flyout = () => {
   const t = useTranslations("Flyout");
@@ -15,54 +16,54 @@ const Flyout = () => {
     (state: RootState) => state.characters.selectedCharacters,
   );
   const dispatch = useDispatch<AppDispatch>();
-  const downloadLinkRef = useRef<HTMLAnchorElement>(null);
-  const [objectUrl, setObjectUrl] = useState<string | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
-    };
-  }, [objectUrl]);
-
-  const handleDownloadCSV = () => {
+  const handleDownloadCSV = async () => {
     if (!selectedCharacters || selectedCharacters.length === 0) return;
 
+    setIsDownloading(true);
     try {
-      const headers = "ID,Name,Species,Status,Details URL\n";
-      const rows = selectedCharacters
-        .map(
-          (char) =>
-            `${char.id},"${char.name.replace(/"/g, '""')}",${char.species},${char.status},${char.detailsUrl}`,
-        )
-        .join("\n");
+      const { fileName, data } = await generateCSV(selectedCharacters);
 
-      const csvContent = headers + rows;
-      const blob = new Blob(["\uFEFF" + csvContent], {
+      const blob = new Blob(["\uFEFF" + data], {
         type: "text/csv;charset=utf-8;",
       });
-
       const url = URL.createObjectURL(blob);
-      setObjectUrl(url);
+      setDownloadUrl(url);
 
-      if (downloadLinkRef.current) {
-        downloadLinkRef.current.href = url;
-        downloadLinkRef.current.download = `${selectedCharacters.length}_characters.csv`;
-        downloadLinkRef.current.click();
-      }
+      const hiddenLink = document.createElement("a");
+      hiddenLink.href = url;
+      hiddenLink.download = fileName;
+      hiddenLink.style.display = "none";
+      document.body.appendChild(hiddenLink);
+      hiddenLink.click();
+      document.body.removeChild(hiddenLink);
+
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        setDownloadUrl(null);
+      }, 100);
     } catch (error) {
       console.error("Download failed:", error);
       alert(t("downloadError"));
+    } finally {
+      setIsDownloading(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (downloadUrl) {
+        URL.revokeObjectURL(downloadUrl);
+      }
+    };
+  }, [downloadUrl]);
 
   if (!selectedCharacters || selectedCharacters.length === 0) return null;
 
   return (
     <div className={`${styles.flyout} ${styles[theme]}`}>
-      <a ref={downloadLinkRef} style={{ display: "none" }} aria-hidden="true" />
-
       <div className={styles.title}>
         {t("selected")} {selectedCharacters.length}
       </div>
@@ -71,6 +72,7 @@ const Flyout = () => {
           className={styles.button}
           onClick={() => dispatch(removeAllCharacters())}
           aria-label={t("unselectAll")}
+          disabled={isDownloading}
         >
           {t("unselectAll")}
         </button>
@@ -78,9 +80,9 @@ const Flyout = () => {
           className={styles.button}
           onClick={handleDownloadCSV}
           aria-label={t("download")}
-          disabled={selectedCharacters.length === 0}
+          disabled={selectedCharacters.length === 0 || isDownloading}
         >
-          {t("download")}
+          {isDownloading ? t("downloading") : t("download")}
         </button>
       </div>
     </div>
