@@ -1,0 +1,136 @@
+@use "../../../assets/styles/globals" as *;
+
+.card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow);
+  overflow: hidden;
+  transition: $transition-long;
+  margin-bottom: $spacing-lg;
+  color: var(--text);
+  position: relative;
+  font-family: $font-stack;
+  line-height: $line-height;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+
+  .cardImage {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  .card {
+    @include responsive-typography($font-size-base, $font-size-xs);
+  }
+
+  .statusBadge {
+    @include responsive-typography($font-size-xs, $font-size-xs);
+  }
+
+  .statusBadge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-family: $font-stack;
+    line-height: $line-height;
+    font-weight: bold;
+    color: var(--text);
+
+    &.alive {
+      background-color: var(--status-alive);
+    }
+
+    &.dead {
+      background-color: var(--status-dead);
+    }
+
+    &.unknown {
+      background-color: var(--status-unknown);
+    }
+  }
+
+  .cardContent {
+    padding: 15px;
+
+    h3 {
+      margin: 0 0 $spacing-sm 0;
+      color: var(--text);
+      font-family: $font-stack;
+      line-height: $line-height;
+    }
+
+    h3 {
+      @include responsive-typography($font-size-md, $font-size-sm);
+    }
+
+    .details {
+      p {
+        margin: $spacing-xs 0;
+        font-family: $font-stack;
+        line-height: $line-height;
+
+        strong {
+          color: var(--secondary-text);
+        }
+      }
+
+      p {
+        @include responsive-typography($font-size-base, $font-size-xs);
+      }
+    }
+
+    .episodes {
+      font-family: $font-stack;
+      line-height: $line-height;
+      margin-top: $spacing-sm;
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .episodes {
+      @include responsive-typography($font-size-base, $font-size-xs);
+    }
+  }
+
+  .flag {
+    position: absolute;
+    top: $spacing-sm;
+    left: $spacing-sm;
+    width: $spacing-lg;
+    height: $spacing-lg;
+    cursor: pointer;
+    accent-color: var(--primary);
+    border-radius: $border-radius-sm;
+    background: transparent;
+    transition: $transition-short;
+    font-family: $font-stack;
+    line-height: $line-height;
+
+    &:hover {
+      background-color: var(--btn-hover);
+    }
+  }
+
+  .flag {
+    @include responsive-typography($font-size-base, $font-size-xs);
+  }
+}

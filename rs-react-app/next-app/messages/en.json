@@ -1,0 +1,102 @@
+{
+  "Footer": {
+    "copyright": "© 2025 Lingua Voice"
+  },
+
+  "Header": {
+    "title": "Rick and Morty Portal",
+    "about": "About"
+  },
+
+  "About": {
+    "title": "About",
+    "subtitle": "About the project",
+    "heading": "Author Information",
+    "courseInfo": "RS School React Course",
+    "back": "Back",
+    "author": "Created by Yulia Podgurskaia",
+    "description": "This project was developed as part of the",
+    "link": "RS School React course",
+    "courseName": "RS School React Course"
+  },
+
+  "NavBar": {
+    "AboutLink": "About",
+    "darkTheme": "Dark Theme",
+    "lightTheme": "Light Theme",
+    "switchLanguage": "Ru"
+  },
+
+  "CharacterDetails": {
+    "unknown": "Unknown",
+    "status": "Status",
+    "species": "Species",
+    "gender": "Gender",
+    "origin": "Origin",
+    "location": "Location",
+    "error": "Failed to load character",
+    "notFound": "Character not found or invalid ID",
+    "close": "Close"
+  },
+
+  "Card": {
+    "noImage": "No image available",
+    "species": "Species",
+    "gender": "Gender",
+    "origin": "Origin",
+    "location": "Location",
+    "episodes": "Episodes",
+    "unknown": "Unknown",
+    "viewDetailsAria": "View details for {name}",
+    "selectAria": "Select {name}",
+    "deselectAria": "Deselect {name}",
+    "status": {
+      "alive": "Alive",
+      "dead": "Dead",
+      "unknown": "Unknown"
+    }
+  },
+  "Search": {
+    "placeholder": "Search characters...",
+    "search": "Search",
+    "searching": "Searching...",
+    "forceRefresh": "Refresh",
+    "refreshing": "Refreshing...",
+    "error": "Error",
+    "unknownError": "An unknown error occurred"
+  },
+  "Results": {
+    "error": "Error: {message}",
+    "noResults": "No characters found"
+  },
+
+  "Flyout": {
+    "unselectAll": "Unselect all",
+    "download": "Download",
+    "selected": "Selected items"
+  },
+
+  "Loader": {
+    "loading": "Loading..."
+  },
+
+  "Home": {
+    "title": "Rick and Morty Characters",
+    "loading": "Loading characters...",
+    "error": "Failed to load characters",
+    "search": {
+      "placeholder": "Search characters...",
+      "searching": "Searching...",
+      "forceRefresh": "Refresh Data",
+      "unknownError": "An unknown error occurred"
+    },
+    "character": {
+      "status": "Status",
+      "species": "Species",
+      "gender": "Gender",
+      "origin": "Origin",
+      "location": "Location",
+      "episodes": "Episodes"
+    }
+  }
+}

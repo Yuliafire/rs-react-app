@@ -1,0 +1,111 @@
+"use client";
+
+import { useCallback } from "react";
+import styles from "./Pagination.module.scss";
+import { useTheme } from "../../shared/hooks/useTheme";
+
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  loading: boolean;
+}
+
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  loading,
+}: PaginationProps) => {
+  const handlePageClick = useCallback(
+    (page: number) => {
+      if (page >= 1 && page <= totalPages && !loading) {
+        onPageChange(page);
+      }
+    },
+    [onPageChange, totalPages, loading],
+  );
+
+  const { theme } = useTheme();
+
+  const getPageNumbers = () => {
+    const delta = 2;
+    const range = [];
+    const left = Math.max(1, currentPage - delta);
+    const right = Math.min(totalPages, currentPage + delta);
+
+    if (left > 2) range.push(1);
+    if (left > 3) range.push("...");
+    for (let i = left; i <= right; i++) range.push(i);
+    if (right < totalPages - 2) range.push("...");
+    if (right < totalPages - 1) range.push(totalPages);
+
+    return range;
+  };
+
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className={`${styles.pagination} ${styles[theme]}`}>
+      <button
+        onClick={() => handlePageClick(currentPage - 1)}
+        disabled={currentPage === 1 || loading}
+        aria-label="Previous page"
+        className={styles.arrowButton}
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      {getPageNumbers().map((page, index) => (
+        <span key={index} className={styles.pageItem}>
+          {page === "..." ? (
+            <span className={styles.ellipsis}>...</span>
+          ) : (
+            <button
+              onClick={() => handlePageClick(page as number)}
+              className={currentPage === page ? styles.active : ""}
+              disabled={loading}
+              aria-current={currentPage === page ? "page" : undefined}
+              aria-label={`Page ${page}`}
+            >
+              {page}
+            </button>
+          )}
+        </span>
+      ))}
+
+      <button
+        onClick={() => handlePageClick(currentPage + 1)}
+        disabled={currentPage === totalPages || loading}
+        aria-label="Next page"
+        className={styles.arrowButton}
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  );
+};
+
+export default Pagination;

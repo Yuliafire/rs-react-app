@@ -1,0 +1,65 @@
+@use "../../../assets/styles/globals" as *;
+
+.button {
+  padding: $spacing-sm $spacing-lg;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition-long;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: $font-stack;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  position: relative;
+  overflow: hidden;
+  min-width: 7rem;
+  text-align: center;
+  border-radius: $border-radius-md;
+  
+
+  border: 1px solid var(--border);
+  color: var(--text);
+  background-color: var(--background-light);
+  
+
+  &:not(:disabled):hover {
+    background: var(--btn-hover);
+    color: var(--btn-hover-color);
+    box-shadow: $shadow-hover;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    border-color: var(--border);
+  }
+
+
+  &[type="submit"],
+  &[type="button"] {
+    border-color: var(--primary);
+    color: var(--primary);
+
+    &:hover:not(:disabled) {
+      background: var(--btn-hover);
+      color: var(--btn-hover-color);
+      box-shadow: 0 0 15px var(--btn-hover);
+    }
+  }
+
+
+  .dark & {
+    background-color: var(--background);
+    border-color: var(--primary);
+    color: var(--primary);
+
+    &:hover:not(:disabled) {
+      background: var(--btn-hover);
+      color: var(--btn-hover-color);
+    }
+  }
+}
