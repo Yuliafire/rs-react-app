@@ -1,9 +1,0 @@
-module.exports = {
-  '[project]/messages/ru.json (json)': (__turbopack_context__) => {
-    __turbopack_context__.v(
-      JSON.parse(
-        '{"Footer":{"copyright":"© 2025 Лингва Войс"},"Header":{"title":"Рик и Морти","about":"О проекте"},"About":{"title":"О проекте","subtitle":"Описание проекта","heading":"Информация об авторе","courseInfo":"RS School Риэкт Курс","back":"Назад","author":"Создано Юлией Подгурской","description":"Этот проект был разработан в рамках","link":"RS School Риэкт курса","courseName":"RS School React Курс"},"NavBar":{"AboutLink":"О проекте","darkTheme":"Темная тема","lightTheme":"Светлая тема","switchLanguage":"Англ"},"Card":{"noImage":"Изображение отсутствует","species":"Вид","gender":"Пол","origin":"Происхождение","location":"Местоположение","episodes":"Эпизоды","unknown":"Неизвестно","viewDetailsAria":"Посмотреть детали для {name}","selectAria":"Выбрать {name}","deselectAria":"Отменить выбор {name}","status":{"alive":"Жив","dead":"Мёртв","unknown":"Неизвестно"}},"CharacterDetails":{"unknown":"Неизвестно","status":"Статус","species":"Вид","gender":"Пол","origin":"Происхождение","location":"Местоположение","error":"Не удалось загрузить персонажа","notFound":"Персонаж не найден или неверный ID","close":"Закрыть"},"Search":{"placeholder":"Поиск персонажей...","search":"Поиск","searching":"Поиск...","forceRefresh":"Обновить","refreshing":"Обновление...","error":"Ошибка","unknownError":"Произошла неизвестная ошибка"},"Results":{"error":"Ошибка: {message}","noResults":"Персонажи не найдены"},"Flyout":{"unselectAll":"Снять все","download":"Скачать","selected":"Выбранные элементы"},"Loader":{"loading":"Загрузка..."}}'
-      )
-    );
-  },
-};

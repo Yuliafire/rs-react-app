@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///turbopack:///[project]/src/components/ui/CardList/Users/yuliapodgurskaia/rs-react-app/rs-react-app/my-app/src/components/ui/CardList/CardList.module.scss"],"sourcesContent":[".cardList {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));\n  gap: 20px;\n  padding: 20px 0;\n\n  @media (min-width: 768px) {\n    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));\n  }\n}\n"],"names":[],"mappings":"AAAA;;;;;;;AAME;EANF"}}]
-}

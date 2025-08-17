@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":["file:///Users/yuliapodgurskaia/rs-react-app/rs-react-app/my-app/src/app/%5Blocale%5D/page.tsx"],"sourcesContent":["'use server';\n\nimport About from \"@/components/About/About\";\n\nexport default async function AboutPage() {\n    return\n}"],"names":[],"mappings":";;;;;;AAIe,eAAe;IAC1B;AACJ;;;IAF8B;;AAAA,+OAAA","debugId":null}},
-    {"offset": {"line": 23, "column": 0}, "map": {"version":3,"sources":["file:///Users/yuliapodgurskaia/rs-react-app/rs-react-app/my-app/.next-internal/server/app/%5Blocale%5D/page/actions.js%20%28server%20actions%20loader%29"],"sourcesContent":["export {default as '001f1a39636da38b4259471b19104beb78af53a494'} from 'ACTIONS_MODULE0'\n"],"names":[],"mappings":";AAAA","debugId":null}}]
-}
