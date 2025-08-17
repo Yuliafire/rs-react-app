@@ -68,16 +68,6 @@ export interface Messages {
     author: string;
   };
 
-  // Search: {
-  //   placeholder: string;
-  //   buttonText: string;
-  // };
-
-  // SearchPageContent: {
-  //   buttonText: string;
-  //   errorText: string;
-  // };
-
   ResultItem: {
     id: number;
     name: string;
@@ -119,16 +109,21 @@ export interface Messages {
     buttonDownloadText: string;
   };
 
-  // About: {
-  //   firstTextTitle: string;
-  //   secondTextTitle: string;
-  //   linkTitle: string;
-  //   linkText: string;
-  //   buttonText: string;
-  // };
   ErrorBoundary: {
     title: string;
     description: string;
     buttonText: string;
+  };
+}
+
+export interface ServiceResponse<T> {
+  status: "success" | "error";
+  data: T;
+  message?: string;
+  info?: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
   };
 }

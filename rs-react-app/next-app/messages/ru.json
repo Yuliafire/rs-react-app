@@ -74,5 +74,30 @@
   },
   "Loader": {
     "loading": "Загрузка..."
+  },
+  
+  "Home": {
+    "title": "Персонажи Рика и Морти",
+    "loading": "Загрузка персонажей...",
+    "error": "Не удалось загрузить персонажей",
+    "search": {
+      "placeholder": "Поиск персонажей...",
+      "searching": "Поиск...",
+      "forceRefresh": "Обновить данные",
+      "unknownError": "Произошла неизвестная ошибка"
+    },
+    "character": {
+      "status": "Статус",
+      "species": "Вид",
+      "gender": "Пол",
+      "origin": "Происхождение",
+      "location": "Местоположение",
+      "episodes": "Эпизоды"
+    },
+    "pagination": {
+      "previous": "Назад",
+      "next": "Вперед",
+      "page": "Страница {page} из {totalPages}"
+    }
   }
 }

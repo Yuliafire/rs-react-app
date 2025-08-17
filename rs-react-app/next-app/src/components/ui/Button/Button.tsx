@@ -1,31 +1,34 @@
 "use client";
 
-import React from "react";
 import styles from "./Button.module.scss";
 
 interface ButtonProps {
-  children?: React.ReactNode;
-  onClick?: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  onClick?: () => void;
+  children: React.ReactNode;
+  ariaLabel?: string;
+  className?: string;
 }
 
-const Button = ({
-  children = null,
-  onClick,
+export default function Button({
   type = "button",
   disabled = false,
-}: ButtonProps) => {
+  onClick,
+  children,
+  ariaLabel,
+  className = "",
+}: ButtonProps) {
   return (
     <button
       type={type}
-      className={styles.button}
+      className={`${styles.button} ${className}`}
       onClick={onClick}
       disabled={disabled}
+      aria-label={ariaLabel}
+      suppressHydrationWarning
     >
       {children}
     </button>
   );
-};
-
-export default Button;
+}

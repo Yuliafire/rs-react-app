@@ -1,28 +1,30 @@
-import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { routing } from "../../i18n/routing";
-import { Messages } from "../../types/types";
 import ClientProviders from "../ClientProviders";
 import Footer from "./footer/page";
+import type { Locale } from "../../i18n/types";
 
 export default async function LocaleLayout({
   children,
-  params,
+  params: { locale },
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: Locale };
 }) {
-  const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
 
-  const messages: Messages = (await import(`../../../messages/${locale}.json`))
-    .default;
+  const messages = (await import(`../../../messages/${locale}.json`)).default;
+  const cookieStore = cookies();
+  const theme =
+    ((await cookieStore).get("theme")?.value as "light" | "dark") || "light";
 
   return (
-    <NextIntlClientProvider messages={messages}>
-      <ClientProviders>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <ClientProviders initialTheme={theme}>
         {children}
         <Footer />
       </ClientProviders>

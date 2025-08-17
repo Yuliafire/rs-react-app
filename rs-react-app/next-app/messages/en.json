@@ -78,5 +78,30 @@
 
   "Loader": {
     "loading": "Loading..."
+  },
+
+  "Home": {
+    "title": "Rick and Morty Characters",
+    "loading": "Loading characters...",
+    "error": "Failed to load characters",
+    "search": {
+      "placeholder": "Search characters...",
+      "searching": "Searching...",
+      "forceRefresh": "Refresh Data",
+      "unknownError": "An unknown error occurred"
+    },
+    "character": {
+      "status": "Status",
+      "species": "Species",
+      "gender": "Gender",
+      "origin": "Origin",
+      "location": "Location",
+      "episodes": "Episodes"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {page} of {totalPages}"
+    }
   }
 }

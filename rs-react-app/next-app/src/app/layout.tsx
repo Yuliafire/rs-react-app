@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.scss";
 
 export const metadata: Metadata = {
-  title: "My App",
-  description: "My App is a...",
+  title: "Rick and Morty App",
+  description: "My App is a Rick and Morty API Platform",
 };
 
 export default function RootLayout({
