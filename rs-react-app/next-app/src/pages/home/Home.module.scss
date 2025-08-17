@@ -94,17 +94,6 @@
     font-weight: 500;
     font-family: $font-stack;
 
-    &.light {
-      background: var(--primary);
-      color: var(--text);
-    }
-
-    &.dark {
-      background: var(--primary);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
     &:hover:not(:disabled) {
       background: var(--primary-hover);
       color: var(--btn-hover-color);
@@ -124,16 +113,28 @@
   span {
     @include responsive-typography($font-size-base, $font-size-xs);
     color: var(--text);
-
-    &.light {
-      color: var(--text);
-    }
-
-    &.dark {
-      color: var(--text);
-    }
   }
 }
+
+.pagination button.light {
+  background: var(--primary);
+  color: var(--text);
+}
+
+.pagination button.dark {
+  background: var(--primary);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.pagination span.light {
+  color: var(--text);
+}
+
+.pagination span.dark {
+  color: var(--text);
+}
+
 
 .home:has(> [data-testid="details"]) .container {
   flex-basis: 60%;

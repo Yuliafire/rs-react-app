@@ -1,3 +1,4 @@
+
 @use "../../assets/styles/globals" as *;
 
 .flyout {
@@ -80,6 +81,7 @@
   font-family: $font-stack;
   @include responsive-typography($font-size-base, $font-size-xs);
 
+
   &:hover {
     background: var(--btn-hover);
     transform: translateY(-1px);
@@ -100,3 +102,5 @@
     padding: $spacing-xs;
   }
 }
+
+

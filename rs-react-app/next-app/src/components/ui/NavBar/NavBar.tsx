@@ -13,11 +13,13 @@ export const NavBar = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const changeTheme = () => {
+  const changeTheme = (e: React.MouseEvent) => {
+    e.stopPropagation();
     toggleTheme();
   };
 
-  const switchLanguage = () => {
+  const switchLanguage = (e: React.MouseEvent) => {
+    e.stopPropagation();
     const queryParams = searchParams
       ? Object.fromEntries(searchParams.entries())
       : {};
@@ -37,11 +39,16 @@ export const NavBar = () => {
             {t("AboutLink")}
           </Link>
         </li>
-        <li className={styles.listItem} onClick={changeTheme}>
-          {theme === "light" ? t("darkTheme") : t("lightTheme")}
+
+        <li className={styles.listItem}>
+          <button className={styles.button} onClick={changeTheme}>
+            {theme === "light" ? t("darkTheme") : t("lightTheme")}
+          </button>
         </li>
-        <li className={styles.listItem} onClick={switchLanguage}>
-          {t("switchLanguage")}
+        <li className={styles.listItem}>
+          <button className={styles.button} onClick={switchLanguage}>
+            {t("switchLanguage")}
+          </button>
         </li>
       </ul>
     </nav>
