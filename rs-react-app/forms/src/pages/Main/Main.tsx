@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Modal from '../components/Modal/Modal';
-import UncontrolledForm from '../components/Form/controllers/Uncontrolled/Uncontrolled';
+import Modal from '../../components/Modal/Modal';
+import UncontrolledForm from '../../components/Form/controllers/Uncontrolled/Uncontrolled';
 // import ControlledForm from '../components/Form/controllers/Controlled/Controlled';
-import type { FormData } from '../components/Form/types/types';
+import type { FormData } from '../../components/Form/types/types';
 import styles from './Main.module.scss';
 
 // Create a new type for stored data that includes the base64 image

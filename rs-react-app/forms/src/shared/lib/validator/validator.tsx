@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 
-// Country data type for better type safety
 interface Country {
   code: string;
   name: string;

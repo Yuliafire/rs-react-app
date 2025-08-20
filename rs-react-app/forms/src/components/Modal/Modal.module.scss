@@ -17,7 +17,7 @@
   padding: 1.5rem;
   border-radius: 0.5rem;
   width: 100%;
-  max-width: 28rem; // 448px (equivalent to max-w-md)
+  max-width: 28rem; 
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -50,7 +50,6 @@
   }
 }
 
-// Optional: Add close button styles if you want to include a close button in the modal
 .closeButton {
   position: absolute;
   top: 0.75rem;

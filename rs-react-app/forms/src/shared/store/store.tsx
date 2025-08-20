@@ -1,20 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit';
-// import formsReducer from '../features/formsSlice';
-import countriesReducer from '../store/countriesSlice';
+import { configureStore, type ThunkAction } from '@reduxjs/toolkit';
 
-// export const store = configureStore({
-//   reducer: {
-//     forms: formsReducer,
-//     countries: countriesReducer,
-//   },
-// });
+import type { Action } from 'redux';
+
+import formReducer from '../../shared/store/formSlice';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
-    countries: countriesReducer,
-    // Add other reducers here
+    form: formReducer,
   },
+  devTools: process.env.NOD_ENV !== 'production',
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+setupListeners(store.dispatch);
+
+export type AppStore = typeof store;
+export type AppState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action<string>
+>;

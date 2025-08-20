@@ -1,32 +1,43 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { FormData, FormSubmission } from './formTypes';
+import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
+import type { FormData } from '../../components/Form/types/types';
 
-const initialState: {
-  submissions: FormSubmission[];
-} = {
-  submissions: [],
+type InitialStateSentFormData = { sentFormData: FormData[] };
+
+const initialState: InitialStateSentFormData = {
+  sentFormData: [],
 };
 
-const formSlice = createSlice({
-  name: 'forms',
+export const formSlice = createSlice({
+  name: 'form',
   initialState,
   reducers: {
-    addSubmission: (
-      state,
-      action: PayloadAction<Omit<FormSubmission, 'id' | 'isNew'>>
-    ) => {
-      state.submissions.unshift({
-        ...action.payload,
-        id: Date.now().toString(),
-        isNew: true,
-      });
-    },
-    clearHighlight: (state, action: PayloadAction<string>) => {
-      const submission = state.submissions.find((s) => s.id === action.payload);
-      if (submission) submission.isNew = false;
+    saveNewFormData: (state, action) => {
+      return {
+        ...state,
+        sentFormData: [
+          ...state.sentFormData,
+          {
+            name: action.payload.name,
+            age: action.payload.age,
+            email: action.payload.email,
+            password: action.payload.password,
+            confirmPassword: action.payload.confirmPassword,
+            gender: action.payload.gender,
+            termsAccepted: action.payload.termsAccepted,
+            country: action.payload.country,
+            image: action.payload.image,
+          },
+        ],
+      };
     },
   },
 });
 
-export const { addSubmission, clearHighlight } = formSlice.actions;
+export const selectSentFormData = createSelector(
+  (state: { form: { sentFormData: [FormData] } }) => state.form,
+  (form) => form.sentFormData
+);
+
+export const { saveNewFormData: addNewSubmit } = formSlice.actions;
 export default formSlice.reducer;
