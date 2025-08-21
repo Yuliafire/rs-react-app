@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import Modal from '../../components/Modal/Modal';
+import ControlledForm from '../../components/Form/controllers/Controlled/Controlled';
 import UncontrolledForm from '../../components/Form/controllers/Uncontrolled/Uncontrolled';
-// import ControlledForm from '../components/Form/controllers/Controlled/Controlled';
-import type { FormData } from '../../components/Form/types/types';
+import type { FormData } from '../../components/Form/Fields/FormFields';
 import styles from './Main.module.scss';
 
-// Create a new type for stored data that includes the base64 image
 interface StoredFormData extends Omit<FormData, 'image'> {
-  image?: string; // base64 string instead of FileList
+  image?: string; // base64 string
   formType: 'uncontrolled' | 'controlled';
   timestamp: number;
-  isNew: boolean;
 }
 
 export default function MainPage() {
@@ -19,83 +17,95 @@ export default function MainPage() {
   >(null);
   const [submittedData, setSubmittedData] = useState<StoredFormData[]>([]);
 
-  const handleFormSubmit = (
+  const handleFormSubmit = async (
     data: FormData,
     formType: 'uncontrolled' | 'controlled'
   ) => {
     console.log('Form submitted:', data, formType);
 
-    // Handle image conversion to base64 if image exists
-    if (data.image && data.image.length > 0) {
-      const file = data.image[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const formDataWithImage: StoredFormData = {
-          // Spread all data except image (we'll replace it)
-          name: data.name,
-          age: data.age,
-          email: data.email,
-          password: data.password,
-          confirmPassword: data.confirmPassword,
-          gender: data.gender,
-          acceptedTC: data.acceptedTC,
-          country: data.country,
-          // Replace FileList with base64 string
-          image: reader.result as string,
+    let formData: StoredFormData;
+
+    try {
+      if (data.image && data.image.length > 0) {
+        const file = data.image[0];
+        const base64Image = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.onerror = () => reject(new Error('Failed to read image'));
+          reader.readAsDataURL(file);
+        });
+
+        formData = {
+          ...data,
+          image: base64Image,
           formType,
           timestamp: Date.now(),
-          isNew: true,
-          termsAccepted: false,
         };
-        setSubmittedData((prev) => [...prev, formDataWithImage]);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      const formDataWithoutImage: StoredFormData = {
-        // Spread all data
-        name: data.name,
-        age: data.age,
-        email: data.email,
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-        gender: data.gender,
-        acceptedTC: data.acceptedTC,
-        country: data.country,
-        // No image
-        formType,
-        timestamp: Date.now(),
-        isNew: true,
-        termsAccepted: false,
-      };
-      setSubmittedData((prev) => [...prev, formDataWithoutImage]);
+      } else {
+        formData = {
+          ...data,
+          image: undefined,
+          formType,
+          timestamp: Date.now(),
+        };
+      }
+
+      setSubmittedData((prev) => [...prev, formData]);
+    } catch (error) {
+      console.error('Error processing form submission:', error);
     }
 
-    // Close modal after submission
     setShowModal(null);
   };
 
   return (
     <div className={styles.container}>
-      <header className="page-header">
+      <header className={styles.header}>
         <h1>Form Submission Portal</h1>
       </header>
 
       <div className={styles.buttonContainer}>
         <button
-          className={styles.uncontrolledButton}
-          onClick={() => setShowModal('uncontrolled')}
-        >
-          Show Uncontrolled Form
-        </button>
-        <button
-          className={styles.controlledButton}
+          className={styles.button}
           onClick={() => setShowModal('controlled')}
+          aria-label="Open controlled form"
         >
           Show Controlled Form
         </button>
+        <button
+          className={styles.button}
+          onClick={() => setShowModal('uncontrolled')}
+          aria-label="Open uncontrolled form"
+        >
+          Show Uncontrolled Form
+        </button>
       </div>
 
-      {/* Display submitted data */}
+      <Modal
+        isOpen={showModal !== null}
+        onClose={() => setShowModal(null)}
+        showCloseButton={true}
+      >
+        {showModal ? (
+          <>
+            <h2 className={styles.modalTitle}>
+              {showModal === 'controlled'
+                ? 'React Hook Form'
+                : 'Uncontrolled Form'}
+            </h2>
+            {showModal === 'controlled' ? (
+              <ControlledForm
+                onSubmit={(data) => handleFormSubmit(data, 'controlled')}
+              />
+            ) : (
+              <UncontrolledForm
+                onSubmit={(data) => handleFormSubmit(data, 'uncontrolled')}
+              />
+            )}
+          </>
+        ) : null}
+      </Modal>
+
       {submittedData.length > 0 && (
         <div className={styles.submittedData}>
           <h2>Submitted Forms</h2>
@@ -131,42 +141,6 @@ export default function MainPage() {
           ))}
         </div>
       )}
-
-      <Modal
-        isOpen={showModal === 'uncontrolled'}
-        onClose={() => setShowModal(null)}
-      >
-        <h2 className={styles.title}>Uncontrolled Form</h2>
-        <UncontrolledForm
-          onSubmit={(data) =>
-            handleFormSubmit(data as unknown as FormData, 'uncontrolled')
-          }
-        />
-        <button
-          className={styles.closeButton}
-          onClick={() => setShowModal(null)}
-        >
-          Close
-        </button>
-      </Modal>
-
-      <Modal
-        isOpen={showModal === 'controlled'}
-        onClose={() => setShowModal(null)}
-      >
-        <h2 className={styles.title}>Controlled Form (React Hook Form)</h2>
-        {/* <ControlledForm
-          onSubmit={(data) =>
-            handleFormSubmit(data as unknown as FormData, 'controlled')
-          }
-        /> */}
-        <button
-          className={styles.closeButton}
-          onClick={() => setShowModal(null)}
-        >
-          Close
-        </button>
-      </Modal>
     </div>
   );
 }

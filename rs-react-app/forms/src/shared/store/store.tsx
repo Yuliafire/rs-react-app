@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     form: formReducer,
   },
-  devTools: process.env.NOD_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 setupListeners(store.dispatch);

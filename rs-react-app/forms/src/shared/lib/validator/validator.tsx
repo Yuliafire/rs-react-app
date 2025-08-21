@@ -7,7 +7,6 @@ interface Country {
   zipExample?: string;
 }
 
-// Configure your country data (this would come from Redux in practice)
 const countries: Country[] = [
   {
     code: 'us',
@@ -30,8 +29,7 @@ const countries: Country[] = [
   // Add more countries as needed
 ];
 
-// Image validation constants
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 export const baseFormSchema = yup.object().shape({
@@ -139,12 +137,8 @@ export const baseFormSchema = yup.object().shape({
   }),
 });
 
-// Extended schema for React Hook Form with additional validation modes
-export const controlledFormSchema = baseFormSchema.shape({
-  // Additional real-time validation rules can go here
-});
+export const controlledFormSchema = baseFormSchema.shape({});
 
-// Helper function for file to base64 conversion
 export const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -154,7 +148,6 @@ export const fileToBase64 = (file: File): Promise<string> => {
   });
 };
 
-// Password strength indicator type
 export type PasswordStrength = {
   score: number;
   hasMinLength: boolean;
@@ -164,7 +157,6 @@ export type PasswordStrength = {
   hasSpecialChar: boolean;
 };
 
-// Password strength calculator
 export const calculatePasswordStrength = (
   password: string
 ): PasswordStrength => {
