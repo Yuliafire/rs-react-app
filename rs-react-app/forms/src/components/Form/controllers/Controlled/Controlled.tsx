@@ -29,9 +29,6 @@ export default function ControlledForm({ onSubmit }: ControlledFormProps) {
         errors={errors}
         passwordValue={password}
         onSubmit={onSubmit}
-        // onSubmit={function (): void {
-        //   throw new Error('Function not implemented.');
-        // }}
       />
       <button type="submit" disabled={!isValid} className={styles.submitButton}>
         Submit

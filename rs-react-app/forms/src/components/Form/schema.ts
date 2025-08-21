@@ -1,4 +1,7 @@
 import * as yup from 'yup';
+import { store } from '../../shared/store/store';
+
+const getCountries = () => store.getState().countries.countries || [];
 
 export const formSchema = yup.object({
   name: yup
@@ -28,7 +31,13 @@ export const formSchema = yup.object({
     .boolean()
     .required('You must accept terms and conditions')
     .oneOf([true], 'You must accept terms and conditions'),
-  country: yup.string().required('Country is required'),
+  country: yup
+    .string()
+    .required('Country is required')
+    .test('valid-country', 'Invalid country', (value) => {
+      const countries = getCountries();
+      return countries.length === 0 || countries.includes(value);
+    }),
   image: yup
     .mixed<FileList>()
     .test('fileType', 'Unsupported file format', (value) => {

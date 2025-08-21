@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import Modal from '../../components/Modal/Modal';
+import Modal from '../../components/ui/Modal/Modal';
 import ControlledForm from '../../components/Form/controllers/Controlled/Controlled';
 import UncontrolledForm from '../../components/Form/controllers/Uncontrolled/Uncontrolled';
 import type { FormData } from '../../components/Form/Fields/FormFields';
 import styles from './Main.module.scss';
 
 interface StoredFormData extends Omit<FormData, 'image'> {
-  image?: string; // base64 string
+  image?: string;
   formType: 'uncontrolled' | 'controlled';
   timestamp: number;
 }

@@ -26,7 +26,7 @@ const countries: Country[] = [
     zipRegex: /^(\d{5})$/,
     zipExample: 'e.g., 10115',
   },
-  // Add more countries as needed
+  // don't forget to add more countries
 ];
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;

@@ -11,12 +11,6 @@ export interface FormData {
   image?: FileList;
 }
 
-export interface StoredFormData extends FormData {
-  formType: 'uncontrolled' | 'controlled';
-  timestamp: number;
-  isNew?: boolean;
-}
-
 export interface FormSubmission {
   id: string;
   type: 'uncontrolled' | 'controlled';

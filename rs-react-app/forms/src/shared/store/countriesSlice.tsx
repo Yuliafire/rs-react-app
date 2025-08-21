@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { RootState } from '../store/store';
+import type { AppState } from '../store/store';
 
 const countriesList: string[] = [
   'Afghanistan',
@@ -198,29 +198,22 @@ const countriesList: string[] = [
   'Yemen',
   'Zambia',
   'Zimbabwe',
-];
+].sort();
 
 export interface CountriesState {
-  // Ensure it's exported
   countries: string[];
 }
 
 const initialState: CountriesState = {
-  countries: [],
+  countries: countriesList,
 };
 
 export const countriesSlice = createSlice({
   name: 'countries',
   initialState,
-  reducers: {
-    loadCountries: (state) => {
-      state.countries = countriesList;
-    },
-  },
+  reducers: {},
 });
 
-export const { loadCountries } = countriesSlice.actions;
-
-export const selectCountries = (state: RootState) => state.countries.countries;
+export const selectCountries = (state: AppState) => state.countries.countries;
 
 export default countriesSlice.reducer;

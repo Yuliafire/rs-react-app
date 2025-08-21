@@ -1,8 +1,8 @@
-// import { useSelector } from 'react-redux';
-// import { selectCountries } from '../../../shared/store/countriesSlice';
 import type { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { type FormSchemaType } from '../schema';
 import styles from './FormFields.module.scss';
+import { selectCountries } from '../../../shared/store/countriesSlice';
+import { useSelector } from 'react-redux';
 
 export type FormData = FormSchemaType;
 
@@ -21,7 +21,7 @@ export default function FormFields({
   errors,
   passwordValue,
 }: FormFieldsProps) {
-  //   const countries = useSelector(selectCountries);
+  const countries = useSelector(selectCountries);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -205,8 +205,7 @@ export default function FormFields({
         )}
       </div>
 
-      {/* Country Autocomplete */}
-      {/* <div className={styles.field}>
+      <div className={styles.field}>
         <label htmlFor="country" className={styles.label}>
           Country
         </label>
@@ -224,7 +223,7 @@ export default function FormFields({
         {errors?.country && (
           <span className={styles.error}>{errors.country.message}</span>
         )}
-      </div> */}
+      </div>
 
       {formType === 'uncontrolled' && (
         <input type="hidden" name="formType" value={formType} />
