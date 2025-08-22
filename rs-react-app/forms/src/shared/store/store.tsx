@@ -15,10 +15,10 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 
 export type AppStore = typeof store;
-export type AppState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
-  AppState,
+  RootState,
   unknown,
   Action<string>
 >;

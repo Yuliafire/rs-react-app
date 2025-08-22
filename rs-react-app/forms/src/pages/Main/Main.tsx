@@ -1,34 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../../components/ui/Modal/Modal';
 import ControlledForm from '../../components/Form/controllers/Controlled/Controlled';
 import UncontrolledForm from '../../components/Form/controllers/Uncontrolled/Uncontrolled';
-import type { FormData } from '../../components/Form/types/types';
+import type { FormData } from '../../components/Form/Fields/FormFields';
+import { selectSentFormData, addNewSubmit } from '../../shared/store/formSlice';
 import styles from './Main.module.scss';
-
-interface StoredFormData extends FormData {
-  formType: 'uncontrolled' | 'controlled';
-  timestamp: number;
-}
 
 export default function MainPage() {
   const [showModal, setShowModal] = useState<
     'uncontrolled' | 'controlled' | null
   >(null);
-  const [submittedData, setSubmittedData] = useState<StoredFormData[]>([]);
 
-  const handleFormSubmit = (
-    data: FormData,
-    formType: 'uncontrolled' | 'controlled'
-  ) => {
-    console.log('Form submitted:', data, formType);
+  const [newSubmissionId, setNewSubmissionId] = useState<string | null>(null);
+  const submissions = useSelector(selectSentFormData);
+  const dispatch = useDispatch();
 
-    const formData: StoredFormData = {
-      ...data,
-      formType,
-      timestamp: Date.now(),
-    };
+  useEffect(() => {
+    if (newSubmissionId) {
+      const timer = setTimeout(() => {
+        setNewSubmissionId(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [newSubmissionId]);
 
-    setSubmittedData((prev) => [...prev, formData]);
+  const handleFormSubmit = (data: Omit<FormData, 'id'>) => {
+    dispatch(addNewSubmit(data));
+    setNewSubmissionId(
+      submissions[submissions.length - 1]?.id || crypto.randomUUID()
+    );
     setShowModal(null);
   };
 
@@ -60,7 +61,7 @@ export default function MainPage() {
         onClose={() => setShowModal(null)}
         showCloseButton={true}
       >
-        {showModal ? (
+        {showModal && (
           <>
             <h2 className={styles.modalTitle}>
               {showModal === 'controlled'
@@ -68,24 +69,23 @@ export default function MainPage() {
                 : 'Uncontrolled Form'}
             </h2>
             {showModal === 'controlled' ? (
-              <ControlledForm
-                onSubmit={(data) => handleFormSubmit(data, 'controlled')}
-              />
+              <ControlledForm onSubmit={handleFormSubmit} />
             ) : (
-              <UncontrolledForm
-                onSubmit={(data) => handleFormSubmit(data, 'uncontrolled')}
-              />
+              <UncontrolledForm onSubmit={handleFormSubmit} />
             )}
           </>
-        ) : null}
+        )}
       </Modal>
 
-      {submittedData.length > 0 && (
+      {submissions.length > 0 && (
         <div className={styles.submittedData}>
           <h2>Submitted Forms</h2>
-          {submittedData.map((data, index) => (
-            <div key={index} className={styles.dataCard}>
-              <h3>{data.formType} Form Submission</h3>
+          {submissions.map((data) => (
+            <div
+              key={data.id}
+              className={`${styles.dataCard} ${data.id === newSubmissionId ? styles.highlightNew : ''}`}
+            >
+              <h3>Form Submission</h3>
               <p>
                 <strong>Name:</strong> {data.name}
               </p>

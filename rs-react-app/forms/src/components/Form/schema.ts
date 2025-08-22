@@ -3,6 +3,9 @@ import { store } from '../../shared/store/store';
 
 const getCountries = () => store.getState().countries.countries || [];
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const SUPPORTED_FORMATS = ['image/png', 'image/jpeg'];
+
 export const formSchema = yup.object({
   name: yup
     .string()
@@ -38,16 +41,36 @@ export const formSchema = yup.object({
       const countries = getCountries();
       return countries.length === 0 || countries.includes(value);
     }),
-
   image: yup
-    .string()
+    .mixed<string | File>()
     .required('Image is required')
-    .test('file-type', 'Only PNG or JPEG allowed', (value) =>
-      value
-        ? value.startsWith('data:image/png') ||
+    .test('file-type', 'Only PNG or JPEG allowed', (value) => {
+      if (typeof value === 'string') {
+        return (
+          value.startsWith('data:image/png') ||
           value.startsWith('data:image/jpeg')
-        : false
-    ),
+        );
+      }
+      if (value instanceof File) {
+        return SUPPORTED_FORMATS.includes(value.type);
+      }
+      return false;
+    })
+    .test('file-size', 'File too large (max 5MB)', (value) => {
+      if (value instanceof File) {
+        return value.size <= MAX_FILE_SIZE;
+      }
+      return true;
+    }),
 });
 
 export type FormSchemaType = yup.InferType<typeof formSchema>;
+
+export const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};

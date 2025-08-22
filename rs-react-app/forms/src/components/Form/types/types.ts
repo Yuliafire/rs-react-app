@@ -8,6 +8,8 @@ export interface FormData {
   country: string;
   acceptedTC: boolean;
   image: string;
+  id?: string;
+  // formType?: 'controlled' | 'uncontrolled';
 }
 
 export interface FormSubmission {

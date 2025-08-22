@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { AppState } from '../store/store';
+import type { RootState } from '../store/store';
 
 const countriesList: string[] = [
   'Afghanistan',
@@ -214,6 +214,6 @@ export const countriesSlice = createSlice({
   reducers: {},
 });
 
-export const selectCountries = (state: AppState) => state.countries.countries;
+export const selectCountries = (state: RootState) => state.countries.countries;
 
 export default countriesSlice.reducer;

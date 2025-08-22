@@ -26,13 +26,9 @@ const countries: Country[] = [
     zipRegex: /^(\d{5})$/,
     zipExample: 'e.g., 10115',
   },
-  // don't forget to add more countries
 ];
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
-
-export const baseFormSchema = yup.object().shape({
+export const formSchema = yup.object().shape({
   name: yup
     .string()
     .required('Name is required')
@@ -93,25 +89,19 @@ export const baseFormSchema = yup.object().shape({
       'Invalid gender selection'
     ),
 
-  termsAccepted: yup
+  acceptedTC: yup
     .boolean()
     .required('You must accept the terms and conditions')
     .oneOf([true], 'You must accept the terms and conditions'),
 
-  avatar: yup
-    .mixed()
+  image: yup
+    .string()
+    .notRequired()
     .test(
-      'fileSize',
-      'File too large (max 5MB)',
+      'valid-base64',
+      'Invalid image format',
       (value) =>
-        !value || (value instanceof File && value.size <= MAX_FILE_SIZE)
-    )
-    .test(
-      'fileFormat',
-      'Unsupported file format (only JPEG/PNG)',
-      (value) =>
-        !value ||
-        (value instanceof File && SUPPORTED_FORMATS.includes(value.type))
+        !value || (typeof value === 'string' && value.startsWith('data:image/'))
     ),
 
   country: yup
@@ -136,8 +126,6 @@ export const baseFormSchema = yup.object().shape({
     otherwise: (schema) => schema.notRequired(),
   }),
 });
-
-export const controlledFormSchema = baseFormSchema.shape({});
 
 export const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {

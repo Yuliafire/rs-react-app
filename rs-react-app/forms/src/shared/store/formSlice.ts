@@ -1,10 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { createSelector } from '@reduxjs/toolkit';
-import type { FormData } from '../../components/Form/types/types';
+import type { RootState } from '../store/store';
 
-type InitialStateSentFormData = { sentFormData: FormData[] };
+export interface FormData {
+  id: string;
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  acceptedTC: boolean;
+  country: string;
+  image: string;
+}
 
-const initialState: InitialStateSentFormData = {
+interface FormState {
+  sentFormData: FormData[];
+}
+
+const initialState: FormState = {
   sentFormData: [],
 };
 
@@ -12,30 +27,17 @@ export const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    saveNewFormData: (state, action) => {
-      return {
-        ...state,
-        sentFormData: [
-          ...state.sentFormData,
-          {
-            name: action.payload.name,
-            age: action.payload.age,
-            email: action.payload.email,
-            password: action.payload.password,
-            confirmPassword: action.payload.confirmPassword,
-            gender: action.payload.gender,
-            acceptedTC: action.payload.acceptedTC,
-            country: action.payload.country,
-            image: action.payload.image,
-          },
-        ],
-      };
+    saveNewFormData: (state, action: PayloadAction<Omit<FormData, 'id'>>) => {
+      state.sentFormData.push({
+        ...action.payload,
+        id: crypto.randomUUID(),
+      });
     },
   },
 });
 
 export const selectSentFormData = createSelector(
-  (state: { form: { sentFormData: [FormData] } }) => state.form,
+  (state: RootState) => state.form,
   (form) => form.sentFormData
 );
 

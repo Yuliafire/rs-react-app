@@ -1,5 +1,9 @@
-import type { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { type FormSchemaType } from '../schema';
+import type {
+  UseFormRegister,
+  FieldErrors,
+  UseFormSetValue,
+} from 'react-hook-form';
+import type { FormSchemaType } from '../schema';
 import styles from './FormFields.module.scss';
 import { selectCountries } from '../../../shared/store/countriesSlice';
 import { useSelector } from 'react-redux';
@@ -7,41 +11,19 @@ import { useSelector } from 'react-redux';
 export type FormData = FormSchemaType;
 
 interface FormFieldsProps {
-  formType: 'uncontrolled' | 'controlled';
-  onSubmit: (data: FormData) => void;
-  register?: UseFormRegister<FormData>;
-  errors?: FieldErrors<FormData>;
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FormData>;
   passwordValue?: string;
+  setValue: UseFormSetValue<FormData>;
 }
 
 export default function FormFields({
-  formType,
-  onSubmit,
   register,
   errors,
   passwordValue,
+  setValue,
 }: FormFieldsProps) {
   const countries = useSelector(selectCountries);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (formType === 'uncontrolled') {
-      const formData = new FormData(e.currentTarget);
-      const data = Object.fromEntries(formData.entries());
-      const processedData: FormData = {
-        name: data.name as string,
-        age: Number(data.age as string),
-        email: data.email as string,
-        password: data.password as string,
-        confirmPassword: data.confirmPassword as string,
-        gender: data.gender as string,
-        acceptedTC: data.acceptedTC === 'on',
-        country: data.country as string,
-        image: data.image as string,
-      };
-      onSubmit(processedData);
-    }
-  };
 
   const getPasswordStrength = (password: string = '') => {
     let strength = 0;
@@ -57,7 +39,14 @@ export default function FormFields({
     ? getPasswordStrength(passwordValue)
     : 0;
 
-  const fields = (
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setValue('image', file);
+    }
+  };
+
+  return (
     <div className={styles.form}>
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>
@@ -67,9 +56,9 @@ export default function FormFields({
           id="name"
           type="text"
           className={styles.input}
-          {...(register ? register('name') : {})}
+          {...register('name')}
         />
-        {errors?.name && (
+        {errors.name && (
           <span className={styles.error}>{errors.name.message}</span>
         )}
       </div>
@@ -83,9 +72,9 @@ export default function FormFields({
           type="number"
           min={0}
           className={styles.input}
-          {...(register ? register('age') : {})}
+          {...register('age')}
         />
-        {errors?.age && (
+        {errors.age && (
           <span className={styles.error}>{errors.age.message}</span>
         )}
       </div>
@@ -98,9 +87,9 @@ export default function FormFields({
           id="email"
           type="email"
           className={styles.input}
-          {...(register ? register('email') : {})}
+          {...register('email')}
         />
-        {errors?.email && (
+        {errors.email && (
           <span className={styles.error}>{errors.email.message}</span>
         )}
       </div>
@@ -113,7 +102,7 @@ export default function FormFields({
           id="password"
           type="password"
           className={styles.input}
-          {...(register ? register('password') : {})}
+          {...register('password')}
         />
         {passwordValue && (
           <div className={styles.passwordStrength}>
@@ -134,7 +123,7 @@ export default function FormFields({
             </div>
           </div>
         )}
-        {errors?.password && (
+        {errors.password && (
           <span className={styles.error}>{errors.password.message}</span>
         )}
       </div>
@@ -147,9 +136,9 @@ export default function FormFields({
           id="confirmPassword"
           type="password"
           className={styles.input}
-          {...(register ? register('confirmPassword') : {})}
+          {...register('confirmPassword')}
         />
-        {errors?.confirmPassword && (
+        {errors.confirmPassword && (
           <span className={styles.error}>{errors.confirmPassword.message}</span>
         )}
       </div>
@@ -158,17 +147,14 @@ export default function FormFields({
         <label htmlFor="gender" className={styles.label}>
           Gender
         </label>
-        <select
-          id="gender"
-          className={styles.input}
-          {...(register ? register('gender') : {})}
-        >
+        <select id="gender" className={styles.input} {...register('gender')}>
           <option value="">Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="other">Other</option>
+          <option value="prefer-not-to-say">Prefer not to say</option>
         </select>
-        {errors?.gender && (
+        {errors.gender && (
           <span className={styles.error}>{errors.gender.message}</span>
         )}
       </div>
@@ -178,12 +164,12 @@ export default function FormFields({
           id="acceptedTC"
           type="checkbox"
           className={styles.checkbox}
-          {...(register ? register('acceptedTC') : {})}
+          {...register('acceptedTC')}
         />
         <label htmlFor="acceptedTC" className={styles.label}>
           Accept Terms and Conditions
         </label>
-        {errors?.acceptedTC && (
+        {errors.acceptedTC && (
           <span className={styles.error}>{errors.acceptedTC.message}</span>
         )}
       </div>
@@ -197,9 +183,9 @@ export default function FormFields({
           type="file"
           accept="image/png, image/jpeg"
           className={styles.input}
-          {...(register ? register('image') : {})}
+          onChange={handleFileChange}
         />
-        {errors?.image && (
+        {errors.image && (
           <span className={styles.error}>{errors.image.message}</span>
         )}
       </div>
@@ -212,32 +198,17 @@ export default function FormFields({
           list="countries"
           id="country"
           className={styles.input}
-          {...(register ? register('country') : {})}
+          {...register('country')}
         />
         <datalist id="countries">
           {countries.map((country: string) => (
             <option key={country} value={country} />
           ))}
         </datalist>
-        {errors?.country && (
+        {errors.country && (
           <span className={styles.error}>{errors.country.message}</span>
         )}
       </div>
-
-      {formType === 'uncontrolled' && (
-        <input type="hidden" name="formType" value={formType} />
-      )}
     </div>
-  );
-
-  return formType === 'uncontrolled' ? (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      {fields}
-      <button type="submit" className={styles.submitButton}>
-        Submit
-      </button>
-    </form>
-  ) : (
-    fields
   );
 }
