@@ -24,7 +24,7 @@ export const formSlice = createSlice({
             password: action.payload.password,
             confirmPassword: action.payload.confirmPassword,
             gender: action.payload.gender,
-            termsAccepted: action.payload.termsAccepted,
+            acceptedTC: action.payload.acceptedTC,
             country: action.payload.country,
             image: action.payload.image,
           },

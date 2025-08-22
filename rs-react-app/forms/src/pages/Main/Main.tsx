@@ -2,11 +2,10 @@ import { useState } from 'react';
 import Modal from '../../components/ui/Modal/Modal';
 import ControlledForm from '../../components/Form/controllers/Controlled/Controlled';
 import UncontrolledForm from '../../components/Form/controllers/Uncontrolled/Uncontrolled';
-import type { FormData } from '../../components/Form/Fields/FormFields';
+import type { FormData } from '../../components/Form/types/types';
 import styles from './Main.module.scss';
 
-interface StoredFormData extends Omit<FormData, 'image'> {
-  image?: string;
+interface StoredFormData extends FormData {
   formType: 'uncontrolled' | 'controlled';
   timestamp: number;
 }
@@ -17,44 +16,19 @@ export default function MainPage() {
   >(null);
   const [submittedData, setSubmittedData] = useState<StoredFormData[]>([]);
 
-  const handleFormSubmit = async (
+  const handleFormSubmit = (
     data: FormData,
     formType: 'uncontrolled' | 'controlled'
   ) => {
     console.log('Form submitted:', data, formType);
 
-    let formData: StoredFormData;
+    const formData: StoredFormData = {
+      ...data,
+      formType,
+      timestamp: Date.now(),
+    };
 
-    try {
-      if (data.image && data.image.length > 0) {
-        const file = data.image[0];
-        const base64Image = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.onerror = () => reject(new Error('Failed to read image'));
-          reader.readAsDataURL(file);
-        });
-
-        formData = {
-          ...data,
-          image: base64Image,
-          formType,
-          timestamp: Date.now(),
-        };
-      } else {
-        formData = {
-          ...data,
-          image: undefined,
-          formType,
-          timestamp: Date.now(),
-        };
-      }
-
-      setSubmittedData((prev) => [...prev, formData]);
-    } catch (error) {
-      console.error('Error processing form submission:', error);
-    }
-
+    setSubmittedData((prev) => [...prev, formData]);
     setShowModal(null);
   };
 
@@ -126,6 +100,9 @@ export default function MainPage() {
               </p>
               <p>
                 <strong>Country:</strong> {data.country}
+              </p>
+              <p>
+                <strong>T&C Accepted:</strong> {data.acceptedTC ? 'Yes' : 'No'}
               </p>
               {data.image && (
                 <div>

@@ -38,17 +38,16 @@ export const formSchema = yup.object({
       const countries = getCountries();
       return countries.length === 0 || countries.includes(value);
     }),
+
   image: yup
-    .mixed<FileList>()
-    .test('fileType', 'Unsupported file format', (value) => {
-      if (!value || (value as FileList).length === 0) return true;
-      const file = value as FileList;
-      return file[0]?.type === 'image/jpeg' || file[0]?.type === 'image/png';
-    }),
-  formType: yup
-    .mixed<'uncontrolled' | 'controlled'>()
-    .oneOf(['uncontrolled', 'controlled'], 'Invalid form type')
-    .required('Form type is required'),
+    .string()
+    .required('Image is required')
+    .test('file-type', 'Only PNG or JPEG allowed', (value) =>
+      value
+        ? value.startsWith('data:image/png') ||
+          value.startsWith('data:image/jpeg')
+        : false
+    ),
 });
 
 export type FormSchemaType = yup.InferType<typeof formSchema>;

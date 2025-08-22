@@ -5,10 +5,10 @@ export interface FormData {
   password: string;
   confirmPassword: string;
   gender: string;
-  termsAccepted: boolean;
   country: string;
-  acceptedTC?: boolean;
-  image?: FileList;
+  acceptedTC: boolean;
+  // image: FileList;
+  image: string;
 }
 
 export interface FormSubmission {
