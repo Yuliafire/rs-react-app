@@ -37,8 +37,7 @@ export default function FormFields({
         gender: data.gender as string,
         acceptedTC: data.acceptedTC === 'on',
         country: data.country as string,
-        image: data.image as unknown as FileList,
-        formType: data.formType as 'uncontrolled' | 'controlled',
+        image: data.image as string,
       };
       onSubmit(processedData);
     }

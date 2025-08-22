@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormFields from '../../Fields/FormFields';
 import { formSchema, type FormSchemaType } from '../../schema';
-import styles from './Controlled.module.scss';
 
 interface ControlledFormProps {
   onSubmit: (data: FormSchemaType) => void;
@@ -22,7 +21,7 @@ export default function ControlledForm({ onSubmit }: ControlledFormProps) {
   const password = watch('password');
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormFields
         formType="controlled"
         register={register}
@@ -30,7 +29,7 @@ export default function ControlledForm({ onSubmit }: ControlledFormProps) {
         passwordValue={password}
         onSubmit={onSubmit}
       />
-      <button type="submit" disabled={!isValid} className={styles.submitButton}>
+      <button type="submit" disabled={!isValid}>
         Submit
       </button>
     </form>

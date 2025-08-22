@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import FormFields, { type FormData } from '../../Fields/FormFields';
-import styles from './Uncontrolled.module.scss';
 
 interface UncontrolledFormProps {
   onSubmit: (data: FormData) => void;
@@ -46,7 +45,7 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className={styles.form}>
+    <form ref={formRef} onSubmit={handleSubmit}>
       <FormFields
         formType="uncontrolled"
         errors={errors}
@@ -55,11 +54,9 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
         }}
       />
       {Object.keys(errors).length > 0 && (
-        <div className={styles.errorContainer}>
+        <div>
           {Object.values(errors).map((error, index) => (
-            <p key={index} className={styles.errorMessage}>
-              {error}
-            </p>
+            <p key={index}>{error}</p>
           ))}
         </div>
       )}

@@ -7,7 +7,6 @@ export interface FormData {
   gender: string;
   country: string;
   acceptedTC: boolean;
-  // image: FileList;
   image: string;
 }
 
