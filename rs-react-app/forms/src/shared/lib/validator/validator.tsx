@@ -111,20 +111,6 @@ export const formSchema = yup.object().shape({
       countries.map((c) => c.code),
       'Invalid country selection'
     ),
-
-  zipCode: yup.string().when('country', {
-    is: (country: string) =>
-      countries.some((c) => c.code === country && c.zipRegex),
-    then: (schema) =>
-      schema
-        .required('ZIP code is required for this country')
-        .test('valid-zip', 'Invalid ZIP code format', function (value) {
-          const countryCode = this.parent.country;
-          const country = countries.find((c) => c.code === countryCode);
-          return country?.zipRegex ? country.zipRegex.test(value ?? '') : true;
-        }),
-    otherwise: (schema) => schema.notRequired(),
-  }),
 });
 
 export const fileToBase64 = (file: File): Promise<string> => {

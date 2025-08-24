@@ -7,8 +7,9 @@ export interface FormData {
   gender: string;
   country: string;
   acceptedTC: boolean;
-  image: string;
+  // image: string;
   id?: string;
+  image: string | File;
 }
 
 export interface FormSubmission {

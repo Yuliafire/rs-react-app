@@ -7,18 +7,28 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  padding-top: 10px;
+  min-height: 25rem;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .field {
   display: flex;
   flex-direction: column;
+  min-height: 5rem;
+  flex: 0 0 auto;
+  box-sizing: border-box;
 }
 
 .checkboxField {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-height: 3rem; 
+  flex: 0 0 auto;
+  box-sizing: border-box;
 }
 
 .label {
@@ -36,6 +46,8 @@
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
+  flex: 0 0 2rem;
+  box-sizing: border-box;
 }
 
 .input:focus {
@@ -53,9 +65,13 @@
 }
 
 .error {
-  color: #ef4444;
+  color: red !important;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+  min-height: 1.5rem;
+  display: block;
+  flex: 0 0 1.5rem;
+  box-sizing: border-box;
 }
 
 .passwordStrength {

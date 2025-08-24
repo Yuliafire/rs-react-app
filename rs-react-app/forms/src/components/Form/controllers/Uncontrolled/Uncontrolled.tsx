@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { addNewSubmit } from '../../../../shared/store/formSlice';
 import { formSchema, fileToBase64 } from '../../schema';
+import type { FieldErrors } from 'react-hook-form';
 
 interface UncontrolledFormProps {
   onSubmit: () => void;
@@ -12,7 +13,7 @@ interface UncontrolledFormProps {
 export default function UncontrolledForm({
   onSubmit: closeModal,
 }: UncontrolledFormProps) {
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<FieldErrors<FormData>>({});
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useDispatch();
 
@@ -21,7 +22,9 @@ export default function UncontrolledForm({
 
     if (!formRef.current) {
       console.error('Form reference is not available');
-      setErrors({ form: 'Form reference is missing' });
+      setErrors({
+        root: { message: 'Form reference is missing' },
+      } as FieldErrors<FormData>);
       return;
     }
 
@@ -30,13 +33,15 @@ export default function UncontrolledForm({
     let imageFile: File | undefined;
 
     formData.forEach((value, key) => {
-      if (key === 'age') data[key] = Number(value);
-      else if (key === 'acceptedTC') data[key] = value === 'on';
-      else if (key === 'image' && value instanceof File) {
+      if (key === 'age') {
+        data[key] = value ? Number(value) : undefined;
+      } else if (key === 'acceptedTC') {
+        data[key] = value === 'on';
+      } else if (key === 'image' && value instanceof File) {
         imageFile = value;
         data[key] = value;
       } else {
-        data[key] = value;
+        data[key] = value || undefined;
       }
     });
 
@@ -44,22 +49,28 @@ export default function UncontrolledForm({
       const validatedData = await formSchema.validate(data, {
         abortEarly: false,
       });
-      setErrors({});
+      setErrors({}); // Clear all errors on success
 
       if (imageFile) {
         validatedData.image = await fileToBase64(imageFile);
       }
 
       dispatch(addNewSubmit(validatedData as FormData));
-
       closeModal();
     } catch (validationErrors) {
-      const newErrors: Record<string, string> = {};
+      const newErrors: FieldErrors<FormData> = {};
+
       if (validationErrors instanceof Yup.ValidationError) {
         validationErrors.inner.forEach((error) => {
-          if (error.path) newErrors[error.path] = error.message;
+          if (error.path) {
+            newErrors[error.path as keyof FormData] = {
+              type: error.type,
+              message: error.message,
+            };
+          }
         });
       }
+
       setErrors(newErrors);
     }
   };
@@ -67,15 +78,6 @@ export default function UncontrolledForm({
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate>
       <FormFields errors={errors} onSubmit={() => {}} />
-      {Object.keys(errors).length > 0 && (
-        <div style={{ marginTop: '10px', minHeight: '20px' }}>
-          {Object.values(errors).map((error, index) => (
-            <p key={index} style={{ color: 'red' }}>
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
       <button type="submit">Submit</button>
     </form>
   );
