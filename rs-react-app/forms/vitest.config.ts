@@ -25,6 +25,7 @@ export default defineConfig({
         'src/constants/**',
         'src/types/**',
         'src/main.{js,jsx,ts,tsx}',
+        '*.{js,jsx,ts,tsx}',
       ],
       thresholds: {
         global: {
