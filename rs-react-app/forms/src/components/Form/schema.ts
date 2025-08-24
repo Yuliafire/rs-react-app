@@ -43,8 +43,9 @@ export const formSchema = yup.object({
     }),
   image: yup
     .mixed<string | File>()
-    .required('Image is required')
+    .notRequired()
     .test('file-type', 'Only PNG or JPEG allowed', (value) => {
+      if (!value) return true;
       if (typeof value === 'string') {
         return (
           value.startsWith('data:image/png') ||
@@ -57,6 +58,7 @@ export const formSchema = yup.object({
       return false;
     })
     .test('file-size', 'File too large (max 5MB)', (value) => {
+      if (!value) return true;
       if (value instanceof File) {
         return value.size <= MAX_FILE_SIZE;
       }

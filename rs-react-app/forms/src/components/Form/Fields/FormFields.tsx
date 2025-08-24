@@ -47,7 +47,7 @@ export default function FormFields({
   };
 
   return (
-    <div className={styles.form}>
+    <div className={styles.form} data-testid="form-fields">
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>
           Name
@@ -57,9 +57,12 @@ export default function FormFields({
           type="text"
           className={styles.input}
           {...(register ? register('name') : { name: 'name' })}
+          data-testid="name-input"
         />
         {errors.name && (
-          <span className={styles.error}>{errors.name.message}</span>
+          <span className={styles.error} data-testid="name-error">
+            {errors.name.message}
+          </span>
         )}
       </div>
 
@@ -73,9 +76,12 @@ export default function FormFields({
           min={0}
           className={styles.input}
           {...(register ? register('age') : { name: 'age' })}
+          data-testid="age-input"
         />
         {errors.age && (
-          <span className={styles.error}>{errors.age.message}</span>
+          <span className={styles.error} data-testid="age-error">
+            {errors.age.message}
+          </span>
         )}
       </div>
 
@@ -88,9 +94,12 @@ export default function FormFields({
           type="email"
           className={styles.input}
           {...(register ? register('email') : { name: 'email' })}
+          data-testid="email-input"
         />
         {errors.email && (
-          <span className={styles.error}>{errors.email.message}</span>
+          <span className={styles.error} data-testid="email-error">
+            {errors.email.message}
+          </span>
         )}
       </div>
 
@@ -103,9 +112,13 @@ export default function FormFields({
           type="password"
           className={styles.input}
           {...(register ? register('password') : { name: 'password' })}
+          data-testid="password-input"
         />
         {passwordValue && (
-          <div className={styles.passwordStrength}>
+          <div
+            className={styles.passwordStrength}
+            data-testid="password-strength"
+          >
             <span className={styles.strengthText}>
               Strength: {passwordStrength}/5
             </span>
@@ -124,7 +137,9 @@ export default function FormFields({
           </div>
         )}
         {errors.password && (
-          <span className={styles.error}>{errors.password.message}</span>
+          <span className={styles.error} data-testid="password-error">
+            {errors.password.message}
+          </span>
         )}
       </div>
 
@@ -139,9 +154,12 @@ export default function FormFields({
           {...(register
             ? register('confirmPassword')
             : { name: 'confirmPassword' })}
+          data-testid="confirm-password-input"
         />
         {errors.confirmPassword && (
-          <span className={styles.error}>{errors.confirmPassword.message}</span>
+          <span className={styles.error} data-testid="confirm-password-error">
+            {errors.confirmPassword.message}
+          </span>
         )}
       </div>
 
@@ -153,6 +171,7 @@ export default function FormFields({
           id="gender"
           className={styles.input}
           {...(register ? register('gender') : { name: 'gender' })}
+          data-testid="gender-select"
         >
           <option value="">Select</option>
           <option value="male">Male</option>
@@ -161,7 +180,9 @@ export default function FormFields({
           <option value="prefer-not-to-say">Prefer not to say</option>
         </select>
         {errors.gender && (
-          <span className={styles.error}>{errors.gender.message}</span>
+          <span className={styles.error} data-testid="gender-error">
+            {errors.gender.message}
+          </span>
         )}
       </div>
 
@@ -171,12 +192,15 @@ export default function FormFields({
           type="checkbox"
           className={styles.checkbox}
           {...(register ? register('acceptedTC') : { name: 'acceptedTC' })}
+          data-testid="tc-checkbox"
         />
         <label htmlFor="acceptedTC" className={styles.label}>
           Accept Terms and Conditions
         </label>
         {errors.acceptedTC && (
-          <span className={styles.error}>{errors.acceptedTC.message}</span>
+          <span className={styles.error} data-testid="tc-error">
+            {errors.acceptedTC.message}
+          </span>
         )}
       </div>
 
@@ -190,9 +214,12 @@ export default function FormFields({
           accept="image/png, image/jpeg"
           className={styles.input}
           onChange={handleFileChange}
+          data-testid="image-input"
         />
         {errors.image && (
-          <span className={styles.error}>{errors.image.message}</span>
+          <span className={styles.error} data-testid="image-error">
+            {errors.image.message}
+          </span>
         )}
       </div>
 
@@ -205,6 +232,7 @@ export default function FormFields({
           id="country"
           className={styles.input}
           {...(register ? register('country') : { name: 'country' })}
+          data-testid="country-input"
         />
         <datalist id="countries">
           {countries.map((country: string) => (
@@ -212,7 +240,9 @@ export default function FormFields({
           ))}
         </datalist>
         {errors.country && (
-          <span className={styles.error}>{errors.country.message}</span>
+          <span className={styles.error} data-testid="country-error">
+            {errors.country.message}
+          </span>
         )}
       </div>
     </div>

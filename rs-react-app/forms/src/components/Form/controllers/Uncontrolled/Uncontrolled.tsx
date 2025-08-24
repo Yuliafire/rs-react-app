@@ -7,11 +7,11 @@ import { formSchema, fileToBase64 } from '../../schema';
 import type { FieldErrors } from 'react-hook-form';
 
 interface UncontrolledFormProps {
-  onSubmit: () => void;
+  onSubmit: (data: FormData) => void;
 }
 
 export default function UncontrolledForm({
-  onSubmit: closeModal,
+  onSubmit, // FIXED: Use the original name
 }: UncontrolledFormProps) {
   const [errors, setErrors] = useState<FieldErrors<FormData>>({});
   const formRef = useRef<HTMLFormElement>(null);
@@ -49,14 +49,16 @@ export default function UncontrolledForm({
       const validatedData = await formSchema.validate(data, {
         abortEarly: false,
       });
-      setErrors({}); // Clear all errors on success
+      setErrors({});
 
       if (imageFile) {
         validatedData.image = await fileToBase64(imageFile);
       }
 
       dispatch(addNewSubmit(validatedData as FormData));
-      closeModal();
+
+      // FIXED: Call onSubmit with the data
+      onSubmit(validatedData as FormData);
     } catch (validationErrors) {
       const newErrors: FieldErrors<FormData> = {};
 
