@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, it } from 'vitest';
 import { formSlice } from '../shared/store/formSlice';
 import type { FormState } from 'react-hook-form';
 
@@ -22,12 +22,6 @@ describe('saveNewFormData reducer', () => {
       },
     };
     const newState = formSlice.reducer(initialState, action);
-    // expect(newState.sentFormData).toHaveLength(1);
-    // expect(newState.sentFormData[0].id).toBeDefined();
-    // expect(newState.sentFormData[0]).toEqual({
-    //   ...action.payload,
-    //   id: expect.any(String),
-    // });
   });
 
   it('updates the state correctly when multiple form data are added', () => {
@@ -66,17 +60,6 @@ describe('saveNewFormData reducer', () => {
       formSlice.reducer(initialState, action1),
       action2
     );
-    // expect(newState.sentFormData).toHaveLength(2);
-    // expect(newState.sentFormData[0].id).toBeDefined();
-    // expect(newState.sentFormData[1].id).toBeDefined();
-    // expect(newState.sentFormData[0]).toEqual({
-    //   ...action1.payload,
-    //   id: expect.any(String),
-    // });
-    // expect(newState.sentFormData[1]).toEqual({
-    //   ...action2.payload,
-    //   id: expect.any(String),
-    // });
   });
 
   it('generates a unique id using crypto.randomUUID()', () => {
@@ -98,9 +81,5 @@ describe('saveNewFormData reducer', () => {
       },
     };
     const newState = formSlice.reducer(initialState, action);
-    // const id = newState.sentFormData[0].id;
-    // expect(id).toBeDefined();
-    // expect(id).toBeInstanceOf(String);
-    // expect(id.length).toBeGreaterThan(0);
   });
 });

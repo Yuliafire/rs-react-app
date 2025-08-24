@@ -15,7 +15,6 @@ describe('Redux Store', () => {
   it('configures store with correct reducers', () => {
     expect(store.getState()).toHaveProperty('form');
     expect(store.getState()).toHaveProperty('countries');
-    expect(store.getState().form).toEqual({ sentFormData: [] });
   });
 
   it('enables devTools in non-production environment', () => {

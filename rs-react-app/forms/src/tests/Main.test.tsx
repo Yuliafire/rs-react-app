@@ -253,7 +253,6 @@ describe('MainPage', () => {
     const store = mockStore();
     renderWithStore(store);
     fireEvent.click(screen.getByTestId('controlled-form-button'));
-    // await waitFor(() => {});
   });
 
   it('handles uncontrolled form submission', async () => {

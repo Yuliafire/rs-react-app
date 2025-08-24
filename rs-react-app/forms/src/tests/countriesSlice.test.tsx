@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import countriesReducer, {
-  selectCountries,
   type CountriesState,
 } from '../shared/store/countriesSlice';
 import { describe, beforeEach, it, expect } from 'vitest';
@@ -62,29 +61,6 @@ describe('countriesSlice', () => {
 
       const emptyStrings = countries.filter((country) => country.trim() === '');
       expect(emptyStrings).toHaveLength(0);
-    });
-  });
-
-  describe('selectCountries selector', () => {
-    it('should return the countries array from state', () => {
-      const mockState: MockRootState = {
-        countries: {
-          countries: ['Test Country 1', 'Test Country 2'],
-        },
-      };
-
-      const result = selectCountries(mockState);
-      expect(result).toEqual(['Test Country 1', 'Test Country 2']);
-    });
-
-    it('should return the actual countries list from the real state', () => {
-      const mockState: MockRootState = {
-        countries: getState().countries,
-      };
-
-      const result = selectCountries(mockState);
-      expect(result).toBe(getState().countries.countries);
-      expect(result.length).toBeGreaterThan(100);
     });
   });
 

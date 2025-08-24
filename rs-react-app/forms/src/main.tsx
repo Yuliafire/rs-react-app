@@ -5,8 +5,10 @@ import './index.css';
 import App from './App/App.tsx';
 import { store } from './shared/store/store';
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Root element not found');
+
+createRoot(rootElement).render(
   <StrictMode>
     <Provider store={store}>
       <App />

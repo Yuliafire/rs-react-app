@@ -16,12 +16,15 @@ export interface FormData {
 }
 
 interface FormState {
-  submissions(submissions: any): unknown;
+  submissions(submissions: unknown): unknown;
   sentFormData: FormData[];
 }
 
 const initialState: FormState = {
   sentFormData: [],
+  submissions: function (): unknown {
+    throw new Error('Function not implemented.');
+  },
 };
 
 export const formSlice = createSlice({

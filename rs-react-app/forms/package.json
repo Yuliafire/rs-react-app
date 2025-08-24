@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "format:fix": "prettier --write .",
     "lint": "eslint --fix .",
-    "prepare": "cd .. && husky rs-react-app/.husky",
+    "prepare": "cd .. && husky forms/.husky",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
   },
