@@ -57,7 +57,6 @@ export default function UncontrolledForm({
 
       dispatch(addNewSubmit(validatedData as FormData));
 
-      // FIXED: Call onSubmit with the data
       onSubmit(validatedData as FormData);
     } catch (validationErrors) {
       const newErrors: FieldErrors<FormData> = {};
