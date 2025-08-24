@@ -12,6 +12,7 @@ interface UncontrolledFormProps {
 
 export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
   const [errors, setErrors] = useState<FieldErrors<FormData>>({});
+  const [password, setPassword] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useDispatch();
 
@@ -54,7 +55,6 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
       }
 
       dispatch(addNewSubmit(validatedData as FormData));
-
       onSubmit(validatedData as FormData);
     } catch (validationErrors) {
       const newErrors: FieldErrors<FormData> = {};
@@ -74,9 +74,19 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
     }
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate>
-      <FormFields errors={errors} onSubmit={() => {}} />
+      <FormFields
+        errors={errors}
+        onSubmit={() => {}}
+        passwordValue={password}
+        setValue={undefined}
+        onPasswordChange={handlePasswordChange}
+      />
       <button type="submit">Submit</button>
     </form>
   );

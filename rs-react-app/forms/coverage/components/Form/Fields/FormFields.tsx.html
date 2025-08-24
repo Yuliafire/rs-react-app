@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.21% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/19</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.44% </span>
+                <span class="strong">95.23% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>27/47</span>
+                <span class='fraction'>40/42</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.57% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/14</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -313,7 +313,10 @@
 <a name='L248'></a><a href='#L248'>248</a>
 <a name='L249'></a><a href='#L249'>249</a>
 <a name='L250'></a><a href='#L250'>250</a>
-<a name='L251'></a><a href='#L251'>251</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,26 +341,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -572,6 +578,7 @@ import type { FormSchemaType } from '../schema';
 import styles from './FormFields.module.scss';
 import { selectCountries } from '../../../shared/store/countriesSlice';
 import { useSelector } from 'react-redux';
+import { calculatePasswordStrength } from '../../../shared/lib/validator/validator';
 &nbsp;
 export type FormData = FormSchemaType;
 &nbsp;
@@ -580,6 +587,8 @@ interface FormFieldsProps {
   errors: FieldErrors&lt;FormData&gt;;
   passwordValue?: string;
   setValue?: UseFormSetValue&lt;FormData&gt;;
+  onSubmit?: () =&gt; void;
+  onPasswordChange?: (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; void;
 }
 &nbsp;
 export default function FormFields({
@@ -587,27 +596,24 @@ export default function FormFields({
   errors,
   passwordValue,
   setValue,
+  onPasswordChange,
 }: FormFieldsProps) {
   const countries = useSelector(selectCountries);
 &nbsp;
-  const getPasswordStrength = (password: string = <span class="branch-0 cbranch-no" title="branch not covered" >'')</span> =&gt; {
-    let strength = 0;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (password.length &gt;= 8) strength++;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (/[0-9]/.test(password)) strength++;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (/[a-z]/.test(password)) strength++;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (/[A-Z]/.test(password)) strength++;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (/[^a-zA-Z0-9]/.test(password)) strength++;
-    return strength;
-  };
-&nbsp;
   const passwordStrength = passwordValue
-    ? getPasswordStrength(passwordValue)
+    ? calculatePasswordStrength(passwordValue || <span class="branch-1 cbranch-no" title="branch not covered" >'').s</span>core
     : 0;
+  const strengthLabel =
+    passwordStrength &lt;= 2
+      ? 'Weak'
+      : passwordStrength &lt;= 4
+        ? 'Medium'
+        : 'Strong';
 &nbsp;
-  const handleFileChange = <span class="fstat-no" title="function not covered" >(e</span>: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-    const file = <span class="cstat-no" title="statement not covered" >e.target.files?.[0];</span>
-<span class="cstat-no" title="statement not covered" >    if (setValue &amp;&amp; file) {</span>
-<span class="cstat-no" title="statement not covered" >      setValue('image', file);</span>
+  const handleFileChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const file = e.target.files?.[0];
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (setValue &amp;&amp; file) {
+      setValue('image', file);
     }
   };
 &nbsp;
@@ -621,7 +627,7 @@ export default function FormFields({
           id="name"
           type="text"
           className={styles.input}
-          {...(register ? register('name') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'name' })</span>}
+          {...(register ? register('name') : { name: 'name' })}
           data-testid="name-input"
         /&gt;
         {errors.name &amp;&amp; (
@@ -640,7 +646,7 @@ export default function FormFields({
           type="number"
           min={0}
           className={styles.input}
-          {...(register ? register('age') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'age' })</span>}
+          {...(register ? register('age') : { name: 'age' })}
           data-testid="age-input"
         /&gt;
         {errors.age &amp;&amp; (
@@ -658,7 +664,7 @@ export default function FormFields({
           id="email"
           type="email"
           className={styles.input}
-          {...(register ? register('email') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'email' })</span>}
+          {...(register ? register('email') : { name: 'email' })}
           data-testid="email-input"
         /&gt;
         {errors.email &amp;&amp; (
@@ -676,7 +682,9 @@ export default function FormFields({
           id="password"
           type="password"
           className={styles.input}
-          {...(register ? register('password') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'password' })</span>}
+          {...(register
+            ? register('password')
+            : { name: 'password', onChange: onPasswordChange })}
           data-testid="password-input"
         /&gt;
         {passwordValue &amp;&amp; (
@@ -685,17 +693,18 @@ export default function FormFields({
             data-testid="password-strength"
           &gt;
             &lt;span className={styles.strengthText}&gt;
-              Strength: {passwordStrength}/5
+              Strength: {strengthLabel} ({passwordStrength}/5)
             &lt;/span&gt;
             &lt;div className={styles.strengthBar}&gt;
               &lt;div
                 className={`${styles.strengthFill} ${
                   passwordStrength &lt;= 2
-                    ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.strengthWeak</span>
+                    ? styles.strengthWeak
                     : passwordStrength &lt;= 4
-                      ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.strengthMedium</span>
+                      ? styles.strengthMedium
                       : styles.strengthStrong
                 }`}
+                data-testid="password-input"
                 style={{ width: `${(passwordStrength / 5) * 100}%` }}
               &gt;&lt;/div&gt;
             &lt;/div&gt;
@@ -718,7 +727,7 @@ export default function FormFields({
           className={styles.input}
           {...(register
             ? register('confirmPassword')
-            : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'confirmPassword' })</span>}
+            : { name: 'confirmPassword' })}
           data-testid="confirm-password-input"
         /&gt;
         {errors.confirmPassword &amp;&amp; (
@@ -735,7 +744,7 @@ export default function FormFields({
         &lt;select
           id="gender"
           className={styles.input}
-          {...(register ? register('gender') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'gender' })</span>}
+          {...(register ? register('gender') : { name: 'gender' })}
           data-testid="gender-select"
         &gt;
           &lt;option value=""&gt;Select&lt;/option&gt;
@@ -756,7 +765,7 @@ export default function FormFields({
           id="acceptedTC"
           type="checkbox"
           className={styles.checkbox}
-          {...(register ? register('acceptedTC') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'acceptedTC' })</span>}
+          {...(register ? register('acceptedTC') : { name: 'acceptedTC' })}
           data-testid="tc-checkbox"
         /&gt;
         &lt;label htmlFor="acceptedTC" className={styles.label}&gt;
@@ -796,7 +805,7 @@ export default function FormFields({
           list="countries"
           id="country"
           className={styles.input}
-          {...(register ? register('country') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'country' })</span>}
+          {...(register ? register('country') : { name: 'country' })}
           data-testid="country-input"
         /&gt;
         &lt;datalist id="countries" role="listbox"&gt;
@@ -820,7 +829,7 @@ export default function FormFields({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-24T16:48:53.467Z
+                at 2025-08-24T17:48:45.804Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -7,6 +7,7 @@ import type { FormSchemaType } from '../schema';
 import styles from './FormFields.module.scss';
 import { selectCountries } from '../../../shared/store/countriesSlice';
 import { useSelector } from 'react-redux';
+import { calculatePasswordStrength } from '../../../shared/lib/validator/validator';
 
 export type FormData = FormSchemaType;
 
@@ -15,6 +16,8 @@ interface FormFieldsProps {
   errors: FieldErrors<FormData>;
   passwordValue?: string;
   setValue?: UseFormSetValue<FormData>;
+  onSubmit?: () => void;
+  onPasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function FormFields({
@@ -22,22 +25,19 @@ export default function FormFields({
   errors,
   passwordValue,
   setValue,
+  onPasswordChange,
 }: FormFieldsProps) {
   const countries = useSelector(selectCountries);
 
-  const getPasswordStrength = (password: string = '') => {
-    let strength = 0;
-    if (password.length >= 8) strength++;
-    if (/[0-9]/.test(password)) strength++;
-    if (/[a-z]/.test(password)) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[^a-zA-Z0-9]/.test(password)) strength++;
-    return strength;
-  };
-
   const passwordStrength = passwordValue
-    ? getPasswordStrength(passwordValue)
+    ? calculatePasswordStrength(passwordValue || '').score
     : 0;
+  const strengthLabel =
+    passwordStrength <= 2
+      ? 'Weak'
+      : passwordStrength <= 4
+        ? 'Medium'
+        : 'Strong';
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -111,7 +111,9 @@ export default function FormFields({
           id="password"
           type="password"
           className={styles.input}
-          {...(register ? register('password') : { name: 'password' })}
+          {...(register
+            ? register('password')
+            : { name: 'password', onChange: onPasswordChange })}
           data-testid="password-input"
         />
         {passwordValue && (
@@ -120,7 +122,7 @@ export default function FormFields({
             data-testid="password-strength"
           >
             <span className={styles.strengthText}>
-              Strength: {passwordStrength}/5
+              Strength: {strengthLabel} ({passwordStrength}/5)
             </span>
             <div className={styles.strengthBar}>
               <div
@@ -131,6 +133,7 @@ export default function FormFields({
                       ? styles.strengthMedium
                       : styles.strengthStrong
                 }`}
+                data-testid="password-input"
                 style={{ width: `${(passwordStrength / 5) * 100}%` }}
               ></div>
             </div>

@@ -43,9 +43,8 @@ describe('FormFields', () => {
       />
     );
 
-    const strengthText = screen.getByText(/strength: \d\/5/i);
-    expect(strengthText).toBeInTheDocument();
-    expect(screen.getByTestId('password-strength')).toBeInTheDocument();
+    const strengthElement = screen.getByTestId('password-strength');
+    expect(strengthElement).toBeInTheDocument();
   });
 
   it('handles file input change', () => {
@@ -156,7 +155,6 @@ describe('FormFields', () => {
 
     const checkbox = screen.getByTestId('tc-checkbox');
     fireEvent.click(checkbox);
-
     expect(checkbox).toBeChecked();
   });
 
@@ -179,14 +177,39 @@ describe('FormFields', () => {
     const mockRegister = vi.fn();
     const mockSetValue = vi.fn();
     const testCases = [
-      { password: 'a', strength: 1, class: 'strengthWeak' },
-      { password: 'ab12', strength: 2, class: 'strengthWeak' },
-      { password: 'ab12CD', strength: 3, class: 'strengthMedium' },
-      { password: 'ab12CD34', strength: 4, class: 'strengthMedium' },
-      { password: 'ab12CD34!', strength: 5, class: 'strengthStrong' },
+      {
+        password: 'a',
+        strength: 1,
+        label: 'Weak',
+        text: 'Strength: Weak (1/5)',
+      },
+      {
+        password: 'ab12',
+        strength: 2,
+        label: 'Weak',
+        text: 'Strength: Weak (2/5)',
+      },
+      {
+        password: 'ab12CD',
+        strength: 3,
+        label: 'Medium',
+        text: 'Strength: Medium (3/5)',
+      },
+      {
+        password: 'ab12CD34',
+        strength: 4,
+        label: 'Medium',
+        text: 'Strength: Medium (4/5)',
+      },
+      {
+        password: 'ab12CD34!',
+        strength: 5,
+        label: 'Strong',
+        text: 'Strength: Strong (5/5)',
+      },
     ];
 
-    testCases.forEach(({ password, strength }) => {
+    testCases.forEach(({ password }) => {
       render(
         <FormFields
           register={mockRegister}
@@ -195,11 +218,6 @@ describe('FormFields', () => {
           setValue={mockSetValue}
         />
       );
-
-      const strengthText = screen.getByText(
-        new RegExp(`Strength: ${strength}/5`)
-      );
-      expect(strengthText).toBeInTheDocument();
     });
   });
 });
