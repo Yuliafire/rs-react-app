@@ -1,0 +1,57 @@
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #333;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  gap: 1rem;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ef4444;
+  margin: 0;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: white;
+  margin: 0;
+}
+
+.errorMessage {
+  font-size: 1rem;
+  color: white;
+  margin: 0;
+}
+
+.errorMessage i {
+  font-style: italic;
+  color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .errorPage {
+    padding: 1.5rem;
+  }
+
+  .heading {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .errorMessage {
+    font-size: 0.875rem;
+  }
+}
