@@ -1,6 +1,6 @@
+import FormFields from '../../Fields/FormFields';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import FormFields from '../../Fields/FormFields';
 import { formSchema, type FormSchemaType, fileToBase64 } from '../../schema';
 
 interface ControlledFormProps {

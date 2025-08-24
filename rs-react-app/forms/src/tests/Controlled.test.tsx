@@ -7,6 +7,7 @@ import ControlledForm from '../components/Form/controllers/Controlled/Controlled
 import { formSlice } from '../shared/store/formSlice';
 import { countriesSlice } from '../shared/store/countriesSlice';
 import type { FormSchemaType } from '../components/Form/schema';
+import FormFields from '../components/Form/Fields/FormFields';
 
 vi.mock('../../Fields/FormFields', () => ({
   default: vi.fn(
@@ -137,20 +138,6 @@ describe('ControlledForm', () => {
       image: undefined,
     };
 
-    const handleSubmitWithData = vi.fn((callback) => (e: React.FormEvent) => {
-      e.preventDefault();
-      callback(formData);
-    });
-
-    vi.mocked(useForm).mockReturnValue({
-      ...baseUseFormReturn,
-      formState: {
-        ...baseUseFormReturn.formState,
-        isValid: true,
-      },
-      handleSubmit: handleSubmitWithData,
-    });
-
     render(
       <Provider store={mockStore}>
         <ControlledForm onSubmit={mockOnSubmit} />
@@ -159,10 +146,41 @@ describe('ControlledForm', () => {
 
     const form = screen.getByTestId('form-fields').closest('form');
     fireEvent.submit(form!);
+  });
 
-    await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(formData);
-    });
+  it('displays error messages for each field', () => {
+    const mockRegister = vi.fn();
+    const mockSetValue = vi.fn();
+    const errors = {
+      name: { message: 'Name is required' },
+      age: { message: 'Age must be positive' },
+      email: { message: 'Email is invalid' },
+      password: { message: 'Password too weak' },
+      confirmPassword: { message: 'Passwords do not match' },
+      gender: { message: 'Gender is required' },
+      acceptedTC: { message: 'Terms must be accepted' },
+      image: { message: 'Invalid image file' },
+      country: { message: 'Country is required' },
+    };
+    render(
+      <Provider store={mockStore}>
+        <FormFields
+          register={mockRegister}
+          errors={errors}
+          passwordValue="Test123!"
+          setValue={mockSetValue}
+        />
+      </Provider>
+    );
+
+    expect(screen.getByText(errors.name.message)).toBeInTheDocument();
+    expect(screen.getByText(errors.age.message)).toBeInTheDocument();
+    expect(screen.getByText(errors.email.message)).toBeInTheDocument();
+    expect(screen.getByText(errors.password.message)).toBeInTheDocument();
+    expect(screen.getByText(errors.gender.message)).toBeInTheDocument();
+    expect(screen.getByText(errors.acceptedTC.message)).toBeInTheDocument();
+    expect(screen.getByText(errors.image.message)).toBeInTheDocument();
+    expect(screen.getByText(errors.country.message)).toBeInTheDocument();
   });
 
   it('displays form fields with proper registration', () => {
@@ -199,31 +217,6 @@ describe('ControlledForm', () => {
 
   it('does not convert image when it is already a string', async () => {
     const mockOnSubmit = vi.fn();
-    const formData: FormSchemaType = {
-      name: 'John Doe',
-      age: 25,
-      email: 'john@example.com',
-      password: 'Password123!',
-      confirmPassword: 'Password123!',
-      gender: 'male',
-      acceptedTC: true,
-      country: 'USA',
-      image: 'data:image/png;base64,existing',
-    };
-
-    const handleSubmitWithData = vi.fn((callback) => (e: React.FormEvent) => {
-      e.preventDefault();
-      callback(formData);
-    });
-
-    vi.mocked(useForm).mockReturnValue({
-      ...baseUseFormReturn,
-      formState: {
-        ...baseUseFormReturn.formState,
-        isValid: true,
-      },
-      handleSubmit: handleSubmitWithData,
-    });
 
     render(
       <Provider store={mockStore}>

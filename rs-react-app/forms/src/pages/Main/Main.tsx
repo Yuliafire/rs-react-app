@@ -13,7 +13,7 @@ export default function MainPage() {
     'uncontrolled' | 'controlled' | null
   >(null);
   const [newSubmissionId, setNewSubmissionId] = useState<string | null>(null);
-  const submissions = useSelector(selectSentFormData);
+  const submissions = useSelector(selectSentFormData) || [];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function MainPage() {
         <button
           className={styles.button}
           onClick={() => setShowModal('controlled')}
-          aria-label="Open controlled form"
+          aria-label="Show Controlled Form"
           data-testid="controlled-form-button"
         >
           Show Controlled Form
@@ -68,7 +68,7 @@ export default function MainPage() {
         <button
           className={styles.button}
           onClick={() => setShowModal('uncontrolled')}
-          aria-label="Open uncontrolled form"
+          aria-label="Show Uncontrolled Form"
           data-testid="uncontrolled-form-button"
         >
           Show Uncontrolled Form
@@ -79,6 +79,7 @@ export default function MainPage() {
         isOpen={showModal !== null}
         onClose={() => setShowModal(null)}
         showCloseButton={true}
+        data-testid="modal"
       >
         {showModal && (
           <>
@@ -96,7 +97,7 @@ export default function MainPage() {
         )}
       </Modal>
 
-      {submissions.length > 0 && (
+      {Array.isArray(submissions) && submissions.length > 0 && (
         <div className={styles.submittedData} data-testid="submitted-forms">
           <h2>Submitted Forms</h2>
           {submissions.map((data) => (
@@ -131,6 +132,7 @@ export default function MainPage() {
                     src={data.image}
                     alt="Uploaded"
                     className={styles.previewImage}
+                    data-testid="submission-image"
                   />
                 </div>
               )}

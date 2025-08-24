@@ -16,6 +16,7 @@ export interface FormData {
 }
 
 interface FormState {
+  submissions(submissions: any): unknown;
   sentFormData: FormData[];
 }
 

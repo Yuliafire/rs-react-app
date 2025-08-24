@@ -1,20 +1,19 @@
 import { useState, useRef } from 'react';
 import FormFields, { type FormData } from '../../Fields/FormFields';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { addNewSubmit } from '../../../../shared/store/formSlice';
-import { formSchema, fileToBase64 } from '../../schema';
+import { formSchema } from '../../schema';
 import type { FieldErrors } from 'react-hook-form';
 
 interface UncontrolledFormProps {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (
+    data: Omit<FormData, 'id'> & { image?: string | File | null }
+  ) => void;
 }
 
 export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
   const [errors, setErrors] = useState<FieldErrors<FormData>>({});
   const [password, setPassword] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
-  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,15 +30,19 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
     const data: Partial<FormData> = {};
     let imageFile: File | undefined;
 
+    const imageInput = formRef.current.elements.namedItem(
+      'image'
+    ) as HTMLInputElement;
+    if (imageInput && imageInput.files && imageInput.files[0]) {
+      imageFile = imageInput.files[0];
+    }
+
     formData.forEach((value, key) => {
       if (key === 'age') {
         data[key] = value ? Number(value) : undefined;
       } else if (key === 'acceptedTC') {
         data[key] = value === 'on';
-      } else if (key === 'image' && value instanceof File) {
-        imageFile = value;
-        data[key] = value;
-      } else {
+      } else if (key !== 'image') {
         data[key] = value || undefined;
       }
     });
@@ -51,11 +54,12 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
       setErrors({});
 
       if (imageFile) {
-        validatedData.image = await fileToBase64(imageFile);
+        validatedData.image = imageFile;
       }
 
-      dispatch(addNewSubmit(validatedData as FormData));
-      onSubmit(validatedData as FormData);
+      onSubmit(
+        validatedData as Omit<FormData, 'id'> & { image?: string | File | null }
+      );
     } catch (validationErrors) {
       const newErrors: FieldErrors<FormData> = {};
 
@@ -87,7 +91,9 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
         setValue={undefined}
         onPasswordChange={handlePasswordChange}
       />
-      <button type="submit">Submit</button>
+      <button type="submit" data-testid="submit-button">
+        Submit
+      </button>
     </form>
   );
 }
