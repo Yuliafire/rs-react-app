@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>16/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.61% </span>
+                <span class="strong">57.44% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>44/47</span>
+                <span class='fraction'>27/47</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
@@ -338,26 +338,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -592,11 +592,11 @@ export default function FormFields({
 &nbsp;
   const getPasswordStrength = (password: string = <span class="branch-0 cbranch-no" title="branch not covered" >'')</span> =&gt; {
     let strength = 0;
-    if (password.length &gt;= 8) strength++;
-    if (/[0-9]/.test(password)) strength++;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (password.length &gt;= 8) strength++;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (/[0-9]/.test(password)) strength++;
     <span class="missing-if-branch" title="else path not taken" >E</span>if (/[a-z]/.test(password)) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[^a-zA-Z0-9]/.test(password)) strength++;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (/[A-Z]/.test(password)) strength++;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (/[^a-zA-Z0-9]/.test(password)) strength++;
     return strength;
   };
 &nbsp;
@@ -604,10 +604,10 @@ export default function FormFields({
     ? getPasswordStrength(passwordValue)
     : 0;
 &nbsp;
-  const handleFileChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-    const file = e.target.files?.[0];
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (setValue &amp;&amp; file) {
-      setValue('image', file);
+  const handleFileChange = <span class="fstat-no" title="function not covered" >(e</span>: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const file = <span class="cstat-no" title="statement not covered" >e.target.files?.[0];</span>
+<span class="cstat-no" title="statement not covered" >    if (setValue &amp;&amp; file) {</span>
+<span class="cstat-no" title="statement not covered" >      setValue('image', file);</span>
     }
   };
 &nbsp;
@@ -621,7 +621,7 @@ export default function FormFields({
           id="name"
           type="text"
           className={styles.input}
-          {...(register ? register('name') : { name: 'name' })}
+          {...(register ? register('name') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'name' })</span>}
           data-testid="name-input"
         /&gt;
         {errors.name &amp;&amp; (
@@ -640,7 +640,7 @@ export default function FormFields({
           type="number"
           min={0}
           className={styles.input}
-          {...(register ? register('age') : { name: 'age' })}
+          {...(register ? register('age') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'age' })</span>}
           data-testid="age-input"
         /&gt;
         {errors.age &amp;&amp; (
@@ -658,7 +658,7 @@ export default function FormFields({
           id="email"
           type="email"
           className={styles.input}
-          {...(register ? register('email') : { name: 'email' })}
+          {...(register ? register('email') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'email' })</span>}
           data-testid="email-input"
         /&gt;
         {errors.email &amp;&amp; (
@@ -676,7 +676,7 @@ export default function FormFields({
           id="password"
           type="password"
           className={styles.input}
-          {...(register ? register('password') : { name: 'password' })}
+          {...(register ? register('password') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'password' })</span>}
           data-testid="password-input"
         /&gt;
         {passwordValue &amp;&amp; (
@@ -691,9 +691,9 @@ export default function FormFields({
               &lt;div
                 className={`${styles.strengthFill} ${
                   passwordStrength &lt;= 2
-                    ? styles.strengthWeak
+                    ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.strengthWeak</span>
                     : passwordStrength &lt;= 4
-                      ? styles.strengthMedium
+                      ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.strengthMedium</span>
                       : styles.strengthStrong
                 }`}
                 style={{ width: `${(passwordStrength / 5) * 100}%` }}
@@ -718,7 +718,7 @@ export default function FormFields({
           className={styles.input}
           {...(register
             ? register('confirmPassword')
-            : { name: 'confirmPassword' })}
+            : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'confirmPassword' })</span>}
           data-testid="confirm-password-input"
         /&gt;
         {errors.confirmPassword &amp;&amp; (
@@ -735,7 +735,7 @@ export default function FormFields({
         &lt;select
           id="gender"
           className={styles.input}
-          {...(register ? register('gender') : { name: 'gender' })}
+          {...(register ? register('gender') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'gender' })</span>}
           data-testid="gender-select"
         &gt;
           &lt;option value=""&gt;Select&lt;/option&gt;
@@ -756,7 +756,7 @@ export default function FormFields({
           id="acceptedTC"
           type="checkbox"
           className={styles.checkbox}
-          {...(register ? register('acceptedTC') : { name: 'acceptedTC' })}
+          {...(register ? register('acceptedTC') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'acceptedTC' })</span>}
           data-testid="tc-checkbox"
         /&gt;
         &lt;label htmlFor="acceptedTC" className={styles.label}&gt;
@@ -796,7 +796,7 @@ export default function FormFields({
           list="countries"
           id="country"
           className={styles.input}
-          {...(register ? register('country') : { name: 'country' })}
+          {...(register ? register('country') : <span class="branch-1 cbranch-no" title="branch not covered" >{ name: 'country' })</span>}
           data-testid="country-input"
         /&gt;
         &lt;datalist id="countries" role="listbox"&gt;
@@ -820,7 +820,7 @@ export default function FormFields({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-24T15:29:17.070Z
+                at 2025-08-24T16:48:53.467Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
