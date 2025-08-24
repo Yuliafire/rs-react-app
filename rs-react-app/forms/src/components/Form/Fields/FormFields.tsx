@@ -234,7 +234,7 @@ export default function FormFields({
           {...(register ? register('country') : { name: 'country' })}
           data-testid="country-input"
         />
-        <datalist id="countries">
+        <datalist id="countries" role="listbox">
           {countries.map((country: string) => (
             <option key={country} value={country} />
           ))}

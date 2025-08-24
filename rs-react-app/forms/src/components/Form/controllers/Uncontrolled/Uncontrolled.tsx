@@ -10,9 +10,7 @@ interface UncontrolledFormProps {
   onSubmit: (data: FormData) => void;
 }
 
-export default function UncontrolledForm({
-  onSubmit, // FIXED: Use the original name
-}: UncontrolledFormProps) {
+export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
   const [errors, setErrors] = useState<FieldErrors<FormData>>({});
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useDispatch();
