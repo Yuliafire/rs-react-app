@@ -1,15 +1,22 @@
 import { useState, useRef } from 'react';
 import FormFields, { type FormData } from '../../Fields/FormFields';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addNewSubmit } from '../../../../shared/store/formSlice';
+import { formSchema, fileToBase64 } from '../../schema';
 
 interface UncontrolledFormProps {
-  onSubmit: (data: FormData) => void;
+  onSubmit: () => void;
 }
 
-export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
+export default function UncontrolledForm({
+  onSubmit: closeModal,
+}: UncontrolledFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const formRef = useRef<HTMLFormElement>(null);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formRef.current) {
@@ -19,47 +26,57 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
     }
 
     const formData = new FormData(formRef.current);
-    const data = Object.fromEntries(formData) as unknown as FormData;
+    const data: Partial<FormData> = {};
+    let imageFile: File | undefined;
 
-    const newErrors: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      if (key === 'age') data[key] = Number(value);
+      else if (key === 'acceptedTC') data[key] = value === 'on';
+      else if (key === 'image' && value instanceof File) {
+        imageFile = value;
+        data[key] = value;
+      } else {
+        data[key] = value;
+      }
+    });
 
-    if (!data.name) newErrors.name = 'Name is required';
-    if (!data.age || isNaN(Number(data.age)))
-      newErrors.age = 'Age must be a valid number';
-    if (!data.email) newErrors.email = 'Email is required';
-    if (!data.password) newErrors.password = 'Password is required';
-    if (data.password !== data.confirmPassword)
-      newErrors.confirmPassword = 'Passwords do not match';
-    if (!data.gender) newErrors.gender = 'Gender is required';
-    if (!data.acceptedTC)
-      newErrors.acceptedTC = 'You must accept terms and conditions';
-    if (!data.country) newErrors.country = 'Country is required';
+    try {
+      const validatedData = await formSchema.validate(data, {
+        abortEarly: false,
+      });
+      setErrors({});
 
-    if (Object.keys(newErrors).length > 0) {
+      if (imageFile) {
+        validatedData.image = await fileToBase64(imageFile);
+      }
+
+      dispatch(addNewSubmit(validatedData as FormData));
+
+      closeModal();
+    } catch (validationErrors) {
+      const newErrors: Record<string, string> = {};
+      if (validationErrors instanceof Yup.ValidationError) {
+        validationErrors.inner.forEach((error) => {
+          if (error.path) newErrors[error.path] = error.message;
+        });
+      }
       setErrors(newErrors);
-      return;
     }
-
-    setErrors({});
-    onSubmit(data);
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
-      <FormFields
-        formType="uncontrolled"
-        errors={errors}
-        onSubmit={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+    <form ref={formRef} onSubmit={handleSubmit} noValidate>
+      <FormFields errors={errors} onSubmit={() => {}} />
       {Object.keys(errors).length > 0 && (
-        <div>
+        <div style={{ marginTop: '10px', minHeight: '20px' }}>
           {Object.values(errors).map((error, index) => (
-            <p key={index}>{error}</p>
+            <p key={index} style={{ color: 'red' }}>
+              {error}
+            </p>
           ))}
         </div>
       )}
+      <button type="submit">Submit</button>
     </form>
   );
 }

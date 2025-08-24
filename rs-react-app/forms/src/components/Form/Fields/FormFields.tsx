@@ -11,10 +11,10 @@ import { useSelector } from 'react-redux';
 export type FormData = FormSchemaType;
 
 interface FormFieldsProps {
-  register: UseFormRegister<FormData>;
+  register?: UseFormRegister<FormData>;
   errors: FieldErrors<FormData>;
   passwordValue?: string;
-  setValue: UseFormSetValue<FormData>;
+  setValue?: UseFormSetValue<FormData>;
 }
 
 export default function FormFields({
@@ -41,7 +41,7 @@ export default function FormFields({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
+    if (setValue && file) {
       setValue('image', file);
     }
   };
@@ -56,7 +56,7 @@ export default function FormFields({
           id="name"
           type="text"
           className={styles.input}
-          {...register('name')}
+          {...(register ? register('name') : { name: 'name' })}
         />
         {errors.name && (
           <span className={styles.error}>{errors.name.message}</span>
@@ -72,7 +72,7 @@ export default function FormFields({
           type="number"
           min={0}
           className={styles.input}
-          {...register('age')}
+          {...(register ? register('age') : { name: 'age' })}
         />
         {errors.age && (
           <span className={styles.error}>{errors.age.message}</span>
@@ -87,7 +87,7 @@ export default function FormFields({
           id="email"
           type="email"
           className={styles.input}
-          {...register('email')}
+          {...(register ? register('email') : { name: 'email' })}
         />
         {errors.email && (
           <span className={styles.error}>{errors.email.message}</span>
@@ -102,7 +102,7 @@ export default function FormFields({
           id="password"
           type="password"
           className={styles.input}
-          {...register('password')}
+          {...(register ? register('password') : { name: 'password' })}
         />
         {passwordValue && (
           <div className={styles.passwordStrength}>
@@ -136,7 +136,9 @@ export default function FormFields({
           id="confirmPassword"
           type="password"
           className={styles.input}
-          {...register('confirmPassword')}
+          {...(register
+            ? register('confirmPassword')
+            : { name: 'confirmPassword' })}
         />
         {errors.confirmPassword && (
           <span className={styles.error}>{errors.confirmPassword.message}</span>
@@ -147,7 +149,11 @@ export default function FormFields({
         <label htmlFor="gender" className={styles.label}>
           Gender
         </label>
-        <select id="gender" className={styles.input} {...register('gender')}>
+        <select
+          id="gender"
+          className={styles.input}
+          {...(register ? register('gender') : { name: 'gender' })}
+        >
           <option value="">Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -164,7 +170,7 @@ export default function FormFields({
           id="acceptedTC"
           type="checkbox"
           className={styles.checkbox}
-          {...register('acceptedTC')}
+          {...(register ? register('acceptedTC') : { name: 'acceptedTC' })}
         />
         <label htmlFor="acceptedTC" className={styles.label}>
           Accept Terms and Conditions
@@ -198,7 +204,7 @@ export default function FormFields({
           list="countries"
           id="country"
           className={styles.input}
-          {...register('country')}
+          {...(register ? register('country') : { name: 'country' })}
         />
         <datalist id="countries">
           {countries.map((country: string) => (
