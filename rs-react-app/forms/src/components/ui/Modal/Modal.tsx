@@ -48,6 +48,7 @@ export default function Modal({
             className={styles.closeButton}
             onClick={onClose}
             aria-label="Close modal"
+            data-testid="modal"
           >
             ×
           </button>
