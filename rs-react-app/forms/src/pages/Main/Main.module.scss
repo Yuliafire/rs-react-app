@@ -1,13 +1,35 @@
 .container {
-  padding: 20px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px; 
   max-width: 1200px;
   margin: 0 auto;
   height: auto;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    max-width: 768px;
+    width: 100%; 
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px;
+     max-width: 480px;
+    width: 100%; 
+  }
 }
 
 .header {
   text-align: center;
   margin-bottom: 20px;
+
+  @media (max-width: 480px) {
+    margin-bottom: 10px; 
+  }
 }
 
 .buttonContainer {
@@ -15,6 +37,12 @@
   gap: 10px;
   justify-content: center;
   margin-bottom: 20px;
+  flex-wrap: wrap; 
+
+  @media (max-width: 480px) {
+    gap: 5px; 
+    margin-bottom: 10px;
+  }
 }
 
 .button {
@@ -24,18 +52,37 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+
+  @media (max-width: 480px) {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
 }
 
 .modalTitle {
   text-align: center;
   margin-bottom: 16px;
+
+  @media (max-width: 480px) {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
 }
 
 .submittedData {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   color: black;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
 }
 
 .dataCard {
@@ -43,6 +90,12 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
+  font-size: 14px;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    font-size: 12px;
+  }
 }
 
 .highlightNew {
@@ -54,10 +107,14 @@
   max-width: 100%;
   max-height: 150px;
   margin-top: 8px;
+  object-fit: contain;
+
+  @media (max-width: 480px) {
+    max-height: 100px;
+  }
 }
 
 @keyframes fadeBorder {
   0% { border-color: #28a745; }
   100% { border-color: #ccc; }
 }
-
