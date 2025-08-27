@@ -1,0 +1,59 @@
+@use '../../assets/styles/globals' as *;
+
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: $min-height;
+  max-width: $max-width-error;
+  margin: 0 auto;
+  padding: $error-padding;
+  background-color: $gray-background;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-light;
+  text-align: center;
+  gap: $error-gap;
+}
+
+.heading {
+  font-size: $heading-font-size;
+  font-weight: 700;
+  color: $error-color;
+  margin: 0;
+}
+
+.description {
+  font-size: $description-font-size;
+  color: $text-color;
+  margin: 0;
+}
+
+.errorMessage {
+  font-size: $error-message-font-size;
+  color: $text-color;
+  margin: 0;
+
+  i {
+    font-style: italic;
+    color: $error-dark-color;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .errorPage {
+    padding: $error-padding - 0.5rem;
+  }
+
+  .heading {
+    font-size: $mobile-heading-font-size;
+  }
+
+  .description {
+    font-size: $mobile-description-font-size;
+  }
+
+  .errorMessage {
+    font-size: $mobile-error-message-font-size;
+  }
+}
