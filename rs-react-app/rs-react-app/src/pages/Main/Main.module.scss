@@ -1,0 +1,31 @@
+@use '../../assets/styles/globals' as *;
+
+.main {
+  min-height: $min-height;
+  padding: $padding;
+  font-family: $font-family-primary;
+  width: 100%;
+  max-width: $max-width;
+  background: $background-color;
+  opacity: $opacity;
+  color: $text-color;
+  margin: 0 auto;
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  box-sizing: border-box;
+}
+
+.dateInputs {
+  display: flex;
+  justify-content: center;
+  gap: $gap;
+  margin-bottom: $margin-bottom;
+  flex-wrap: wrap;
+
+  @media (max-width: $breakpoint-mobile) {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}

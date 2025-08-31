@@ -1,0 +1,6 @@
+build
+coverage
+dist
+**/*.json
+**/*.html
+**/*.css

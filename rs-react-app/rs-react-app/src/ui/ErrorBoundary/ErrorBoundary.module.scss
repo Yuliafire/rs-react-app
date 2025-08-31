@@ -1,0 +1,110 @@
+// Import global variables
+@use '../../assets/styles/globals' as *;
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: $min-height;
+  max-width: $max-width-error;
+  margin: 0 auto;
+  padding: $error-padding;
+  background-color: $dark-background;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-light;
+  text-align: center;
+  gap: $error-gap;
+}
+
+.errorTitle {
+  font-size: $heading-font-size;
+  font-weight: 700;
+  color: $error-color;
+  margin: 0;
+}
+
+.errorSubtitle {
+  font-size: $description-font-size;
+  color: $text-color;
+  margin: 0;
+}
+
+.errorMessage {
+  font-size: $error-message-font-size;
+  color: $text-color;
+  margin: 0;
+
+  i {
+    font-style: italic;
+    color: $error-dark-color;
+  }
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: $border-light;
+  margin: $margin-bottom 0;
+}
+
+.hogwartsButton {
+  padding: $button-padding;
+  border: $border-width solid $house-gryffindor;
+  border-radius: $border-radius;
+  font-size: $button-font-size;
+  font-weight: 600;
+  background: linear-gradient(
+    135deg,
+    $dark-background 0%,
+    $house-gryffindor 100%
+  );
+  color: $white-text;
+  cursor: pointer;
+  transition:
+    $button-transition,
+    background 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      $house-gryffindor 0%,
+      $error-dark-color 100%
+    );
+    border-color: $error-dark-color;
+    transform: translateY(-2px);
+    box-shadow: $button-hover-shadow;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: $button-focus-shadow;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .errorContainer {
+    padding: $error-padding - 0.5rem;
+  }
+
+  .errorTitle {
+    font-size: $mobile-heading-font-size;
+  }
+
+  .errorSubtitle {
+    font-size: $mobile-description-font-size;
+  }
+
+  .errorMessage {
+    font-size: $mobile-error-message-font-size;
+  }
+
+  .hogwartsButton {
+    padding: $button-mobile-padding;
+    font-size: $mobile-button-font-size;
+  }
+}
